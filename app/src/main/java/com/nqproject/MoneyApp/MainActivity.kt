@@ -46,7 +46,10 @@ fun MainContent() {
             contentDescription = ""
         )
         Spacer(modifier = Modifier.height(10.dp))
-        Text(text = "MoneyApp", style = MaterialTheme.typography.h4)
+        Text(
+            text = "MoneyApp",
+            style = MaterialTheme.typography.h5,
+            color = MaterialTheme.colors.primary,)
         Spacer(modifier = Modifier.height(60.dp))
         Button(onClick = {}) {
             Text("Test")

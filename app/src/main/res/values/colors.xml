@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="yellow_light">#FFFFDE8A</color>
-    <color name="yellow_medium">#FFFFD52D</color>
+    <color name="yellow_medium">#FFFFCB2D</color>
     <color name="yellow_dark">#FFFBC02D</color>
     <color name="orange_dark">#FFF79215</color>
     <color name="black">#FF000000</color>
+    <color name="blackBackground">#FF121212</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
