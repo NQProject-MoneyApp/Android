@@ -26,7 +26,7 @@ fun GroupListScreen(navController: NavController) {
 
         Text(
             text = "Group list",
-            style = MaterialTheme.typography.h5,
+            style = MaterialTheme.typography.h2,
             color = MaterialTheme.colors.primary,)
         Spacer(modifier = Modifier.height(60.dp))
         Button(onClick = {

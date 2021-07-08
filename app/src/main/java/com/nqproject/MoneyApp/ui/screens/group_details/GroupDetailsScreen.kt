@@ -19,7 +19,7 @@ fun GroupDetailsScreen(navController: NavController, groupId: Int) {
 
         Text(
             text = "Group details, id: $groupId",
-            style = MaterialTheme.typography.h5,
+            style = MaterialTheme.typography.h2,
             color = MaterialTheme.colors.primary,)
     }
 }

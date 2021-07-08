@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.sp
 import com.nqproject.MoneyApp.R
 
 val PoppinsFont = FontFamily(
-    Font(R.font.poppins_black),
+    Font(R.font.poppins_regular),
     Font(R.font.poppins_semi_bold, FontWeight.SemiBold),
 )
 
@@ -20,9 +20,21 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
-    h5 = TextStyle(
+    h2 = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontSize = 30.sp,
+    ),
+    h4 = TextStyle(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 20.sp,
+    ),
+    h5 = TextStyle(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
+    ),
+    body2 = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
     )
 
     /* Other default text styles to override

@@ -11,5 +11,7 @@ object AppColors {
     val OrangeMedium = Color(0xFFF79215)
 
     val BlackBackground = Color(0xFF121212)
+    val DarkGray = Color(0xff212121)
+    val MiddleGray = Color(0xff7A7A7A)
 }
 
