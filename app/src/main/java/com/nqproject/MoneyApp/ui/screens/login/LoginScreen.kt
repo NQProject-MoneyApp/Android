@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -25,8 +24,6 @@ import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.ui.navigation.MainNavigationScreen
 import com.nqproject.MoneyApp.ui.screens.login.LoginViewModel
 import com.nqproject.MoneyApp.ui.theme.AppTheme
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.livedata.observeAsState
 import com.nqproject.MoneyApp.ui.screens.login.LoginResult

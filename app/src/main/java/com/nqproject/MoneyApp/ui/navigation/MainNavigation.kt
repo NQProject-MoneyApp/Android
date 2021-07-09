@@ -2,7 +2,6 @@ package com.nqproject.MoneyApp.ui.navigation
 
 import androidx.compose.animation.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
