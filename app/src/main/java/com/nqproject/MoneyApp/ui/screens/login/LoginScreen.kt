@@ -35,7 +35,6 @@ fun LoginScreen(navController: NavHostController) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val viewModel = viewModel<LoginViewModel>()
-
     val loading = viewModel.loading.observeAsState(false).value
 
     Column(
@@ -47,7 +46,7 @@ fun LoginScreen(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        Header()
+        LoginHeader()
 
         LoginForm(loading = loading) { username, password ->
             coroutineScope.launch {
@@ -62,7 +61,6 @@ fun LoginScreen(navController: NavHostController) {
                     }
                 }
             }
-
         }
 
         Spacer(modifier = Modifier.height(21.dp))
@@ -77,7 +75,7 @@ fun LoginScreen(navController: NavHostController) {
 }
 
 @Composable
-private fun Header() {
+private fun LoginHeader() {
     Spacer(modifier = Modifier.height(39.dp))
     Image(
         painterResource(id = R.drawable.ic_icon),
@@ -87,7 +85,7 @@ private fun Header() {
     Spacer(modifier = Modifier.height(69.dp))
 
     Text(
-        text = "MoneyApp",
+        text = "Hello",
         style = MaterialTheme.typography.h2,
         color = MaterialTheme.colors.primary,)
     Spacer(modifier = Modifier.height(40.dp))

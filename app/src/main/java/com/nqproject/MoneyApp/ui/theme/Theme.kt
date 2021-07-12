@@ -13,10 +13,10 @@ object AppTheme {
         @Composable
         @ReadOnlyComposable
         get() = AppThemeColors(
-            primary = AppColors.YellowMedium,
+            primary = AppColors.Yellow,
             primaryVariant = AppColors.YellowDark,
-            secondary = AppColors.OrangeMedium,
-            background = AppColors.BlackBackground,
+            secondary = AppColors.Gray,
+            background = AppColors.Black,
             surface = AppColors.DarkGray,
             secondaryVariant = AppColors.OrangeMedium,
             error = Color(0xFFCF6679),

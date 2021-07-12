@@ -7,9 +7,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import com.nqproject.MoneyApp.manager.AuthenticationManager
 import com.nqproject.MoneyApp.ui.screens.GroupDetailsScreen
 import com.nqproject.MoneyApp.ui.screens.GroupListScreen
 import com.nqproject.MoneyApp.ui.screens.LoginScreen
+import com.nqproject.MoneyApp.ui.screens.add_group.AddGroupScreen
 
 sealed class MainNavigationScreen(
     val route: String,
@@ -17,13 +19,13 @@ sealed class MainNavigationScreen(
 
     object LoginScreen: MainNavigationScreen(route = "login")
     object Groups: MainNavigationScreen("groups")
+    object AddGroups: MainNavigationScreen("add-groups")
+
     object GroupDetails: MainNavigationScreen("group-details/{groupId}") {
         fun createRoute(groupId: Int): String {
             return "group-details/$groupId"
         }
     }
-
-
 }
 
 @ExperimentalAnimationApi
@@ -31,8 +33,9 @@ sealed class MainNavigationScreen(
 fun MainNavigation() {
 
     val navController = rememberNavController()
+    val startDestination = if (AuthenticationManager.token != null) MainNavigationScreen.Groups.route else MainNavigationScreen.LoginScreen.route
 
-    NavHost(navController, startDestination = MainNavigationScreen.LoginScreen.route) {
+    NavHost(navController, startDestination = startDestination) {
 
         composable(route = MainNavigationScreen.LoginScreen.route) {
             LoginScreen(navController)
@@ -49,8 +52,12 @@ fun MainNavigation() {
             GroupDetailsScreen(navController, backStackEntry.arguments?.getInt("groupId")!!)
         }
 
+        composable(
+            route = MainNavigationScreen.AddGroups.route,
+        ) {
+            AddGroupScreen(navController = navController)
+        }
     }
-
 }
 
 
