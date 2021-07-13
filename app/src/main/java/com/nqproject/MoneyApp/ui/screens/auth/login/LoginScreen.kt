@@ -47,7 +47,9 @@ fun LoginScreen(navController: NavHostController) {
 
                 when(result) {
                     is LoginResult.Success -> {
-                        navController.navigate(MainNavigationScreen.Groups.route)
+                        navController.navigate(MainNavigationScreen.Groups.route) {
+                            popUpTo(MainNavigationScreen.LoginScreen.route) { inclusive = true }
+                        }
                     }
                     is LoginResult.Failed -> {
                         Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
@@ -61,9 +63,6 @@ fun LoginScreen(navController: NavHostController) {
             // Action
         }
         BottomOption(text = "No account yet?", buttonText = "Register") {
-            // TODO
-            // block back button?
-            // replace all screens?
             navController.navigate(MainNavigationScreen.RegistrationScreen.route)
         }
 

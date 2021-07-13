@@ -28,7 +28,7 @@ fun GroupListScreen(navController: NavController) {
 
     val viewModel = viewModel<GroupsListViewModel>()
     val coroutineScope = rememberCoroutineScope()
-    var groupsList = viewModel.groupsList.observeAsState(emptyList()).value
+    val groupsList = viewModel.groupsList.observeAsState(emptyList()).value
     val loading = viewModel.loading.observeAsState(false).value
     val scrollState = rememberScrollState()
 
@@ -56,10 +56,9 @@ fun GroupListScreen(navController: NavController) {
                 Spacer(modifier = Modifier.width(20.dp))
                 Button(onClick = {
                     AuthenticationManager.token = null
-                    // TODO
-                    // block back button?
-                    // replace all screens?
-                    navController.navigate(MainNavigationScreen.LoginScreen.route)
+                    navController.navigate(MainNavigationScreen.LoginScreen.route) {
+                        popUpTo(MainNavigationScreen.Groups.route) { inclusive = true }
+                    }
                 }) { Text("Logout") }
             }
             
