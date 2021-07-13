@@ -12,6 +12,7 @@ import com.nqproject.MoneyApp.ui.screens.GroupDetailsScreen
 import com.nqproject.MoneyApp.ui.screens.GroupListScreen
 import com.nqproject.MoneyApp.ui.screens.LoginScreen
 import com.nqproject.MoneyApp.ui.screens.add_group.AddGroupScreen
+import com.nqproject.MoneyApp.ui.screens.auth.registration.RegistrationScreen
 
 sealed class MainNavigationScreen(
     val route: String,
@@ -20,6 +21,7 @@ sealed class MainNavigationScreen(
     object LoginScreen: MainNavigationScreen(route = "login")
     object Groups: MainNavigationScreen("groups")
     object AddGroups: MainNavigationScreen("add-groups")
+    object RegistrationScreen: MainNavigationScreen("registration")
 
     object GroupDetails: MainNavigationScreen("group-details/{groupId}") {
         fun createRoute(groupId: Int): String {
@@ -39,6 +41,10 @@ fun MainNavigation() {
 
         composable(route = MainNavigationScreen.LoginScreen.route) {
             LoginScreen(navController)
+        }
+
+        composable(route = MainNavigationScreen.RegistrationScreen.route) {
+            RegistrationScreen(navController)
         }
 
         composable(route = MainNavigationScreen.Groups.route) {

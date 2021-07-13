@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.manager.AuthenticationManager
 import com.nqproject.MoneyApp.ui.navigation.MainNavigationScreen
 import com.nqproject.MoneyApp.ui.screens.group_list.GroupListComponent
@@ -32,10 +33,10 @@ fun GroupListScreen(navController: NavController) {
     val scrollState = rememberScrollState()
 
     GroupListHeader(didPressUserButton = {
-        Log.d("MONEY_APP", "didPressUserButton")
+        Log.d(Config.MAIN_TAG, "didPressUserButton")
 
     }, didPressAddGroup = {
-        Log.d("MONEY_APP", "didPressAddGroup")
+        Log.d(Config.MAIN_TAG, "didPressAddGroup")
         navController.navigate(MainNavigationScreen.AddGroups.route)
 
     }, body = {

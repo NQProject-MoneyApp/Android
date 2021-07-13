@@ -1,4 +1,4 @@
-package com.nqproject.MoneyApp.ui.screens.login
+package com.nqproject.MoneyApp.ui.screens.auth.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,5 +23,4 @@ class LoginViewModel: ViewModel() {
 
         return result
     }
-
 }

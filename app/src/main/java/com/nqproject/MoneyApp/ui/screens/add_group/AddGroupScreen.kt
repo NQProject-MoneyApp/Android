@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.ui.theme.AppTheme
@@ -38,7 +39,7 @@ fun AddGroupScreen(navController: NavController) {
             navController.popBackStack()
 
         }, didPressMenuButton = {
-            Log.d("MONEY_APP", "didPressMenuButton")
+            Log.d(Config.MAIN_TAG, "didPressMenuButton")
 
         }, body = {
             Column(
@@ -50,7 +51,7 @@ fun AddGroupScreen(navController: NavController) {
                     if (it.isEmpty()) {
                         Toast.makeText(context, "Enter a group name", Toast.LENGTH_SHORT).show()
                     } else {
-                        Log.d("MONEY_APP", "on save group: $it")
+                        Log.d(Config.MAIN_TAG, "on save group: $it")
                         coroutineScope.launch {
                             val result = viewModel.addGroup(name=it)
 
@@ -82,7 +83,7 @@ private fun GroupNameForm(onSave: (name: String) -> Unit, loading: Boolean) {
         Image(
             painterResource(id = R.drawable.ic_add),
             modifier = Modifier
-                .clickable { Log.d("MONEY_APP", "Did press add group image") }
+                .clickable { Log.d(Config.MAIN_TAG, "Did press add group image") }
                 .padding(50.dp),
             contentDescription = "",
         )

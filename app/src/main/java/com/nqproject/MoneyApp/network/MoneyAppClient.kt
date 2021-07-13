@@ -1,10 +1,12 @@
 package com.nqproject.MoneyApp.network
 
 import android.util.Log
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.manager.AuthenticationManager
 import com.nqproject.MoneyApp.network.models.NetworkAddGroupRequest
 import com.nqproject.MoneyApp.network.models.NetworkGroupsResponse
 import com.nqproject.MoneyApp.network.models.NetworkLoginRequest
+import com.nqproject.MoneyApp.network.models.NetworkRegistrationRequest
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -46,7 +48,23 @@ object MoneyAppClient {
             }
         } catch(e: HttpException) {
             //TODO: parse error from backend
-            Log.e("MONEY_APP", "Failed to login", e)
+            Log.e(Config.MAIN_TAG, "Failed to login", e)
+            SimpleResult.Error("Unknown error")
+        }
+    }
+
+    suspend fun registration(username: String, password: String, email: String): SimpleResult<String> {
+        return try {
+            val result = client.registration(NetworkRegistrationRequest(username = username, email = email, password1 = password, password2 = password,))
+
+            if(result.key != null) {
+                SimpleResult.Success(result.key)
+            } else {
+                SimpleResult.Error("Unknown error, ${result.error}")
+            }
+        } catch(e: HttpException) {
+            //TODO: parse error from backend
+            Log.e(Config.MAIN_TAG, "Failed to registration", e)
             SimpleResult.Error("Unknown error")
         }
     }
@@ -59,7 +77,7 @@ object MoneyAppClient {
             SimpleResult.Success(result)
 
         } catch(e: HttpException) {
-            Log.e("MONEY_APP", "Failed to fetch groups", e)
+            Log.e(Config.MAIN_TAG, "Failed to fetch groups", e)
             SimpleResult.Error("Unknown error")
         }
     }
@@ -71,7 +89,7 @@ object MoneyAppClient {
             SimpleResult.Success(result)
 
         } catch(e: HttpException) {
-            Log.e("MONEY_APP", "Failed to fetch groups", e)
+            Log.e(Config.MAIN_TAG, "Failed to fetch groups", e)
             SimpleResult.Error("Unknown error")
         }
     }

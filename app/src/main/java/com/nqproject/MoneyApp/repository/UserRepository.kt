@@ -3,7 +3,8 @@ package com.nqproject.MoneyApp.repository
 import com.nqproject.MoneyApp.manager.AuthenticationManager
 import com.nqproject.MoneyApp.network.MoneyAppClient
 import com.nqproject.MoneyApp.network.SimpleResult
-import com.nqproject.MoneyApp.ui.screens.login.LoginResult
+import com.nqproject.MoneyApp.ui.screens.auth.login.LoginResult
+import com.nqproject.MoneyApp.ui.screens.auth.registration.RegistrationResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -24,6 +25,15 @@ object UserRepository {
         }
     }
 
-    //    TODO
-    suspend fun register(username: String, email: String, password: String) {}
+    suspend fun register(username: String, email: String, password: String): RegistrationResult {
+
+        val result = withContext(Dispatchers.IO) {
+            MoneyAppClient.registration(username, password, email)
+        }
+
+        return when (result) {
+            is SimpleResult.Error -> RegistrationResult.Failed(result.error)
+            is SimpleResult.Success -> RegistrationResult.Success
+        }
+    }
 }
