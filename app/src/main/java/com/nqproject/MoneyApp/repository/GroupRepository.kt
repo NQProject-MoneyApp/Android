@@ -3,7 +3,6 @@ package com.nqproject.MoneyApp.repository
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.network.MoneyAppClient
 import com.nqproject.MoneyApp.network.SimpleResult
-import com.nqproject.MoneyApp.ui.screens.group_list.Group
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

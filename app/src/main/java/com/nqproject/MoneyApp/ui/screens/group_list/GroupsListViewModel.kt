@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nqproject.MoneyApp.network.SimpleResult
+import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.repository.GroupRepository
 
 class GroupsListViewModel: ViewModel() {
