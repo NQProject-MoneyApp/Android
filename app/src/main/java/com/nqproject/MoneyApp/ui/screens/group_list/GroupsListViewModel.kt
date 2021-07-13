@@ -1,11 +1,12 @@
 package com.nqproject.MoneyApp.ui.screens.group_list
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.repository.GroupRepository
+import kotlinx.coroutines.launch
 
 class GroupsListViewModel: ViewModel() {
 
@@ -14,6 +15,12 @@ class GroupsListViewModel: ViewModel() {
 
     val loading: LiveData<Boolean> = _loading
     val groupsList: LiveData<List<Group>> = _groupsList
+
+    init {
+        viewModelScope.launch {
+            fetchGroups()
+        }
+    }
 
     suspend fun fetchGroups(): SimpleResult<List<Group>> {
         _loading.value = true
