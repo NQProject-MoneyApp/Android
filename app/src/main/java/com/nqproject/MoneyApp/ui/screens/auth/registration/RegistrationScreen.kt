@@ -87,6 +87,9 @@ private fun RegistrationForm(
         usernameState = usernameState,
         passwordState = passwordState,
         emailState = emailState,
+        onDone = {
+            onRegisterPressed(usernameState.value, passwordState.value, emailState.value)
+        },
     )
 
     Spacer(modifier = Modifier.height(21.dp))

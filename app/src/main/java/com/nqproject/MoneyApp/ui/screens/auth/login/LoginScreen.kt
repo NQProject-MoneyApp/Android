@@ -79,7 +79,10 @@ private fun LoginForm(
 
     AuthInputFields(
         usernameState = usernameState,
-        passwordState = passwordState
+        passwordState = passwordState,
+        onDone = {
+            onLoginPressed(usernameState.value, passwordState.value)
+        }
     )
 
     Spacer(modifier = Modifier.height(21.dp))
