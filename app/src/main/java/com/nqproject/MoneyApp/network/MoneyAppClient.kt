@@ -24,7 +24,7 @@ sealed class SimpleResult<T> {
 object MoneyAppClient {
 
     private val client = Retrofit.Builder()
-        .baseUrl("http://10.0.2.2:8000")
+        .baseUrl("http://192.168.1.150:8000")
         .addConverterFactory(GsonConverterFactory.create())
         .client(OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.HEADERS })
