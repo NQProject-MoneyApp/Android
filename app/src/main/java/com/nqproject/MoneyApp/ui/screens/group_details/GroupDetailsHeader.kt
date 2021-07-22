@@ -9,13 +9,13 @@ import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.ui.screens.Header
 
 @Composable
-fun GroupDetailsHeader(didPressBackArrow: () -> Unit, didPressOptions: () -> Unit, body: @Composable () -> Unit, title: String) {
+fun GroupDetailsHeader(didPressBackButton: () -> Unit, didPressOptions: () -> Unit, body: @Composable () -> Unit, title: String) {
     Header(title = title,
         leftIcon = {
             Image(
                 painterResource(id = R.drawable.ic_back_arrow),
                 modifier = Modifier
-                    .clickable { didPressBackArrow() },
+                    .clickable { didPressBackButton() },
                 contentDescription = "",
             )
         }, rightIcon = {

@@ -3,10 +3,7 @@ package com.nqproject.MoneyApp.network
 import android.util.Log
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.manager.AuthenticationManager
-import com.nqproject.MoneyApp.network.models.NetworkAddGroupRequest
-import com.nqproject.MoneyApp.network.models.NetworkGroupsResponse
-import com.nqproject.MoneyApp.network.models.NetworkLoginRequest
-import com.nqproject.MoneyApp.network.models.NetworkRegistrationRequest
+import com.nqproject.MoneyApp.network.models.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -90,6 +87,18 @@ object MoneyAppClient {
 
         } catch(e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to fetch groups", e)
+            SimpleResult.Error("Unknown error")
+        }
+    }
+
+    suspend fun groupUsers(groupId: Int): SimpleResult<List<NetworkGroupUsersResponse>> {
+        return try {
+            val result = client.groupUsers(groupId)
+            result.forEach { println("$it.username $it.balance") }
+            println(result)
+            SimpleResult.Success(result)
+        } catch(e: HttpException) {
+            Log.e(Config.MAIN_TAG, "Failed to fetch group users", e)
             SimpleResult.Error("Unknown error")
         }
     }

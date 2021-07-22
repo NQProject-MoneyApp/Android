@@ -4,6 +4,7 @@ import com.nqproject.MoneyApp.network.models.*
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface MoneyAppApi {
 
@@ -18,4 +19,7 @@ interface MoneyAppApi {
 
     @POST("api/groups/")
     suspend fun addGroup(@Body request: NetworkAddGroupRequest): NetworkGroupsResponse
+
+    @GET("/api/group/{id}/users/")
+    suspend fun groupUsers(@Path("id") id: Int): List<NetworkGroupUsersResponse>
 }
