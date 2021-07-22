@@ -17,7 +17,14 @@ object GroupRepository {
         return when(result) {
             is SimpleResult.Error -> SimpleResult.Error(result.error)
             is SimpleResult.Success -> SimpleResult.Success(
-                result.data.map { Group(id = it.pk!!, name = it.name!!, amount = 35.55, icon = R.drawable.ic_burger, isFavourite = false) })
+                result.data.map { Group(
+                    id = it.pk!!,
+                    name = it.name!!,
+                    totalCost = it.total_cost!!,
+                    icon = R.drawable.ic_burger,
+                    isFavourite = it.is_favourite!!,
+                    userBalance = it.user_balance!!,
+                    createDate = it.create_date!!) })
         }
     }
 
