@@ -1,6 +1,7 @@
 package com.nqproject.MoneyApp.ui.screens.group_list
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -18,7 +19,7 @@ import com.nqproject.MoneyApp.repository.Group
 
 
 @Composable
-fun GroupListComponent(group: Group) {
+fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
     val icon = if (group.isFavourite) R.drawable.ic_star_select else R.drawable.ic_star
 
     Card(
@@ -27,6 +28,7 @@ fun GroupListComponent(group: Group) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
+            .clickable { didPressComponent(group) }
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceBetween,

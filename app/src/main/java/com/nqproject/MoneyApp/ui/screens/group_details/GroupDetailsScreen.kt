@@ -14,12 +14,13 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupDetailsHeader
 
 @Composable
-fun GroupDetailsScreen(navController: NavController, groupId: Int) {
+fun GroupDetailsScreen(navController: NavController, group: Group) {
 
     val scrollState = rememberScrollState()
     
@@ -52,10 +53,10 @@ fun GroupDetailsScreen(navController: NavController, groupId: Int) {
 //                    )
 //                }
                 Text(
-                    text = "Group details, id: $groupId",
+                    text = "Group details, id: ${group.id}",
                     style = MaterialTheme.typography.h2,
                     color = MaterialTheme.colors.primary,)
             }
         },
-        title = "Group $groupId")
+        title = "Group ${group.id}")
 }

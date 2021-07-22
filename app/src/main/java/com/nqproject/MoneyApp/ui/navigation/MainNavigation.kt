@@ -7,7 +7,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import com.google.gson.Gson
 import com.nqproject.MoneyApp.manager.AuthenticationManager
+import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.ui.screens.GroupDetailsScreen
 import com.nqproject.MoneyApp.ui.screens.GroupListScreen
 import com.nqproject.MoneyApp.ui.screens.LoginScreen
@@ -23,9 +25,10 @@ sealed class MainNavigationScreen(
     object AddGroups: MainNavigationScreen("add-groups")
     object RegistrationScreen: MainNavigationScreen("registration")
 
-    object GroupDetails: MainNavigationScreen("group-details/{groupId}") {
-        fun createRoute(groupId: Int): String {
-            return "group-details/$groupId"
+    object GroupDetails: MainNavigationScreen("group-details/{group}") {
+        fun createRoute(group: Group): String {
+            val json = Gson().toJson(group)
+            return "group-details/$json"
         }
     }
 }
@@ -53,9 +56,11 @@ fun MainNavigation() {
 
         composable(
             route = MainNavigationScreen.GroupDetails.route,
-            arguments = listOf(navArgument("groupId") { type = NavType.IntType }),
+            arguments = listOf(navArgument("group") { type = NavType.StringType }),
         ) { backStackEntry ->
-            GroupDetailsScreen(navController, backStackEntry.arguments?.getInt("groupId")!!)
+            val jsonGroup = backStackEntry.arguments?.getString("group")!!
+            val group = Gson().fromJson(jsonGroup, Group::class.java)
+            GroupDetailsScreen(navController, group)
         }
 
         composable(
