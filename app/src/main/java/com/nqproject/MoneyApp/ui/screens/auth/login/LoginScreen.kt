@@ -96,6 +96,6 @@ private fun LoginForm(
         onClick = {
             onLoginPressed(usernameState.value, passwordState.value)
         }) {
-        Text("Login", style = MaterialTheme.typography.h4)
+        Text("Log in", style = MaterialTheme.typography.h4)
     }
 }

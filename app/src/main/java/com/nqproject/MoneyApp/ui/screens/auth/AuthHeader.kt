@@ -21,11 +21,13 @@ fun AuthHeader() {
         modifier = Modifier.size(132.dp),
         contentDescription = ""
     )
-    Spacer(modifier = Modifier.height(69.dp))
+    Spacer(modifier = Modifier.height(39.dp))
 
     Text(
+        modifier = Modifier.height(83.dp),
         text = "Hello",
         style = MaterialTheme.typography.h2,
-        color = MaterialTheme.colors.primary,)
-    Spacer(modifier = Modifier.height(40.dp))
+        color = MaterialTheme.colors.primary,
+    )
+    Spacer(modifier = Modifier.height(39.dp))
 }
