@@ -7,10 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.nqproject.MoneyApp.repository.Group
 
 
 @Composable
-fun GroupDetailsScreen(navController: NavController, groupId: Int) {
+fun GroupDetailsScreen(navController: NavController, group: Group) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,

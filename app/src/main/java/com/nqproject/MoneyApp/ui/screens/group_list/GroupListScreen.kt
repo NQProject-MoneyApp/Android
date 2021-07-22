@@ -17,6 +17,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.manager.AuthenticationManager
+import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.ui.navigation.MainNavigationScreen
 import com.nqproject.MoneyApp.ui.screens.group_list.GroupListComponent
 import com.nqproject.MoneyApp.ui.screens.group_list.GroupListHeader
@@ -68,7 +69,10 @@ fun GroupListScreen(navController: NavController) {
             } else {
                 Spacer(modifier = Modifier.height(60.dp))
                 groupsList.forEach {
-                    GroupListComponent(it)
+                    GroupListComponent(it,
+                    didPressComponent = {
+                        navController.navigate(MainNavigationScreen.GroupDetails.createRoute(group = it))
+                    })
                 }
             }
         }
