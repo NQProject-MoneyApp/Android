@@ -16,11 +16,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.repository.Group
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 
 
 @Composable
 fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
     val icon = if (group.isFavourite) R.drawable.ic_star_select else R.drawable.ic_star
+    val dateFormat = SimpleDateFormat("dd-MM-yyy")
 
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
@@ -53,7 +56,7 @@ fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
                     .padding(8.dp)) {
                     Text(text = group.name, style = MaterialTheme.typography.h5, color= Color.White)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "$ - ${group.amount}", style = MaterialTheme.typography.subtitle2, color= Color.White)
+                    Text(text = "$ - ${group.userBalance}", style = MaterialTheme.typography.subtitle2, color= Color.White)
                 }
                 Column(
                     verticalArrangement = Arrangement.SpaceEvenly,
@@ -61,7 +64,7 @@ fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
                 ) {
                     Image(painterResource(id = icon), contentDescription = "")
                     Spacer(modifier = Modifier.height(65.dp))
-                    Text(text = "21-07-2021", style = MaterialTheme.typography.subtitle2, color= Color.White)
+                    Text(text = dateFormat.format(group.createDate), style = MaterialTheme.typography.subtitle2, color= Color.White)
                 }
             }
         }

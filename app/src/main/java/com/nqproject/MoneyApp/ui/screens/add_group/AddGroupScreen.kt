@@ -32,42 +32,38 @@ fun AddGroupScreen(navController: NavController) {
     val loading = viewModel.loading.observeAsState(false).value
     val context = LocalContext.current
 
-    Column() {
-        Spacer(modifier = Modifier.height(20.dp))
+    AddGroupHeader(didPressBackButton = {
+        navController.popBackStack()
 
-        AddGroupHeader(didPressBackButton = {
-            navController.popBackStack()
+    }, didPressMenuButton = {
+        Log.d(Config.MAIN_TAG, "didPressMenuButton")
 
-        }, didPressMenuButton = {
-            Log.d(Config.MAIN_TAG, "didPressMenuButton")
+    }, body = {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally,) {
+            GroupNameForm(loading=loading, onSave = {
 
-        }, body = {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally,) {
-                GroupNameForm(loading=loading, onSave = {
+                if (it.isEmpty()) {
+                    Toast.makeText(context, "Enter a group name", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.d(Config.MAIN_TAG, "on save group: $it")
+                    coroutineScope.launch {
+                        val result = viewModel.addGroup(name=it)
 
-                    if (it.isEmpty()) {
-                        Toast.makeText(context, "Enter a group name", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Log.d(Config.MAIN_TAG, "on save group: $it")
-                        coroutineScope.launch {
-                            val result = viewModel.addGroup(name=it)
-
-                            when(result) {
-                                is SimpleResult.Error -> Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
-                                is SimpleResult.Success -> {
-                                    SimpleResult.Success("Success")
-                                    navController.popBackStack()
-                                }
+                        when(result) {
+                            is SimpleResult.Error -> Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
+                            is SimpleResult.Success -> {
+                                SimpleResult.Success("Success")
+                                navController.popBackStack()
                             }
                         }
                     }
-                })
-            }
-        })
-    }
+                }
+            })
+        }
+    })
 }
 
 @Composable
