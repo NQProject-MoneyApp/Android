@@ -1,11 +1,10 @@
 package com.nqproject.MoneyApp.ui.screens.expense_list
 
 import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -44,7 +43,7 @@ fun ExpenseListScreen(navController: NavController, group: Group) {
                  modifier = Modifier
                      .fillMaxSize()
                      .verticalScroll(scrollState)
-                     .padding(48.dp),
+                     .padding(32.dp),
                  verticalArrangement = Arrangement.Top,
                  horizontalAlignment = Alignment.CenterHorizontally,
              ) {
@@ -61,14 +60,16 @@ fun ExpenseListScreen(navController: NavController, group: Group) {
                  }
                  Button(onClick = {
                      Log.d(Config.MAIN_TAG, "new expense")
-                 })
+                 }, modifier = Modifier.fillMaxWidth(), shape = AbsoluteRoundedCornerShape(15))
                  { Text(
                      text = "New expense",
                      style = MaterialTheme.typography.h4
                  )
                  }
+                 Spacer(modifier = Modifier.height(20.dp))
                  groupExpenses.forEach {
                      ExpenseListComponent(it)
+                     Spacer(modifier = Modifier.height(20.dp))
                  }
              }
         },

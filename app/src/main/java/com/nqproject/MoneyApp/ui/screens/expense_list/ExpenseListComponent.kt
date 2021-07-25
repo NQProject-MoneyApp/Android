@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.repository.Expense
 import java.text.SimpleDateFormat
+import java.util.*
 
 @Composable
 fun ExpenseListComponent(expense: Expense) {
@@ -28,25 +29,20 @@ fun ExpenseListComponent(expense: Expense) {
         shape = RoundedCornerShape(15),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
             //.clickable { didPressComponent(expense) }
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.CenterHorizontally,
+            //horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(16.dp)
+                .padding(24.dp)
         ) {
             Text(
                 text = expense.name,
                 style = MaterialTheme.typography.h4,
-                color = MaterialTheme.colors.primary,
-                textAlign = TextAlign.Left
+                color = MaterialTheme.colors.primary
             )
-            Row(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-            ) {
+            Row() {
                 Text(
                     modifier = Modifier.weight(1f),
                     text = expense.author.name,
@@ -54,7 +50,7 @@ fun ExpenseListComponent(expense: Expense) {
                     color = Color.White
                 )
                 Text(
-                    text = "\$${expense.amount}",
+                    text = "\$${String.format(Locale.US, "%.2f", expense.amount)}",
                     style = MaterialTheme.typography.h5,
                     color = Color.White
                 )

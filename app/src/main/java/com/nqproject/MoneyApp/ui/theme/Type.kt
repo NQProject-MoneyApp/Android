@@ -29,7 +29,7 @@ val Typography = Typography(
         fontSize = 20.sp,
     ),
     h5 = TextStyle(
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
     ),
     body2 = TextStyle(

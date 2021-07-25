@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Button
@@ -50,7 +51,7 @@ fun GroupDetailsScreen(navController: NavController, group: Group) {
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .padding(48.dp),
+                    .padding(32.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -74,7 +75,7 @@ fun GroupDetailsScreen(navController: NavController, group: Group) {
                         color = Color.White
                     )
                     Text(
-                        text = "-100$",
+                        text = "100$",
                         style = MaterialTheme.typography.h4,
                         color = Color.White
                     )
@@ -107,7 +108,8 @@ fun GroupDetailsScreen(navController: NavController, group: Group) {
                 Button(onClick = {
                     Log.d(Config.MAIN_TAG, "new expense")
                 },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = AbsoluteRoundedCornerShape(15)
                 )
                 { Text(
                     text = "New expense",
@@ -121,6 +123,7 @@ fun GroupDetailsScreen(navController: NavController, group: Group) {
                 }) {
                     Text("Show group users")
                 }
+                Spacer(modifier = Modifier.height(20.dp))
                 GroupUsersListComponent(navController, userBalanceList = groupUsersList, group, didPressAllExpenses = {
                     navController.navigate(MainNavigationScreen.ExpenseList.createRoute(group = it))
                 })

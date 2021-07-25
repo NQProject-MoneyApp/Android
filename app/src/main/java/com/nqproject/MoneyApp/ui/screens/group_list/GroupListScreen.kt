@@ -43,7 +43,8 @@ fun GroupListScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(scrollState),
+                .verticalScroll(scrollState)
+                .padding(32.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -63,15 +64,16 @@ fun GroupListScreen(navController: NavController) {
             }
             
             if (loading) {
-                Spacer(modifier = Modifier.height(60.dp))
+                Spacer(modifier = Modifier.height(32.dp))
                 CircularProgressIndicator()
             } else {
-                Spacer(modifier = Modifier.height(60.dp))
+                Spacer(modifier = Modifier.height(32.dp))
                 groupsList.forEach {
                     GroupListComponent(it,
                     didPressComponent = {
                         navController.navigate(MainNavigationScreen.GroupDetails.createRoute(group = it))
                     })
+                    Spacer(modifier = Modifier.height(20.dp))
                 }
             }
         }
