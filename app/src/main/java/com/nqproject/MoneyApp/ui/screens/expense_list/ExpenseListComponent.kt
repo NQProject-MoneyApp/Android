@@ -1,6 +1,5 @@
 package com.nqproject.MoneyApp.ui.screens.expense_list
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,18 +10,14 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.repository.Expense
-import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
 fun ExpenseListComponent(expense: Expense) {
-    val dateFormat = SimpleDateFormat("dd-MM-yyy")
 
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
@@ -42,7 +37,7 @@ fun ExpenseListComponent(expense: Expense) {
                 style = MaterialTheme.typography.h4,
                 color = MaterialTheme.colors.primary
             )
-            Row() {
+            Row {
                 Text(
                     modifier = Modifier.weight(1f),
                     text = expense.author.name,
