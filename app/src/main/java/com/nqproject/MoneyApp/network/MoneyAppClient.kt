@@ -21,7 +21,7 @@ sealed class SimpleResult<T> {
 object MoneyAppClient {
 
     private val client = Retrofit.Builder()
-        .baseUrl("http://192.168.1.150:8000")
+        .baseUrl("https://money-app-nqproject.herokuapp.com")
         .addConverterFactory(GsonConverterFactory.create())
         .client(OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.HEADERS })
@@ -94,11 +94,21 @@ object MoneyAppClient {
     suspend fun groupUsers(groupId: Int): SimpleResult<List<NetworkGroupUsersResponse>> {
         return try {
             val result = client.groupUsers(groupId)
-            result.forEach { println("$it.username $it.balance") }
+            result.forEach { println("$it.user.username $it.balance") }
             println(result)
             SimpleResult.Success(result)
         } catch(e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to fetch group users", e)
+            SimpleResult.Error("Unknown error")
+        }
+    }
+
+    suspend fun expenses(groupId: Int): SimpleResult<List<NetworkExpensesResponse>> {
+        return try {
+            val result = client.groupExpenses(groupId)
+            SimpleResult.Success(result)
+        } catch(e: HttpException) {
+            Log.e(Config.MAIN_TAG, "Failed to fetch group expenses", e)
             SimpleResult.Error("Unknown error")
         }
     }

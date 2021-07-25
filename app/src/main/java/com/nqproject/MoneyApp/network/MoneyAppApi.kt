@@ -22,4 +22,7 @@ interface MoneyAppApi {
 
     @GET("/api/group/{id}/users/")
     suspend fun groupUsers(@Path("id") id: Int): List<NetworkGroupUsersResponse>
+
+    @GET("/api/{id}/expenses/")
+    suspend fun groupExpenses(@Path("id") id: Int): List<NetworkExpensesResponse>
 }

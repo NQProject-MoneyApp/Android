@@ -1,19 +1,27 @@
 package com.nqproject.MoneyApp.ui.screens.group_details
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.repository.User
+import com.nqproject.MoneyApp.ui.navigation.MainNavigationScreen
+import com.nqproject.MoneyApp.ui.screens.group_list.GroupsListViewModel
+import kotlinx.coroutines.launch
 
 @Composable
-fun GroupUsersListComponent(userBalanceList: List<UserBalance>) {
+fun GroupUsersListComponent(navController: NavController, userBalanceList: List<UserBalance>, group: Group, didPressAllExpenses: (Group) -> Unit) {
 
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
@@ -31,7 +39,9 @@ fun GroupUsersListComponent(userBalanceList: List<UserBalance>) {
             userBalanceList.forEach {
                 GroupBalanceComponent(it)
             }
-            TextButton(onClick = { /*TODO*/ }) {
+            TextButton(onClick = {
+                didPressAllExpenses(group)
+            }) {
                 Text("All expenses",
                     color = MaterialTheme.colors.primary,
                     style = MaterialTheme.typography.h4

@@ -32,7 +32,6 @@ fun GroupListScreen(navController: NavController) {
     val groupsList = viewModel.groupsList.observeAsState(emptyList()).value
     val loading = viewModel.loading.observeAsState(false).value
     val scrollState = rememberScrollState()
-
     GroupListHeader(didPressUserButton = {
         Log.d(Config.MAIN_TAG, "didPressUserButton")
 

@@ -8,6 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Button
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -22,6 +23,7 @@ import androidx.navigation.NavController
 import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
+import com.nqproject.MoneyApp.ui.navigation.MainNavigationScreen
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupUsersListComponent
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupDetailsHeader
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupDetailsViewModel
@@ -80,8 +82,7 @@ fun GroupDetailsScreen(navController: NavController, group: Group) {
                 Row(
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
-                )
-                {
+                ) {
                     Text(
                         modifier = Modifier.weight(1f),
                         text = "Balance",
@@ -95,9 +96,19 @@ fun GroupDetailsScreen(navController: NavController, group: Group) {
                     )
                 }
                 Spacer(modifier = Modifier.height(32.dp))
+                TextButton(onClick = { /*TODO*/ }) {
+                    Text(
+                        text = "Settle up",
+                        style = MaterialTheme.typography.h4,
+                        color = MaterialTheme.colors.primary
+                    )
+                }
+                Spacer(modifier = Modifier.height(32.dp))
                 Button(onClick = {
                     Log.d(Config.MAIN_TAG, "new expense")
-                })
+                },
+                    modifier = Modifier.fillMaxWidth()
+                )
                 { Text(
                     text = "New expense",
                     style = MaterialTheme.typography.h4
@@ -110,8 +121,11 @@ fun GroupDetailsScreen(navController: NavController, group: Group) {
                 }) {
                     Text("Show group users")
                 }
-                GroupUsersListComponent(userBalanceList = groupUsersList)
+                GroupUsersListComponent(navController, userBalanceList = groupUsersList, group, didPressAllExpenses = {
+                    navController.navigate(MainNavigationScreen.ExpenseList.createRoute(group = it))
+                })
             }
         },
-        title = "Group details: ${group.id}")
+        title = group.name
+    )
 }

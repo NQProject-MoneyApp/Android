@@ -47,7 +47,8 @@ object GroupRepository {
         return when(result) {
             is SimpleResult.Error -> SimpleResult.Error(result.error)
             is SimpleResult.Success -> SimpleResult.Success(
-                result.data.map { UserBalance(name = it.username!!, balance = it.balance!!) })
+                result.data.map { UserBalance(name = it.user!!.username!!, balance = it.balance!!) })
+                //TODO: Parse if not null
         }
     }
 }

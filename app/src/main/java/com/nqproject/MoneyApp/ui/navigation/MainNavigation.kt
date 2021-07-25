@@ -15,6 +15,7 @@ import com.nqproject.MoneyApp.ui.screens.GroupListScreen
 import com.nqproject.MoneyApp.ui.screens.LoginScreen
 import com.nqproject.MoneyApp.ui.screens.add_group.AddGroupScreen
 import com.nqproject.MoneyApp.ui.screens.auth.registration.RegistrationScreen
+import com.nqproject.MoneyApp.ui.screens.expense_list.ExpenseListScreen
 
 sealed class MainNavigationScreen(
     val route: String,
@@ -29,6 +30,13 @@ sealed class MainNavigationScreen(
         fun createRoute(group: Group): String {
             val json = Gson().toJson(group)
             return "group-details/$json"
+        }
+    }
+
+    object ExpenseList: MainNavigationScreen("group-expenses/{group}") {
+        fun createRoute(group: Group): String {
+            val json = Gson().toJson(group)
+            return "group-expenses/$json"
         }
     }
 }
@@ -61,6 +69,15 @@ fun MainNavigation() {
             val jsonGroup = backStackEntry.arguments?.getString("group")!!
             val group = Gson().fromJson(jsonGroup, Group::class.java)
             GroupDetailsScreen(navController, group)
+        }
+
+        composable(
+            route = MainNavigationScreen.ExpenseList.route,
+            arguments = listOf(navArgument("group") { type = NavType.StringType }),
+        ) { backStackEntry ->
+            val jsonGroup = backStackEntry.arguments?.getString("group")!!
+            val group = Gson().fromJson(jsonGroup, Group::class.java)
+            ExpenseListScreen(navController, group)
         }
 
         composable(

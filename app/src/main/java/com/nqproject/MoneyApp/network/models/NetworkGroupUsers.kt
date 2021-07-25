@@ -1,6 +1,6 @@
 package com.nqproject.MoneyApp.network.models
 
 data class NetworkGroupUsersResponse (
-    val username: String?,
+    val user: NetworkUser?,
     val balance: Double?
 )
