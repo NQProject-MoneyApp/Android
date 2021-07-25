@@ -33,4 +33,18 @@ class GroupsListViewModel: ViewModel() {
 
         return result
     }
+
+    suspend fun join(code: String): SimpleResult<String> {
+        val result = GroupRepository.join(code)
+
+        return when(result) {
+            is SimpleResult.Error -> SimpleResult.Error(result.error)
+            is SimpleResult.Success -> {
+                viewModelScope.launch {
+                    fetchGroups()
+                }
+                SimpleResult.Success("Success")
+            }
+        }
+    }
 }

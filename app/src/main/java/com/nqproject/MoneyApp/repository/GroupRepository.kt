@@ -51,4 +51,26 @@ object GroupRepository {
                 //TODO: Parse if not null
         }
     }
+
+    suspend fun generateCode(groupId: Int): SimpleResult<String> {
+        val result = withContext(Dispatchers.IO) {
+            MoneyAppClient.groupCode(groupId)
+        }
+
+        return when(result) {
+            is SimpleResult.Error -> SimpleResult.Error(result.error)
+            is SimpleResult.Success -> SimpleResult.Success(result.data.code)
+        }
+    }
+
+    suspend fun join(code: String): SimpleResult<String> {
+        val result = withContext(Dispatchers.IO) {
+            MoneyAppClient.joinToGroup(code)
+        }
+
+        return when(result) {
+            is SimpleResult.Error -> SimpleResult.Error(result.error)
+            is SimpleResult.Success -> SimpleResult.Success("Success")
+        }
+    }
 }

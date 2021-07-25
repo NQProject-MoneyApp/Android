@@ -1,10 +1,7 @@
 package com.nqproject.MoneyApp.network
 
 import com.nqproject.MoneyApp.network.models.*
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface MoneyAppApi {
 
@@ -25,4 +22,10 @@ interface MoneyAppApi {
 
     @GET("/api/{id}/expenses/")
     suspend fun groupExpenses(@Path("id") id: Int): List<NetworkExpensesResponse>
+
+    @POST("/api/group-codes/")
+    suspend fun groupCode(@Body request: NetworkGroupCodeRequest): NetworkGroupCodeResponse
+
+    @PUT("/api/join/{code}/")
+    suspend fun joinToGroup(@Path("code") code: String)
 }

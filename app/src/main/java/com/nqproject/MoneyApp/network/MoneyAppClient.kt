@@ -112,4 +112,24 @@ object MoneyAppClient {
             SimpleResult.Error("Unknown error")
         }
     }
+
+    suspend fun groupCode(groupId: Int): SimpleResult<NetworkGroupCodeResponse> {
+        return try {
+            val result = client.groupCode(NetworkGroupCodeRequest(groupId))
+            SimpleResult.Success(result)
+        } catch(e: HttpException) {
+            Log.e(Config.MAIN_TAG, "Failed to fetch group code", e)
+            SimpleResult.Error("Unknown error")
+        }
+    }
+
+    suspend fun joinToGroup(code: String): SimpleResult<Boolean> {
+        return try {
+            client.joinToGroup(code)
+            SimpleResult.Success(true)
+        } catch(e: HttpException) {
+            Log.e(Config.MAIN_TAG, "Failed to join to group", e)
+            SimpleResult.Error("Unknown error")
+        }
+    }
 }

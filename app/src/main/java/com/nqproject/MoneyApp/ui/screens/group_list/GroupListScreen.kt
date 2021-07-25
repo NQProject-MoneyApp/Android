@@ -4,12 +4,12 @@ import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -23,6 +23,8 @@ import com.nqproject.MoneyApp.ui.screens.group_list.GroupListComponent
 import com.nqproject.MoneyApp.ui.screens.group_list.GroupListHeader
 import com.nqproject.MoneyApp.ui.screens.group_list.GroupsListViewModel
 import kotlinx.coroutines.launch
+import androidx.compose.runtime.livedata.observeAsState
+import com.nqproject.MoneyApp.ui.screens.group_list.JoinAlertComponent
 
 @Composable
 fun GroupListScreen(navController: NavController) {
@@ -32,6 +34,9 @@ fun GroupListScreen(navController: NavController) {
     val groupsList = viewModel.groupsList.observeAsState(emptyList()).value
     val loading = viewModel.loading.observeAsState(false).value
     val scrollState = rememberScrollState()
+    // TODO move to view model?
+    var showJoinAlert by remember { mutableStateOf(false) }
+
     GroupListHeader(didPressUserButton = {
         Log.d(Config.MAIN_TAG, "didPressUserButton")
 
@@ -39,7 +44,21 @@ fun GroupListScreen(navController: NavController) {
         Log.d(Config.MAIN_TAG, "didPressAddGroup")
         navController.navigate(MainNavigationScreen.AddGroups.route)
 
+    },didPressJoinGroup = {
+        Log.d(Config.MAIN_TAG, "didPressJoinGroup")
+        showJoinAlert = true
+
     }, body = {
+
+        if (showJoinAlert) {
+            JoinAlertComponent(onClose = { showJoinAlert = false }) {
+                Log.d(Config.MAIN_TAG, "tryJoinToGroup")
+                showJoinAlert = false
+                coroutineScope.launch {
+                    viewModel.join(it)
+                }
+            }
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize()

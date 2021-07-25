@@ -4,9 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nqproject.MoneyApp.network.SimpleResult
-import com.nqproject.MoneyApp.repository.Expense
-import com.nqproject.MoneyApp.repository.ExpenseRepository
-import com.nqproject.MoneyApp.repository.User
 import com.nqproject.MoneyApp.repository.GroupRepository
 
 class GroupDetailsViewModel: ViewModel() {
@@ -21,5 +18,9 @@ class GroupDetailsViewModel: ViewModel() {
         }
 
         return result
+    }
+
+    suspend fun fetchGroupCode(groupId: Int): SimpleResult<String> {
+        return GroupRepository.generateCode(groupId)
     }
 }
