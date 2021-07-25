@@ -6,6 +6,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.material.Text
 import androidx.compose.ui.graphics.Color
+import java.util.*
 
 @Composable
 fun GroupBalanceComponent(userBalance: UserBalance) {
@@ -16,7 +17,7 @@ fun GroupBalanceComponent(userBalance: UserBalance) {
             text = userBalance.name,
             color = Color.White
         )
-        Text(userBalance.balance.toString(),
+        Text(String.format(Locale.US, "%.2f", userBalance.balance),
             color = Color.White
         )
     }

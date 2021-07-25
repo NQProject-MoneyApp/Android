@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun Header(title: String, leftIcon: @Composable () -> Unit, rightIcon: @Composable () -> Unit, body: @Composable () -> Unit) {
     Column() {
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(32.dp))
         Row(horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
             Spacer(modifier = Modifier.width(10.dp))
             leftIcon()
@@ -20,7 +20,7 @@ fun Header(title: String, leftIcon: @Composable () -> Unit, rightIcon: @Composab
             rightIcon()
             Spacer(modifier = Modifier.width(10.dp))
         }
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         body()
     }
 }

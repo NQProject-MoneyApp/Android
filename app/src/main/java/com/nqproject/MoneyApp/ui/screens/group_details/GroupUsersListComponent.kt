@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -19,6 +20,7 @@ import com.nqproject.MoneyApp.repository.User
 import com.nqproject.MoneyApp.ui.navigation.MainNavigationScreen
 import com.nqproject.MoneyApp.ui.screens.group_list.GroupsListViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 
 @Composable
 fun GroupUsersListComponent(navController: NavController, userBalanceList: List<UserBalance>, group: Group, didPressAllExpenses: (Group) -> Unit) {
@@ -28,17 +30,28 @@ fun GroupUsersListComponent(navController: NavController, userBalanceList: List<
         shape = RoundedCornerShape(15),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(16.dp)
+                .padding(32.dp)
         ) {
+            Row {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = "Members",
+                    color = MaterialTheme.colors.primary
+                )
+                Text(
+                    text = "Balance",
+                    color = MaterialTheme.colors.primary
+                )
+            }
             userBalanceList.forEach {
                 GroupBalanceComponent(it)
             }
+            Spacer(modifier = Modifier.height(20.dp))
             TextButton(onClick = {
                 didPressAllExpenses(group)
             }) {

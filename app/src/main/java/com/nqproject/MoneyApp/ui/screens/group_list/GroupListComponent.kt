@@ -18,6 +18,7 @@ import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.repository.Group
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.*
 
 
 @Composable
@@ -30,16 +31,14 @@ fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
         shape = RoundedCornerShape(15),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
             .clickable { didPressComponent(group) }
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(16.dp)
+                .padding(24.dp)
         ) {
-            Spacer(modifier = Modifier.height(12.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
             ) {
@@ -54,9 +53,9 @@ fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
                 Column(modifier = Modifier
                     .weight(1f)
                     .padding(8.dp)) {
-                    Text(text = group.name, style = MaterialTheme.typography.h5, color= Color.White)
+                    Text(text = group.name, style = MaterialTheme.typography.h4, color= Color.White)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "$ - ${group.userBalance}", style = MaterialTheme.typography.subtitle2, color= Color.White)
+                    Text(text = "$ ${String.format(Locale.US, "%.2f", group.userBalance)}", style = MaterialTheme.typography.subtitle2, color= Color.White)
                 }
                 Column(
                     verticalArrangement = Arrangement.SpaceEvenly,
