@@ -51,15 +51,15 @@ fun MainNavigation() {
     NavHost(navController, startDestination = startDestination) {
 
         composable(route = MainNavigationScreen.LoginScreen.route) {
-            LoginScreen(navController)
+//            LoginScreen()
         }
 
         composable(route = MainNavigationScreen.RegistrationScreen.route) {
-            RegistrationScreen(navController)
+//            RegistrationScreen(navController)
         }
 
         composable(route = MainNavigationScreen.Groups.route) {
-            GroupListScreen(navController)
+            GroupListScreen()
         }
 
         composable(

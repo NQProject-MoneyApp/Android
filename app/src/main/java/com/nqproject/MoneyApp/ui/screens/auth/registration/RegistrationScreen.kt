@@ -29,7 +29,9 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun RegistrationScreen(navController: NavHostController) {
+fun RegistrationScreen(
+    onLoginNavigate: () -> Unit
+) {
 
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -54,7 +56,7 @@ fun RegistrationScreen(navController: NavHostController) {
 
                 when(result) {
                     is RegistrationResult.Success -> {
-                        navController.navigate(MainNavigationScreen.LoginScreen.route)
+//                        navController.navigate(MainNavigationScreen.LoginScreen.route)
                     }
                     is RegistrationResult.Failed -> {
                         Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
@@ -68,7 +70,8 @@ fun RegistrationScreen(navController: NavHostController) {
             // TODO
             // block back button?
             // replace all screens?
-            navController.navigate(MainNavigationScreen.LoginScreen.route)
+//            navController.navigate(MainNavigationScreen.LoginScreen.route)
+            onLoginNavigate()
         }
     }
 }

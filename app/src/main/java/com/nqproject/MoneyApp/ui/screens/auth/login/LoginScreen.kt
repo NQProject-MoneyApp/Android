@@ -12,8 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
-import com.nqproject.MoneyApp.ui.navigation.MainNavigationScreen
 import com.nqproject.MoneyApp.ui.screens.auth.login.LoginViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.livedata.observeAsState
@@ -23,7 +21,10 @@ import com.nqproject.MoneyApp.ui.screens.auth.AuthInputFields
 import com.nqproject.MoneyApp.ui.screens.auth.BottomOption
 
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(
+    onRegisterNavigate: () -> Unit,
+    onLoggedInNavigate: () -> Unit,
+) {
 
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -47,9 +48,10 @@ fun LoginScreen(navController: NavHostController) {
 
                 when(result) {
                     is LoginResult.Success -> {
-                        navController.navigate(MainNavigationScreen.Groups.route) {
-                            popUpTo(MainNavigationScreen.LoginScreen.route) { inclusive = true }
-                        }
+//                        navController.navigate(MainNavigationScreen.Groups.route) {
+//                            popUpTo(MainNavigationScreen.LoginScreen.route) { inclusive = true }
+//                        }
+                        onLoggedInNavigate()
                     }
                     is LoginResult.Failed -> {
                         Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
@@ -63,7 +65,7 @@ fun LoginScreen(navController: NavHostController) {
             // Action
         }
         BottomOption(text = "No account yet?", buttonText = "Register") {
-            navController.navigate(MainNavigationScreen.RegistrationScreen.route)
+            onRegisterNavigate()
         }
 
     }
