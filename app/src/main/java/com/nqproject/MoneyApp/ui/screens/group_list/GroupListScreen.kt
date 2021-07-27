@@ -27,7 +27,11 @@ import androidx.compose.runtime.livedata.observeAsState
 import com.nqproject.MoneyApp.ui.screens.group_list.JoinAlertComponent
 
 @Composable
-fun GroupListScreen() {
+fun GroupListScreen(
+    onAddGroupNavigate: () -> Unit,
+    onGroupDetailsNavigate: (group: Group) -> Unit,
+    onLoginNavigate: () -> Unit,
+) {
 
     val viewModel = viewModel<GroupsListViewModel>()
     val coroutineScope = rememberCoroutineScope()
@@ -37,65 +41,70 @@ fun GroupListScreen() {
     // TODO move to view model?
     var showJoinAlert by remember { mutableStateOf(false) }
 
-    GroupListHeader(didPressUserButton = {
-        Log.d(Config.MAIN_TAG, "didPressUserButton")
+    GroupListHeader(
+        didPressUserButton = {
+            Log.d(Config.MAIN_TAG, "didPressUserButton")
 
-    }, didPressAddGroup = {
-        Log.d(Config.MAIN_TAG, "didPressAddGroup")
-//        navController.navigate(MainNavigationScreen.AddGroups.route)
+        },
+        didPressAddGroup = {
+            Log.d(Config.MAIN_TAG, "didPressAddGroup")
+            onAddGroupNavigate()
 
-    },didPressJoinGroup = {
-        Log.d(Config.MAIN_TAG, "didPressJoinGroup")
-        showJoinAlert = true
+        },
+        didPressJoinGroup = {
+            Log.d(Config.MAIN_TAG, "didPressJoinGroup")
+            showJoinAlert = true
 
-    }, body = {
+        },
+        body = {
 
-        if (showJoinAlert) {
-            JoinAlertComponent(onClose = { showJoinAlert = false }) {
-                Log.d(Config.MAIN_TAG, "tryJoinToGroup")
-                showJoinAlert = false
-                coroutineScope.launch {
-                    viewModel.join(it)
-                }
-            }
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(scrollState)
-                .padding(32.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Row() {
-                Button(onClick = {
+            if (showJoinAlert) {
+                JoinAlertComponent(onClose = { showJoinAlert = false }) {
+                    Log.d(Config.MAIN_TAG, "tryJoinToGroup")
+                    showJoinAlert = false
                     coroutineScope.launch {
-                        viewModel.fetchGroups()
+                        viewModel.join(it)
                     }
-                }) { Text("Fetch groups") }
-                Spacer(modifier = Modifier.width(20.dp))
-                Button(onClick = {
-                    AuthenticationManager.token = null
-//                    navController.navigate(MainNavigationScreen.LoginScreen.route) {
-//                        popUpTo(MainNavigationScreen.Groups.route) { inclusive = true }
-//                    }
-                }) { Text("Logout") }
+                }
             }
-            
-            if (loading) {
-                Spacer(modifier = Modifier.height(32.dp))
-                CircularProgressIndicator()
-            } else {
-                Spacer(modifier = Modifier.height(32.dp))
-                groupsList.forEach {
-                    GroupListComponent(it,
-                    didPressComponent = {
-//                        navController.navigate(MainNavigationScreen.GroupDetails.createRoute(group = it))
-                    })
-                    Spacer(modifier = Modifier.height(20.dp))
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+                    .padding(32.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Row() {
+                    Button(onClick = {
+                        coroutineScope.launch {
+                            viewModel.fetchGroups()
+                        }
+                    }) { Text("Fetch groups") }
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Button(onClick = {
+                        AuthenticationManager.token = null
+                        onLoginNavigate()
+                    }) { Text("Logout") }
+                }
+
+                if (loading) {
+                    Spacer(modifier = Modifier.height(32.dp))
+                    CircularProgressIndicator()
+                } else {
+                    Spacer(modifier = Modifier.height(32.dp))
+                    groupsList.forEach {
+                        GroupListComponent(
+                            it,
+                            didPressComponent = {
+                                onGroupDetailsNavigate(it)
+                            },
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                    }
                 }
             }
         }
-    })
+    )
 }
 

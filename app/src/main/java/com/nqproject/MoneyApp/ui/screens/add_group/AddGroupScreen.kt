@@ -16,7 +16,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.network.SimpleResult
@@ -25,17 +24,18 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun AddGroupScreen(navController: NavController) {
+fun AddGroupScreen(
+    onBackNavigate: () -> Unit
+) {
 
     val viewModel = viewModel<AddGroupViewModel>()
     val coroutineScope = rememberCoroutineScope()
     val loading = viewModel.loading.observeAsState(false).value
     val context = LocalContext.current
 
-    AddGroupHeader(didPressBackButton = {
-        navController.popBackStack()
-
-    }, didPressMenuButton = {
+    AddGroupHeader(
+        didPressBackButton = onBackNavigate,
+        didPressMenuButton = {
         Log.d(Config.MAIN_TAG, "didPressMenuButton")
 
     }, body = {
@@ -56,7 +56,7 @@ fun AddGroupScreen(navController: NavController) {
                             is SimpleResult.Error -> Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
                             is SimpleResult.Success -> {
                                 SimpleResult.Success("Success")
-                                navController.popBackStack()
+                                onBackNavigate()
                             }
                         }
                     }

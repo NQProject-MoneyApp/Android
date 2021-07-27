@@ -39,7 +39,11 @@ import com.nqproject.MoneyApp.ui.screens.group_details.GroupDetailsViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun GroupDetailsScreen(navController: NavController, group: Group) {
+fun GroupDetailsScreen(
+    group: Group,
+    onExpensesListNavigate: () -> Unit,
+    onBackNavigate: () -> Unit
+) {
 
     val coroutineScope = rememberCoroutineScope()
     val viewModel = viewModel<GroupDetailsViewModel>()
@@ -53,7 +57,7 @@ fun GroupDetailsScreen(navController: NavController, group: Group) {
     GroupDetailsHeader(
         didPressBackButton = {
             Log.d(Config.MAIN_TAG, "didPressBackButton")
-            navController.popBackStack()
+            onBackNavigate()
         },
         didPressGenerateCode = {
             Log.d(Config.MAIN_TAG, "didPressGenerateCode")
@@ -154,9 +158,11 @@ fun GroupDetailsScreen(navController: NavController, group: Group) {
                     Text("Show group users")
                 }
                 Spacer(modifier = Modifier.height(20.dp))
-                GroupUsersListComponent(navController, userBalanceList = groupUsersList, group, didPressAllExpenses = {
-                    navController.navigate(MainNavigationScreen.ExpenseList.createRoute(group = it))
-                })
+                GroupUsersListComponent(
+                    userBalanceList = groupUsersList,
+                    group = group,
+                    didPressAllExpenses = { onExpensesListNavigate() }
+                )
             }
         },
         title = group.name

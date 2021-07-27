@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.ui.screens.GroupListScreen
 import com.nqproject.MoneyApp.ui.theme.MoneyAppTheme
 
@@ -19,7 +21,21 @@ class GroupListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 MoneyAppTheme {
-                    GroupListScreen()
+                    GroupListScreen(
+                        onAddGroupNavigate = {
+                            val action = GroupListFragmentDirections
+                                .actionGroupListFragmentToAddGroupFragment()
+                            findNavController().navigate(action)
+                        },
+                        onGroupDetailsNavigate = { group ->
+                            val action = GroupListFragmentDirections
+                                .actionGroupListFragmentToGroupDetailsFragment(group)
+                            findNavController().navigate(action)
+                        },
+                        onLoginNavigate = {
+                            findNavController().navigate(R.id.action_global_loginFragment)
+                        }
+                    )
                 }
             }
         }

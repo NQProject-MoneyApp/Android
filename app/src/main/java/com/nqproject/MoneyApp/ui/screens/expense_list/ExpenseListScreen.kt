@@ -23,7 +23,10 @@ import com.nqproject.MoneyApp.repository.Group
 import kotlinx.coroutines.launch
 
 @Composable
-fun ExpenseListScreen(navController: NavController, group: Group) {
+fun ExpenseListScreen(
+    group: Group,
+    onBackNavigate: () -> Unit,
+) {
 
     val coroutineScope = rememberCoroutineScope()
     val viewModel = viewModel<ExpenseListViewModel>()
@@ -33,7 +36,7 @@ fun ExpenseListScreen(navController: NavController, group: Group) {
     ExpenseListHeader(
         didPressBackButton = {
             Log.d(Config.MAIN_TAG, "didPressBackButton")
-            navController.popBackStack()
+            onBackNavigate()
         },
         didPressOptions = {
             Log.d(Config.MAIN_TAG, "didPressOptions")

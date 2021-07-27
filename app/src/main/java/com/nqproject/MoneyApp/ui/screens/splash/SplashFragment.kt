@@ -21,7 +21,6 @@ class SplashFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 MoneyAppTheme {
-                    Text("Loading...")
                 }
             }
         }
