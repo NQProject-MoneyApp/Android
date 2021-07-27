@@ -86,7 +86,7 @@ fun GroupDetailsScreen(navController: NavController, group: Group) {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Image(
-                    painterResource(id = R.drawable.ic_burger),
+                    painterResource(id = group.icon),
                     modifier = Modifier
                         .size(132.dp)
                         .padding(8.dp),

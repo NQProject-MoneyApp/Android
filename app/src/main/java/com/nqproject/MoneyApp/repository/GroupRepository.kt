@@ -1,5 +1,7 @@
 package com.nqproject.MoneyApp.repository
 
+import android.util.Log
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.network.MoneyAppClient
 import com.nqproject.MoneyApp.network.SimpleResult
@@ -21,8 +23,8 @@ object GroupRepository {
                     id = it.pk!!,
                     name = it.name!!,
                     totalCost = it.total_cost!!,
-                    icon = R.drawable.ic_burger,
-                    isFavourite = it.is_favourite!!,
+                    icon = MoneyAppIcon.from(it.icon!!).icon(),
+                    isFavourite = false,
                     userBalance = it.user_balance!!,
                     createDate = it.create_date!!) })
         }

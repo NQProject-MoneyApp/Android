@@ -132,4 +132,13 @@ object MoneyAppClient {
             SimpleResult.Error("Unknown error")
         }
     }
+
+    suspend fun icons(): SimpleResult<List<Int>> {
+        return try {
+            SimpleResult.Success(client.icons().icons)
+        } catch(e: HttpException) {
+            Log.e(Config.MAIN_TAG, "Failed to fetch icons", e)
+            SimpleResult.Error("Unknown error")
+        }
+    }
 }
