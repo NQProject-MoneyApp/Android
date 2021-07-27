@@ -8,19 +8,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.nqproject.MoneyApp.repository.Group
-import com.nqproject.MoneyApp.repository.User
-import com.nqproject.MoneyApp.ui.navigation.MainNavigationScreen
-import com.nqproject.MoneyApp.ui.screens.group_list.GroupsListViewModel
-import kotlinx.coroutines.launch
-import java.util.*
 
 @Composable
 fun GroupUsersListComponent(userBalanceList: List<UserBalance>, group: Group, didPressAllExpenses: (Group) -> Unit) {

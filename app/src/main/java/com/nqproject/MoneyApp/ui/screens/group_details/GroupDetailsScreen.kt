@@ -22,16 +22,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.network.SimpleResult
-import com.nqproject.MoneyApp.ui.navigation.MainNavigationScreen
-import com.nqproject.MoneyApp.ui.screens.auth.login.LoginResult
 import com.nqproject.MoneyApp.ui.screens.group_details.CodeAlertComponent
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupUsersListComponent
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupDetailsHeader
