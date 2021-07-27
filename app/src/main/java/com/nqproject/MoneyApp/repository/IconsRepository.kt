@@ -5,7 +5,7 @@ import com.nqproject.MoneyApp.network.SimpleResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class IconsRepository {
+object IconsRepository {
 
     suspend fun icons(): SimpleResult<List<MoneyAppIcon>> {
         val result = withContext(Dispatchers.IO) {

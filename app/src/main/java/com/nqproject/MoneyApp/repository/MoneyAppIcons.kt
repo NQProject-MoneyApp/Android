@@ -1,18 +1,16 @@
 package com.nqproject.MoneyApp.repository
 
-import android.util.Log
-import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
 
+enum class MoneyAppIcon(val id: Int) {
+    Hamburger(1),
+    BeerHamburger(2),
+    Bowl(3),
+    Drinks(4),
+    Coffee(5),
+    Beers(6),
+    Kite(7);
 
-enum class MoneyAppIcon {
-    Hamburger,
-    BeerHamburger,
-    Bowl,
-    Drinks,
-    Coffee,
-    Beers,
-    Kite;
 
     fun icon(): Int {
        return when (this) {
@@ -28,19 +26,7 @@ enum class MoneyAppIcon {
 
     companion object {
         fun from(id: Int): MoneyAppIcon {
-            return when (id) {
-                1 -> Hamburger
-                2 -> BeerHamburger
-                3 -> Bowl
-                4 -> Drinks
-                5 -> Coffee
-                6 -> Beers
-                7 -> Kite
-                else -> {
-                    Log.d(Config.MAIN_TAG, "Error icon not found")
-                    Hamburger
-                }
-            }
+            return values().firstOrNull { it.id == id} ?: Hamburger
         }
     }
 }

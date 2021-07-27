@@ -79,9 +79,9 @@ object MoneyAppClient {
         }
     }
 
-    suspend fun addGroup(name: String): SimpleResult<NetworkGroupsResponse> {
+    suspend fun addGroup(name: String, icon: Int): SimpleResult<NetworkGroupsResponse> {
         return try {
-            val result = client.addGroup(NetworkAddGroupRequest(name=name))
+            val result = client.addGroup(NetworkAddGroupRequest(name=name, icon=icon))
 
             SimpleResult.Success(result)
 
