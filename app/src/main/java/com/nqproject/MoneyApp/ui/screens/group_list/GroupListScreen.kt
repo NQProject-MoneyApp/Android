@@ -30,7 +30,11 @@ import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.ui.screens.group_list.JoinAlertComponent
 
 @Composable
-fun GroupListScreen(navController: NavController) {
+fun GroupListScreen(
+    onAddGroupNavigate: () -> Unit,
+    onGroupDetailsNavigate: (group: Group) -> Unit,
+    onLoginNavigate: () -> Unit,
+) {
 
     val viewModel = viewModel<GroupsListViewModel>()
     val coroutineScope = rememberCoroutineScope()
@@ -41,18 +45,22 @@ fun GroupListScreen(navController: NavController) {
     // TODO move to view model?
     var showJoinAlert by remember { mutableStateOf(false) }
 
-    GroupListHeader(didPressUserButton = {
-        Log.d(Config.MAIN_TAG, "didPressUserButton")
+    GroupListHeader(
+        didPressUserButton = {
+            Log.d(Config.MAIN_TAG, "didPressUserButton")
 
-    }, didPressAddGroup = {
-        Log.d(Config.MAIN_TAG, "didPressAddGroup")
-        navController.navigate(MainNavigationScreen.AddGroups.route)
+        },
+        didPressAddGroup = {
+            Log.d(Config.MAIN_TAG, "didPressAddGroup")
+            onAddGroupNavigate()
 
-    },didPressJoinGroup = {
-        Log.d(Config.MAIN_TAG, "didPressJoinGroup")
-        showJoinAlert = true
+        },
+        didPressJoinGroup = {
+            Log.d(Config.MAIN_TAG, "didPressJoinGroup")
+            showJoinAlert = true
 
-    }, body = {
+        },
+        body = {
 
         if (showJoinAlert) {
             JoinAlertComponent(onClose = { showJoinAlert = false }) {
@@ -84,9 +92,7 @@ fun GroupListScreen(navController: NavController) {
                 Spacer(modifier = Modifier.width(20.dp))
                 Button(onClick = {
                     AuthenticationManager.token = null
-                    navController.navigate(MainNavigationScreen.LoginScreen.route) {
-                        popUpTo(MainNavigationScreen.Groups.route) { inclusive = true }
-                    }
+                    onLoginNavigate()
                 }) { Text("Logout") }
             }
             
@@ -98,7 +104,7 @@ fun GroupListScreen(navController: NavController) {
                 groupsList.forEach {
                     GroupListComponent(it,
                     didPressComponent = {
-                        navController.navigate(MainNavigationScreen.GroupDetails.createRoute(group = it))
+                        onGroupDetailsNavigate(it)
                     })
                     Spacer(modifier = Modifier.height(20.dp))
                 }

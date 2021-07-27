@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/splashFragment">
+
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/loginFragment"
+        app:popUpToInclusive="true" />
+
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.nqproject.MoneyApp.ui.screens.auth.login.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_groupListFragment"
+            app:destination="@id/groupListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.nqproject.MoneyApp.ui.screens.auth.registration.RegistrationFragment"
+        android:label="RegistrationFragment" >
+        <action
+            android:id="@+id/action_registrationFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupListFragment"
+        android:name="com.nqproject.MoneyApp.ui.screens.group_list.GroupListFragment"
+        android:label="GroupListFragment" >
+        <action
+            android:id="@+id/action_groupListFragment_to_addGroupFragment"
+            app:destination="@id/addGroupFragment" />
+        <action
+            android:id="@+id/action_groupListFragment_to_groupDetailsFragment"
+            app:destination="@id/groupDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.nqproject.MoneyApp.ui.screens.splash.SplashFragment"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_groupListFragment"
+            app:destination="@id/groupListFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGroupFragment"
+        android:name="com.nqproject.MoneyApp.ui.screens.add_group.AddGroupFragment"
+        android:label="AddGroupFragment" />
+    <fragment
+        android:id="@+id/groupDetailsFragment"
+        android:name="com.nqproject.MoneyApp.ui.screens.group_details.GroupDetailsFragment"
+        android:label="GroupDetailsFragment" >
+        <argument
+            android:name="group"
+            app:argType="com.nqproject.MoneyApp.repository.Group" />
+        <action
+            android:id="@+id/action_groupDetailsFragment_to_expenseListFragment"
+            app:destination="@id/expenseListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/expenseListFragment"
+        android:name="com.nqproject.MoneyApp.ui.screens.expense_list.ExpenseListFragment"
+        android:label="ExpenseListFragment" >
+        <argument
+            android:name="group"
+            app:argType="com.nqproject.MoneyApp.repository.Group" />
+    </fragment>
+</navigation>

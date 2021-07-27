@@ -53,7 +53,7 @@ fun AuthInputFields(usernameState: MutableState<String>, passwordState: MutableS
             backgroundColor = MaterialTheme.colors.surface,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
+            disabledIndicatorColor = Color.Transparent,
         ),
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = KeyboardType.Email,
@@ -81,7 +81,7 @@ fun AuthInputFields(usernameState: MutableState<String>, passwordState: MutableS
                 backgroundColor = MaterialTheme.colors.surface,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
+                disabledIndicatorColor = Color.Transparent,
             )
         )
     }
@@ -109,7 +109,7 @@ fun AuthInputFields(usernameState: MutableState<String>, passwordState: MutableS
             backgroundColor = MaterialTheme.colors.surface,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
+            disabledIndicatorColor = Color.Transparent,
         ),
         visualTransformation = PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions.Default.copy(

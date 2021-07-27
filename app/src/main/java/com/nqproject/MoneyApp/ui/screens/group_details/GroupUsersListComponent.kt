@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 @Composable
-fun GroupUsersListComponent(navController: NavController, userBalanceList: List<UserBalance>, group: Group, didPressAllExpenses: (Group) -> Unit) {
+fun GroupUsersListComponent(userBalanceList: List<UserBalance>, group: Group, didPressAllExpenses: (Group) -> Unit) {
 
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
