@@ -8,8 +8,15 @@ import com.nqproject.MoneyApp.repository.GroupRepository
 
 class GroupDetailsViewModel: ViewModel() {
 
+    var initialized = false
+
     private val _groupDetails = MutableLiveData(emptyList<UserBalance>())
     val groupDetails: LiveData<List<UserBalance>> = _groupDetails
+
+    fun init() {
+        if(initialized) return
+        initialized = true
+    }
 
     suspend fun fetchGroupUsers(groupId: Int): SimpleResult<List<UserBalance>> {
         val result = GroupRepository.fetchGroupUsers(groupId)

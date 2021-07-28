@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.MoneyApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
+
         <item name="colorPrimary">@color/yellow_medium</item>
         <item name="colorPrimaryVariant">@color/yellow_dark</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -10,9 +11,12 @@
         <item name="colorSecondaryVariant">@color/orange_dark</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/yellow_medium</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/blackBackground</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/blackBackground</item>
+        <item name="android:windowLightStatusBar">false</item>
         <!-- Customize your theme here. -->
+
+        <item name="android:windowBackground">@color/blackBackground</item>
     </style>
 
     <style name="Theme.MoneyApp.NoActionBar">
