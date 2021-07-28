@@ -33,6 +33,7 @@ import com.nqproject.MoneyApp.ui.screens.group_details.GroupUsersListComponent
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupDetailsHeader
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupDetailsViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 
 @Composable
 fun GroupDetailsScreen(
@@ -105,7 +106,7 @@ fun GroupDetailsScreen(
                         color = Color.White
                     )
                     Text(
-                        text = "100$",
+                        text = "\$${String.format(Locale.US, "%.2f", group.totalCost)}",
                         style = MaterialTheme.typography.h4,
                         color = Color.White
                     )
@@ -121,7 +122,7 @@ fun GroupDetailsScreen(
                         color = Color.White
                     )
                     Text(
-                        text = "+ $50",
+                        text = "\$${String.format(Locale.US, "%.2f", group.userBalance)}",
                         style = MaterialTheme.typography.h4,
                         color = Color.Green
                     )

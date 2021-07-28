@@ -31,7 +31,7 @@ fun GroupUsersListComponent(userBalanceList: List<UserBalance>, group: Group, di
             Row {
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = "Members",
+                    text = "Member",
                     color = MaterialTheme.colors.primary
                 )
                 Text(
