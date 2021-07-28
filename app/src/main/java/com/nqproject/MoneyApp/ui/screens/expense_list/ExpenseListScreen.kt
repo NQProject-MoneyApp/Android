@@ -27,7 +27,8 @@ import kotlinx.coroutines.launch
 fun ExpenseListScreen(
     group: Group,
     onBackNavigate: () -> Unit,
-    onExpenseDetailsNavigate: (expense: Expense) -> Unit
+    onExpenseDetailsNavigate: (expense: Expense) -> Unit,
+    onAddExpenseNavigate: () -> Unit,
 ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -36,12 +37,14 @@ fun ExpenseListScreen(
     val groupExpenses = viewModel.groupExpenses.observeAsState(emptyList()).value
 
     ExpenseListHeader(
+        didPressAddExpense = {
+            Log.d(Config.MAIN_TAG, "didPressAddExpense")
+            onAddExpenseNavigate()
+
+        },
         didPressBackButton = {
             Log.d(Config.MAIN_TAG, "didPressBackButton")
             onBackNavigate()
-        },
-        didPressOptions = {
-            Log.d(Config.MAIN_TAG, "didPressOptions")
         },
         body = {
              Column(

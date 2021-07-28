@@ -78,6 +78,9 @@
         <action
             android:id="@+id/action_groupDetailsFragment_to_expenseListFragment"
             app:destination="@id/expenseListFragment" />
+        <action
+            android:id="@+id/action_groupDetailsFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
     </fragment>
     <fragment
         android:id="@+id/expenseListFragment"
@@ -89,6 +92,9 @@
         <action
             android:id="@+id/action_expenseListFragment_to_expenseDetailsFragment"
             app:destination="@id/expenseDetailsFragment" />
+        <action
+            android:id="@+id/action_expenseListFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
     </fragment>
     <fragment
         android:id="@+id/expenseDetailsFragment"
@@ -97,5 +103,13 @@
         <argument
             android:name="expense"
             app:argType="com.nqproject.MoneyApp.repository.Expense" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="com.nqproject.MoneyApp.ui.screens.add_expense.AddExpenseFragment"
+        android:label="AddExpenseFragment" >
+        <argument
+            android:name="group"
+            app:argType="com.nqproject.MoneyApp.repository.Group" />
     </fragment>
 </navigation>

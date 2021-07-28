@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.nqproject.MoneyApp.ui.screens.GroupDetailsScreen
+import com.nqproject.MoneyApp.ui.screens.expense_list.ExpenseListFragmentDirections
 import com.nqproject.MoneyApp.ui.theme.MoneyAppTheme
 
 class GroupDetailsFragment : Fragment() {
@@ -40,6 +42,11 @@ class GroupDetailsFragment : Fragment() {
                         },
                         onBackNavigate = {
                             requireActivity().onBackPressed()
+                        },
+                        onAddExpenseNavigate = {
+                            val action = GroupDetailsFragmentDirections
+                                .actionGroupDetailsFragmentToAddExpenseFragment(args.group)
+                            findNavController().navigate(action)
                         },
                     )
                 }

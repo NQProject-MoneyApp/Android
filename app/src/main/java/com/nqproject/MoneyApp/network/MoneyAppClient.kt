@@ -86,7 +86,19 @@ object MoneyAppClient {
             SimpleResult.Success(result)
 
         } catch(e: HttpException) {
-            Log.e(Config.MAIN_TAG, "Failed to fetch groups", e)
+            Log.e(Config.MAIN_TAG, "Failed to add groups", e)
+            SimpleResult.Error("Unknown error")
+        }
+    }
+
+    suspend fun addExpense(groupId: Int, name: String, amount: Float): SimpleResult<NetworkExpensesResponse> {
+        return try {
+            val result = client.addExpense(groupId, NetworkAddExpenseRequest(name=name, amount=amount))
+
+            SimpleResult.Success(result)
+
+        } catch(e: HttpException) {
+            Log.e(Config.MAIN_TAG, "Failed to add expense", e)
             SimpleResult.Error("Unknown error")
         }
     }

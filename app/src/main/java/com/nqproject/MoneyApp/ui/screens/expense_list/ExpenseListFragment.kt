@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.nqproject.MoneyApp.ui.screens.LoginScreen
 import com.nqproject.MoneyApp.ui.screens.auth.login.LoginFragmentDirections
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupDetailsFragmentArgs
+import com.nqproject.MoneyApp.ui.screens.group_list.GroupListFragmentDirections
 import com.nqproject.MoneyApp.ui.theme.MoneyAppTheme
 
 
@@ -28,6 +29,11 @@ class ExpenseListFragment : Fragment() {
                 MoneyAppTheme {
                     ExpenseListScreen(
                         group = args.group,
+                        onAddExpenseNavigate = {
+                            val action = ExpenseListFragmentDirections
+                                .actionExpenseListFragmentToAddExpenseFragment(args.group)
+                            findNavController().navigate(action)
+                        },
                         onBackNavigate = {
                             requireActivity().onBackPressed()
                         },

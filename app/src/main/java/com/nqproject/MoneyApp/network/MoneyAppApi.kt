@@ -17,6 +17,9 @@ interface MoneyAppApi {
     @POST("api/groups/")
     suspend fun addGroup(@Body request: NetworkAddGroupRequest): NetworkGroupsResponse
 
+    @POST("/api/{id}/expenses/")
+    suspend fun addExpense(@Path("id") id: Int, @Body request: NetworkAddExpenseRequest): NetworkExpensesResponse
+
     @GET("/api/group/{id}/users/")
     suspend fun groupUsers(@Path("id") id: Int): List<NetworkGroupUsersResponse>
 

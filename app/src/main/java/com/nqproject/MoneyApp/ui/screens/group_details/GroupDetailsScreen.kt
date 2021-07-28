@@ -39,7 +39,8 @@ import java.util.*
 fun GroupDetailsScreen(
     group: Group,
     onExpensesListNavigate: () -> Unit,
-    onBackNavigate: () -> Unit
+    onBackNavigate: () -> Unit,
+    onAddExpenseNavigate: () -> Unit
 ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -138,6 +139,7 @@ fun GroupDetailsScreen(
                 Spacer(modifier = Modifier.height(32.dp))
                 Button(onClick = {
                     Log.d(Config.MAIN_TAG, "new expense")
+                    onAddExpenseNavigate()
                 },
                     modifier = Modifier.fillMaxWidth(),
                     shape = AbsoluteRoundedCornerShape(15)
