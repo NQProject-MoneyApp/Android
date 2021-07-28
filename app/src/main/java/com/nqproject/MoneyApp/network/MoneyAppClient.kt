@@ -21,7 +21,7 @@ sealed class SimpleResult<T> {
 object MoneyAppClient {
 
     private val client = Retrofit.Builder()
-        .baseUrl("https://money-app-nqproject.herokuapp.com")
+        .baseUrl("https://money-app-nqproject-staging.herokuapp.com")
         .addConverterFactory(GsonConverterFactory.create())
         .client(OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.HEADERS })
