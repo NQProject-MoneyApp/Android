@@ -68,12 +68,16 @@ class AppThemeColors(
 
 @Composable
 fun MoneyAppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
-    CompositionLocalProvider(LocalContentColor provides Color.White) {
-        MaterialTheme(
-            colors = AppTheme.colors.toMaterialColors(true),
-            typography = Typography,
-            shapes = Shapes,
-            content = content
-        )
-    }
+//    Surface(color = AppColors.BlackBackground) {
+        CompositionLocalProvider(
+            LocalContentColor provides Color.White,
+        ) {
+            MaterialTheme(
+                colors = AppTheme.colors.toMaterialColors(true),
+                typography = Typography,
+                shapes = Shapes,
+                content = content
+            )
+        }
+//    }
 }
