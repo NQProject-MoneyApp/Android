@@ -13,13 +13,7 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        initSingletons()
 
         setContentView(R.layout.main_activity)
     }
-
-    private fun initSingletons() {
-        SharedPreferencesManager.init(this)
-    }
-
 }
