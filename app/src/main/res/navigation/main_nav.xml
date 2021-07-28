@@ -43,7 +43,11 @@
             app:destination="@id/addGroupFragment" />
         <action
             android:id="@+id/action_groupListFragment_to_groupDetailsFragment"
-            app:destination="@id/groupDetailsFragment" />
+            app:destination="@id/groupDetailsFragment"
+            app:enterAnim="@anim/fade_scale_in"
+            app:exitAnim="@anim/fade_scale_out"
+            app:popEnterAnim="@anim/fade_scale_in"
+            app:popExitAnim="@anim/fade_scale_out" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
