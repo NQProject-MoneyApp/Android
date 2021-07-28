@@ -28,7 +28,6 @@ fun ExpenseListComponent(expense: Expense) {
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
-            //horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .padding(24.dp)
         ) {

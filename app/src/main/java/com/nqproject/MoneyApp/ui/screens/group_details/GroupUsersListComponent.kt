@@ -40,7 +40,7 @@ fun GroupUsersListComponent(navController: NavController, userBalanceList: List<
             Row {
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = "Members",
+                    text = "Member",
                     color = MaterialTheme.colors.primary
                 )
                 Text(
