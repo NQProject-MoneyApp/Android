@@ -40,6 +40,10 @@ fun GroupListScreen(
     var showJoinAlert by remember { mutableStateOf(false) }
 
     GroupListHeader(
+        onLogout = {
+            AuthenticationManager.token = null
+            onLoginNavigate()
+        },
         didPressUserButton = {
             Log.d(Config.MAIN_TAG, "didPressUserButton")
 
@@ -63,7 +67,6 @@ fun GroupListScreen(
                 coroutineScope.launch {
                     val result = viewModel.join(it)
                     if (result is SimpleResult.Error) {
-                        Log.d(Config.MAIN_TAG, "TOAST")
                         Toast.makeText(context, "Error on join to group", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -73,34 +76,21 @@ fun GroupListScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(32.dp),
+                .padding(24.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Row() {
-                Button(onClick = {
-                    coroutineScope.launch {
-                        viewModel.fetchGroups()
-                    }
-                }) { Text("Fetch groups") }
-                Spacer(modifier = Modifier.width(20.dp))
-                Button(onClick = {
-                    AuthenticationManager.token = null
-                    onLoginNavigate()
-                }) { Text("Logout") }
-            }
             
             if (loading) {
                 Spacer(modifier = Modifier.height(32.dp))
                 CircularProgressIndicator()
             } else {
-                Spacer(modifier = Modifier.height(32.dp))
                 groupsList.forEach {
                     GroupListComponent(it,
                     didPressComponent = {
                         onGroupDetailsNavigate(it)
                     })
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(21.dp))
                 }
             }
         }

@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -25,13 +26,15 @@ import java.util.*
 fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
     val icon = if (group.isFavourite) R.drawable.ic_star_select else R.drawable.ic_star
     val dateFormat = SimpleDateFormat("dd-MM-yyy")
-
+    val cardShape = RoundedCornerShape(15)
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
-        shape = RoundedCornerShape(15),
+        shape = cardShape,
         modifier = Modifier
             .fillMaxWidth()
+            .clip(shape = cardShape)
             .clickable { didPressComponent(group) }
+
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceBetween,

@@ -19,6 +19,10 @@ class GroupsListViewModel: ViewModel() {
     val groupsList: LiveData<List<Group>> = _groupsList
 
     init {
+        updateGroups()
+    }
+
+    fun updateGroups() {
         viewModelScope.launch {
             fetchGroups()
         }
@@ -46,7 +50,7 @@ class GroupsListViewModel: ViewModel() {
             }
             is SimpleResult.Success -> {
                 viewModelScope.launch {
-                    fetchGroups()
+                    updateGroups()
                 }
                 SimpleResult.Success("Success")
             }
