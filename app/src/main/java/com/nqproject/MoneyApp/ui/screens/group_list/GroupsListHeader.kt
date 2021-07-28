@@ -16,18 +16,35 @@ import com.nqproject.MoneyApp.ui.screens.Header
 import com.nqproject.MoneyApp.R
 
 @Composable
-fun GroupListHeader(didPressUserButton: () -> Unit, didPressAddGroup: () -> Unit, didPressJoinGroup: () -> Unit, body: @Composable () -> Unit) {
+fun GroupListHeader(didPressUserButton: () -> Unit, didPressAddGroup: () -> Unit, didPressJoinGroup: () -> Unit, onLogout: () -> Unit, body: @Composable () -> Unit) {
 
-    var showMenu by remember { mutableStateOf(false) }
+    var showLeftMenu by remember { mutableStateOf(false) }
+    var showRightMenu by remember { mutableStateOf(false) }
 
     Header(title = "Groups",
         leftIcon = {
-            Image(
-                painterResource(id = R.drawable.ic_user),
-                modifier = Modifier
-                    .clickable { didPressUserButton() },
-                contentDescription = "",
-            )
+            Row() {
+
+                Image(
+                    painterResource(id = R.drawable.ic_user),
+                    modifier = Modifier
+                        .clickable { showLeftMenu = true },
+                    contentDescription = "",
+                )
+
+                DropdownMenu(
+                    expanded = showLeftMenu,
+                    onDismissRequest = { showLeftMenu = false }
+                ) {
+                    DropdownMenuItem(onClick = {
+                        onLogout()
+                        showLeftMenu = false
+                    }) {
+                        Text("Logout", color = MaterialTheme.colors.primary)
+                    }
+                }
+            }
+
     }, rightIcon = {
 
     Row() {
@@ -35,24 +52,23 @@ fun GroupListHeader(didPressUserButton: () -> Unit, didPressAddGroup: () -> Unit
         Image(
             painterResource(id = R.drawable.ic_add),
             modifier = Modifier
-                .clickable { showMenu = !showMenu
-                },
+                .clickable { showRightMenu = !showRightMenu },
             contentDescription = "",
         )
 
         DropdownMenu(
-            expanded = showMenu,
-            onDismissRequest = { showMenu = false }
+            expanded = showRightMenu,
+            onDismissRequest = { showRightMenu = false }
         ) {
             DropdownMenuItem(onClick = {
                 didPressAddGroup()
-                showMenu = false
+                showRightMenu = false
             }) {
                 Text("Add", color = MaterialTheme.colors.primary)
             }
             DropdownMenuItem(onClick = {
                 didPressJoinGroup()
-                showMenu = false
+                showRightMenu = false
             }) {
                 Text("Join", color = MaterialTheme.colors.primary)
             }

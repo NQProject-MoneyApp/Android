@@ -20,7 +20,6 @@ fun Header(title: String, leftIcon: @Composable () -> Unit, rightIcon: @Composab
             rightIcon()
             Spacer(modifier = Modifier.width(10.dp))
         }
-        Spacer(modifier = Modifier.height(16.dp))
         body()
     }
 }

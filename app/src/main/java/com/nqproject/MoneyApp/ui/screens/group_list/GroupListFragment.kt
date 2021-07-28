@@ -6,12 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.findNavController
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.ui.screens.GroupListScreen
+import com.nqproject.MoneyApp.ui.screens.group_details.GroupDetailsViewModel
 import com.nqproject.MoneyApp.ui.theme.MoneyAppTheme
+import androidx.fragment.app.viewModels
 
 class GroupListFragment : Fragment() {
+
+    private val viewModel: GroupsListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +44,11 @@ class GroupListFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateGroups()
     }
 
 }
