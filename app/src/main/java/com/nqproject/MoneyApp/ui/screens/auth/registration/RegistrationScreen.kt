@@ -54,7 +54,7 @@ fun RegistrationScreen(
 
                 when(result) {
                     is RegistrationResult.Success -> {
-//                        navController.navigate(MainNavigationScreen.LoginScreen.route)
+                        onLoginNavigate()
                     }
                     is RegistrationResult.Failed -> {
                         Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
