@@ -6,5 +6,5 @@ data class NetworkGroupCodeResponse (
 )
 
 data class NetworkGroupCodeRequest(
-    val group_id: Int
+    val group: Int
 )
