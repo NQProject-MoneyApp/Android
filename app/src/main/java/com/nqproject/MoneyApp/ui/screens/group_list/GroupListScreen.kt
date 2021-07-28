@@ -66,14 +66,8 @@ fun GroupListScreen(
                 showJoinAlert = false
                 coroutineScope.launch {
                     val result = viewModel.join(it)
-                    when(result) {
-                        is SimpleResult.Success -> {
-                            viewModel.updateGroups()
-                        }
-                        is SimpleResult.Error -> {
-                            Log.d(Config.MAIN_TAG, "TOAST")
-                            Toast.makeText(context, "Error on join to group", Toast.LENGTH_SHORT).show()
-                        }
+                    if (result is SimpleResult.Error) {
+                        Toast.makeText(context, "Error on join to group", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -82,7 +76,7 @@ fun GroupListScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(horizontal = 24.dp, vertical = 24.dp),
+                .padding(24.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

@@ -16,7 +16,12 @@ import com.nqproject.MoneyApp.ui.screens.Header
 import com.nqproject.MoneyApp.R
 
 @Composable
-fun GroupListHeader(didPressUserButton: () -> Unit, didPressAddGroup: () -> Unit, didPressJoinGroup: () -> Unit, onLogout: () -> Unit, body: @Composable () -> Unit) {
+fun GroupListHeader(
+    didPressUserButton: () -> Unit,
+    didPressAddGroup: () -> Unit,
+    didPressJoinGroup: () -> Unit,
+    onLogout: () -> Unit,
+    body: @Composable () -> Unit) {
 
     var showLeftMenu by remember { mutableStateOf(false) }
     var showRightMenu by remember { mutableStateOf(false) }

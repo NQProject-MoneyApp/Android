@@ -50,7 +50,7 @@ class GroupsListViewModel: ViewModel() {
             }
             is SimpleResult.Success -> {
                 viewModelScope.launch {
-                    fetchGroups()
+                    updateGroups()
                 }
                 SimpleResult.Success("Success")
             }
