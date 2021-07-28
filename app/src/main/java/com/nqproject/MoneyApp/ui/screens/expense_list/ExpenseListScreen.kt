@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.repository.Expense
 import com.nqproject.MoneyApp.repository.Group
 import kotlinx.coroutines.launch
 
@@ -26,6 +27,7 @@ import kotlinx.coroutines.launch
 fun ExpenseListScreen(
     group: Group,
     onBackNavigate: () -> Unit,
+    onExpenseDetailsNavigate: (expense: Expense) -> Unit
 ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -70,8 +72,11 @@ fun ExpenseListScreen(
                  )
                  }
                  Spacer(modifier = Modifier.height(20.dp))
-                 groupExpenses.forEach {
-                     ExpenseListComponent(it)
+                 groupExpenses.forEach { it ->
+                     ExpenseListComponent(it,
+                     didPressComponent = {
+                         onExpenseDetailsNavigate(it)
+                     })
                      Spacer(modifier = Modifier.height(20.dp))
                  }
              }
