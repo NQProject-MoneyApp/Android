@@ -1,30 +1,18 @@
 package com.nqproject.MoneyApp
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.fragment.app.FragmentActivity
 import com.nqproject.MoneyApp.manager.SharedPreferencesManager
-import com.nqproject.MoneyApp.ui.navigation.MainNavigation
-import com.nqproject.MoneyApp.ui.theme.MoneyAppTheme
 
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
     @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initSingletons()
-        setContent {
-            MoneyAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
 
-                    MainNavigation()
-                }
-            }
-        }
+        setContentView(R.layout.main_activity)
     }
 
     private fun initSingletons() {

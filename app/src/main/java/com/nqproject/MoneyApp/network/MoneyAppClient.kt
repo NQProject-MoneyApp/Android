@@ -79,9 +79,9 @@ object MoneyAppClient {
         }
     }
 
-    suspend fun addGroup(name: String): SimpleResult<NetworkGroupsResponse> {
+    suspend fun addGroup(name: String, icon: Int): SimpleResult<NetworkGroupsResponse> {
         return try {
-            val result = client.addGroup(NetworkAddGroupRequest(name=name))
+            val result = client.addGroup(NetworkAddGroupRequest(name=name, icon=icon))
 
             SimpleResult.Success(result)
 
@@ -129,6 +129,15 @@ object MoneyAppClient {
             SimpleResult.Success(true)
         } catch(e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to join to group", e)
+            SimpleResult.Error("Unknown error")
+        }
+    }
+
+    suspend fun icons(): SimpleResult<List<Int>> {
+        return try {
+            SimpleResult.Success(client.icons().icons)
+        } catch(e: HttpException) {
+            Log.e(Config.MAIN_TAG, "Failed to fetch icons", e)
             SimpleResult.Error("Unknown error")
         }
     }

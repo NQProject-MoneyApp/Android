@@ -19,9 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import com.nqproject.MoneyApp.Config
-import com.nqproject.MoneyApp.ui.navigation.MainNavigationScreen
 import com.nqproject.MoneyApp.ui.screens.auth.AuthHeader
 import com.nqproject.MoneyApp.ui.screens.auth.AuthInputFields
 import com.nqproject.MoneyApp.ui.screens.auth.BottomOption
@@ -29,7 +27,9 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun RegistrationScreen(navController: NavHostController) {
+fun RegistrationScreen(
+    onLoginNavigate: () -> Unit
+) {
 
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -54,7 +54,7 @@ fun RegistrationScreen(navController: NavHostController) {
 
                 when(result) {
                     is RegistrationResult.Success -> {
-                        navController.navigate(MainNavigationScreen.LoginScreen.route)
+//                        navController.navigate(MainNavigationScreen.LoginScreen.route)
                     }
                     is RegistrationResult.Failed -> {
                         Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
@@ -68,7 +68,8 @@ fun RegistrationScreen(navController: NavHostController) {
             // TODO
             // block back button?
             // replace all screens?
-            navController.navigate(MainNavigationScreen.LoginScreen.route)
+//            navController.navigate(MainNavigationScreen.LoginScreen.route)
+            onLoginNavigate()
         }
     }
 }

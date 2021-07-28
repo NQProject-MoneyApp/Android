@@ -22,16 +22,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.network.SimpleResult
-import com.nqproject.MoneyApp.ui.navigation.MainNavigationScreen
-import com.nqproject.MoneyApp.ui.screens.auth.login.LoginResult
 import com.nqproject.MoneyApp.ui.screens.group_details.CodeAlertComponent
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupUsersListComponent
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupDetailsHeader
@@ -40,7 +36,11 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 @Composable
-fun GroupDetailsScreen(navController: NavController, group: Group) {
+fun GroupDetailsScreen(
+    group: Group,
+    onExpensesListNavigate: () -> Unit,
+    onBackNavigate: () -> Unit
+) {
 
     val coroutineScope = rememberCoroutineScope()
     val viewModel = viewModel<GroupDetailsViewModel>()
@@ -54,7 +54,7 @@ fun GroupDetailsScreen(navController: NavController, group: Group) {
     GroupDetailsHeader(
         didPressBackButton = {
             Log.d(Config.MAIN_TAG, "didPressBackButton")
-            navController.popBackStack()
+            onBackNavigate()
         },
         didPressGenerateCode = {
             Log.d(Config.MAIN_TAG, "didPressGenerateCode")
@@ -87,7 +87,7 @@ fun GroupDetailsScreen(navController: NavController, group: Group) {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Image(
-                    painterResource(id = R.drawable.ic_burger),
+                    painterResource(id = group.icon),
                     modifier = Modifier
                         .size(132.dp)
                         .padding(8.dp),
@@ -155,9 +155,11 @@ fun GroupDetailsScreen(navController: NavController, group: Group) {
                     Text("Show group users")
                 }
                 Spacer(modifier = Modifier.height(20.dp))
-                GroupUsersListComponent(navController, userBalanceList = groupUsersList, group, didPressAllExpenses = {
-                    navController.navigate(MainNavigationScreen.ExpenseList.createRoute(group = it))
-                })
+                GroupUsersListComponent(
+                    userBalanceList = groupUsersList,
+                    group = group,
+                    didPressAllExpenses = { onExpensesListNavigate() }
+                )
             }
         },
         title = group.name

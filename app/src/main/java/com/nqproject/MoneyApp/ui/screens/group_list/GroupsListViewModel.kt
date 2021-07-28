@@ -1,8 +1,10 @@
 package com.nqproject.MoneyApp.ui.screens.group_list
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.repository.GroupRepository
@@ -38,7 +40,10 @@ class GroupsListViewModel: ViewModel() {
         val result = GroupRepository.join(code)
 
         return when(result) {
-            is SimpleResult.Error -> SimpleResult.Error(result.error)
+            is SimpleResult.Error -> {
+                Log.d(Config.MAIN_TAG, "Error toast?")
+                SimpleResult.Error(result.error)
+            }
             is SimpleResult.Success -> {
                 viewModelScope.launch {
                     fetchGroups()

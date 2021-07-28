@@ -3,6 +3,7 @@ package com.nqproject.MoneyApp.ui.theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
 
@@ -60,18 +61,19 @@ class AppThemeColors(
             onBackground = this.onBackground,
             onError = this.onError,
             secondaryVariant = this.secondaryVariant,
-            isLight = darkTheme,
+            isLight = !darkTheme,
         )
     }
 }
 
 @Composable
 fun MoneyAppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
-
-    MaterialTheme(
-        colors = AppTheme.colors.toMaterialColors(true),
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
+    CompositionLocalProvider(LocalContentColor provides Color.White) {
+        MaterialTheme(
+            colors = AppTheme.colors.toMaterialColors(true),
+            typography = Typography,
+            shapes = Shapes,
+            content = content
+        )
+    }
 }

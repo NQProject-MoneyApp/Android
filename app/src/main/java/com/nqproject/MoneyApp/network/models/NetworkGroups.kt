@@ -4,7 +4,8 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 data class NetworkAddGroupRequest(
-    val name: String?
+    val name: String?,
+    val icon: Int?
 )
 
 data class NetworkGroupsResponse(
@@ -13,7 +14,7 @@ data class NetworkGroupsResponse(
     val create_date: Date?,
     val total_cost: Double?,
     val user_balance: Double?,
-    val is_favourite: Boolean?,
+    val icon: Int?,
     @SerializedName("non_field_errors")
     val error: String?,
 )
