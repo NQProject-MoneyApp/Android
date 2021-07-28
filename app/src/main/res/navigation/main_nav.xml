@@ -82,5 +82,16 @@
         <argument
             android:name="group"
             app:argType="com.nqproject.MoneyApp.repository.Group" />
+        <action
+            android:id="@+id/action_expenseListFragment_to_expenseDetailsFragment"
+            app:destination="@id/expenseDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/expenseDetailsFragment"
+        android:name="com.nqproject.MoneyApp.ui.screens.expense_details.ExpenseDetailsFragment"
+        android:label="ExpenseDetailsFragment" >
+        <argument
+            android:name="expense"
+            app:argType="com.nqproject.MoneyApp.repository.Expense" />
     </fragment>
 </navigation>

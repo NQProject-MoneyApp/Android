@@ -1,5 +1,6 @@
 package com.nqproject.MoneyApp.ui.screens.expense_list
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,14 +18,14 @@ import com.nqproject.MoneyApp.repository.Expense
 import java.util.*
 
 @Composable
-fun ExpenseListComponent(expense: Expense) {
+fun ExpenseListComponent(expense: Expense, didPressComponent: (Expense) -> Unit) {
 
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
         shape = RoundedCornerShape(15),
         modifier = Modifier
             .fillMaxWidth()
-            //.clickable { didPressComponent(expense) }
+            .clickable { didPressComponent(expense) }
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
