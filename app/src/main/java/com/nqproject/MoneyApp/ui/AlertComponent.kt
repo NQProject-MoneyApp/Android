@@ -14,7 +14,6 @@ fun AlertComponent(onClose: () -> Unit, body: @Composable () -> Unit) {
     AlertDialog(
         shape = RoundedCornerShape(32.dp),
         onDismissRequest = { onClose() },
-        modifier = Modifier.padding(horizontal = 24.dp),
         text = {
             body()
         },

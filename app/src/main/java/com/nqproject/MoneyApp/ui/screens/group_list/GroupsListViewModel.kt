@@ -8,7 +8,10 @@ import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.repository.GroupRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.math.min
 
 class GroupsListViewModel: ViewModel() {
 
@@ -29,8 +32,13 @@ class GroupsListViewModel: ViewModel() {
     }
 
     suspend fun fetchGroups(): SimpleResult<List<Group>> {
+        val date = Date()
         _loading.value = true
         val result = GroupRepository.fetchGroups()
+        // UI FIX
+        // request must take at least one second for the activity indicator to load
+        delay(1000 - (Date().time-date.time))
+
         _loading.value = false
 
         if (result is SimpleResult.Success) {
@@ -42,6 +50,7 @@ class GroupsListViewModel: ViewModel() {
 
     suspend fun join(code: String): SimpleResult<String> {
         val result = GroupRepository.join(code)
+
 
         return when(result) {
             is SimpleResult.Error -> {

@@ -27,9 +27,9 @@ fun GroupListHeader(
             navigationIcon = {
                 IconButton(onClick = { showLeftMenu = true }) {
                     Image(
-
                         painterResource(id = R.drawable.ic_user),
                         contentDescription = "",
+                        modifier = Modifier.padding(8.dp)
                     )
                 }
 

@@ -20,6 +20,10 @@ import com.nqproject.MoneyApp.ui.screens.group_list.GroupListHeader
 import com.nqproject.MoneyApp.ui.screens.group_list.GroupsListViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.ui.platform.LocalContext
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.ui.screens.group_list.JoinAlertComponent
 
@@ -29,15 +33,13 @@ fun GroupListScreen(
     onGroupDetailsNavigate: (group: Group) -> Unit,
     onLoginNavigate: () -> Unit,
 ) {
-
     val viewModel = viewModel<GroupsListViewModel>()
     val coroutineScope = rememberCoroutineScope()
     val groupsList = viewModel.groupsList.observeAsState(emptyList()).value
-    val loading = viewModel.loading.observeAsState(false).value
     val scrollState = rememberScrollState()
     val context = LocalContext.current
-    // TODO move to view model?
     var showJoinAlert by remember { mutableStateOf(false) }
+    val isRefreshing by viewModel.loading.observeAsState(false)
 
     GroupListHeader(
         onLogout = {
@@ -46,12 +48,9 @@ fun GroupListScreen(
         },
         didPressUserButton = {
             Log.d(Config.MAIN_TAG, "didPressUserButton")
-
         },
         didPressAddGroup = {
-            Log.d(Config.MAIN_TAG, "didPressAddGroup")
             onAddGroupNavigate()
-
         },
         didPressJoinGroup = {
             Log.d(Config.MAIN_TAG, "didPressJoinGroup")
@@ -72,24 +71,36 @@ fun GroupListScreen(
                 }
             }
         }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(scrollState)
-                .padding(24.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally,
+
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(isRefreshing),
+            onRefresh = {
+                viewModel.updateGroups()
+                        },
+            indicator = { state, trigger ->
+                SwipeRefreshIndicator(
+                    state = state,
+                    refreshTriggerDistance = trigger,
+                    scale = true,
+                    backgroundColor = MaterialTheme.colors.primary,
+                    contentColor = MaterialTheme.colors.background,
+                )
+            }
         ) {
-            
-            if (loading) {
-                Spacer(modifier = Modifier.height(32.dp))
-                CircularProgressIndicator()
-            } else {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+                    .padding(24.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
                 groupsList.forEach {
                     GroupListComponent(it,
-                    didPressComponent = {
-                        onGroupDetailsNavigate(it)
-                    })
+                        didPressComponent = {
+                            onGroupDetailsNavigate(it)
+                        })
                     Spacer(modifier = Modifier.height(21.dp))
                 }
             }

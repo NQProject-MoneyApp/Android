@@ -30,7 +30,7 @@ fun AddExpenseForm(onSave: (name: String, amount: Float) -> Unit, loading: Boole
     InputField(
         focusRequester = FocusRequester(),
         fieldState = expenseName,
-        keyboardType = KeyboardType.Number,
+        keyboardType = KeyboardType.Text,
         placeholder = "Name",
         focusRequesterAction = {
             expenseAmountRequester.requestFocus()
@@ -56,7 +56,6 @@ fun AddExpenseForm(onSave: (name: String, amount: Float) -> Unit, loading: Boole
         shape = RoundedCornerShape(10.dp),
         enabled = !loading,
         onClick = {
-
             onSave(expenseName.value, expenseAmount.value.toFloat())
         }) {
         Text("Save", style = MaterialTheme.typography.h4)
