@@ -37,11 +37,6 @@ fun ExpenseListScreen(
     val groupExpenses = viewModel.groupExpenses.observeAsState(emptyList()).value
 
     ExpenseListHeader(
-        didPressAddExpense = {
-            Log.d(Config.MAIN_TAG, "didPressAddExpense")
-            onAddExpenseNavigate()
-
-        },
         didPressBackButton = {
             Log.d(Config.MAIN_TAG, "didPressBackButton")
             onBackNavigate()
@@ -67,7 +62,7 @@ fun ExpenseListScreen(
                      )
                  }
                  Button(onClick = {
-                     Log.d(Config.MAIN_TAG, "new expense")
+                     onAddExpenseNavigate()
                  }, modifier = Modifier.fillMaxWidth(), shape = AbsoluteRoundedCornerShape(15))
                  { Text(
                      text = "New expense",

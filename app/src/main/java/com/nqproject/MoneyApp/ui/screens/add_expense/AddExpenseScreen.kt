@@ -43,16 +43,15 @@ fun AddExpenseScreen(
 
     AddExpenseHeader(
         didPressBackButton = onBackNavigate,
-        didPressMenuButton = {
-            Log.d(Config.MAIN_TAG, "didPressMenuButton")
-
-        }, body = {
+        body = {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 24.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,) {
 
-                ExpenseNameForm(
+                AddExpenseForm(
                     loading=loading,
                     onSave = { name, amount ->
                         when {
@@ -84,76 +83,4 @@ fun AddExpenseScreen(
             }
         })
 }
-
-@Composable
-private fun ExpenseNameForm(onSave: (name: String, amount: Float) -> Unit, loading: Boolean) {
-    val expenseName = remember { mutableStateOf("") }
-    val expenseAmount = remember { mutableStateOf("0") }
-
-    val expenseAmountRequester = remember { FocusRequester() }
-
-    val focusManager = LocalFocusManager.current
-
-    Spacer(modifier = Modifier.height(21.dp))
-
-    InputField(
-        focusRequester = FocusRequester(),
-        fieldState = expenseName,
-        keyboardType = KeyboardType.Number,
-        placeholder = "Name",
-        focusRequesterAction = {
-            expenseAmountRequester.requestFocus()
-        })
-
-    Spacer(modifier = Modifier.height(21.dp))
-
-    InputField(
-        focusRequester = FocusRequester(),
-        fieldState = expenseAmount,
-        keyboardType = KeyboardType.Number,
-        placeholder = "Amount",
-        focusRequesterAction = {
-            focusManager.clearFocus()
-        })
-
-    Spacer(modifier = Modifier.height(21.dp))
-
-    Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(49.dp)
-            .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(10.dp),
-        enabled = !loading,
-        onClick = {
-            onSave(expenseName.value, expenseAmount.value.toFloat())
-        }) {
-        Text("Save", style = MaterialTheme.typography.h4)
-    }
-
-}
-//
-//@Composable
-//private fun InputField(expenseName: MutableState<String>) {
-//
-//    TextField(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(16.dp),
-//        value = expenseName.value,
-//        onValueChange = { newValue ->
-//            expenseName.value = newValue
-//        },
-//        label = { Text("Expense name", color = AppTheme.colors.hintText) },
-//        shape = RoundedCornerShape(10.dp),
-//        singleLine = true,
-//        colors = TextFieldDefaults.textFieldColors(
-//            backgroundColor = MaterialTheme.colors.surface,
-//            focusedIndicatorColor = Color.Transparent,
-//            unfocusedIndicatorColor = Color.Transparent,
-//            disabledIndicatorColor = Color.Transparent
-//        ),
-//    )
-//}
-
 

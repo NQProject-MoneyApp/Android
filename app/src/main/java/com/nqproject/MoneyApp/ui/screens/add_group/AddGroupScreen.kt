@@ -41,10 +41,7 @@ fun AddGroupScreen(
 
     AddGroupHeader(
         didPressBackButton = onBackNavigate,
-        didPressMenuButton = {
-        Log.d(Config.MAIN_TAG, "didPressMenuButton")
-
-    }, body = {
+        body = {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Top,
