@@ -23,9 +23,6 @@ import android.content.Context
 import androidx.compose.ui.draw.clip
 
 
-
-
-
 @Composable
 fun CodeAlertComponent(onClose: () -> Unit, code: String) {
     val context = LocalContext.current
@@ -60,7 +57,7 @@ fun CodeAlertComponent(onClose: () -> Unit, code: String) {
                         val clip = ClipData.newPlainText("label", code)
                         clipboard.setPrimaryClip(clip)
                         Toast
-                            .makeText(context, "Skopiowano!", Toast.LENGTH_SHORT)
+                            .makeText(context, "Copied", Toast.LENGTH_SHORT)
                             .show()
                     }
             ) {
