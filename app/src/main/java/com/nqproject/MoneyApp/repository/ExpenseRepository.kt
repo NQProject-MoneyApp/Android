@@ -1,6 +1,5 @@
 package com.nqproject.MoneyApp.repository
 
-import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.network.MoneyAppClient
 import com.nqproject.MoneyApp.network.SimpleResult
 import kotlinx.coroutines.Dispatchers
@@ -10,7 +9,7 @@ object ExpenseRepository {
 
     suspend fun fetchExpenses(groupId: Int): SimpleResult<List<Expense>> {
         val result = withContext(Dispatchers.IO) {
-            MoneyAppClient.expenses(groupId)
+            MoneyAppClient.fetchExpenses(groupId)
         }
 
         return when(result) {

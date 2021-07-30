@@ -1,8 +1,5 @@
 package com.nqproject.MoneyApp.repository
 
-import android.util.Log
-import com.nqproject.MoneyApp.Config
-import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.network.MoneyAppClient
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.ui.screens.group_details.UserBalance
@@ -13,7 +10,7 @@ object GroupRepository {
 
     suspend fun fetchGroups(): SimpleResult<List<Group>> {
         val result = withContext(Dispatchers.IO) {
-            MoneyAppClient.groups()
+            MoneyAppClient.fetchGroups()
         }
 
         return when(result) {

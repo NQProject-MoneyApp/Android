@@ -66,7 +66,7 @@ object MoneyAppClient {
         }
     }
 
-    suspend fun groups(): SimpleResult<List<NetworkGroupsResponse>> {
+    suspend fun fetchGroups(): SimpleResult<List<NetworkGroupsResponse>> {
         return try {
             val result = client.groups()
             result.forEach { println(it.name) }
@@ -115,7 +115,7 @@ object MoneyAppClient {
         }
     }
 
-    suspend fun expenses(groupId: Int): SimpleResult<List<NetworkExpensesResponse>> {
+    suspend fun fetchExpenses(groupId: Int): SimpleResult<List<NetworkExpensesResponse>> {
         return try {
             val result = client.groupExpenses(groupId)
             SimpleResult.Success(result)
