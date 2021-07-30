@@ -20,8 +20,7 @@ import com.nqproject.MoneyApp.ui.AlertComponent
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.compose.ui.draw.clip
 
 
 
@@ -30,6 +29,7 @@ import androidx.core.content.ContextCompat.getSystemService
 @Composable
 fun CodeAlertComponent(onClose: () -> Unit, code: String) {
     val context = LocalContext.current
+    val shape = RoundedCornerShape(25)
     AlertComponent(onClose = { onClose() }) {
         Column(
 
@@ -48,11 +48,12 @@ fun CodeAlertComponent(onClose: () -> Unit, code: String) {
             Spacer(modifier = Modifier.height(8.dp))
             Card(
                 backgroundColor = MaterialTheme.colors.secondary,
-                shape = RoundedCornerShape(25),
+                shape = shape,
                 border = BorderStroke(3.dp, MaterialTheme.colors.primary),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
+                    .clip(shape)
                     .clickable {
                         val clipboard =
                             context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

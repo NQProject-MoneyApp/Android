@@ -22,6 +22,7 @@ object MoneyAppClient {
 
     private val client = Retrofit.Builder()
         .baseUrl("https://money-app-nqproject-staging.herokuapp.com")
+//        .baseUrl("http://192.168.1.66:8000")
         .addConverterFactory(GsonConverterFactory.create())
         .client(OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.HEADERS })
@@ -141,7 +142,8 @@ object MoneyAppClient {
             SimpleResult.Success(true)
         } catch(e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to join to group", e)
-            SimpleResult.Error("Unknown error")
+            val errorMessage = e.response()?.errorBody()?.string()
+            SimpleResult.Error(errorMessage ?: "Unknown error")
         }
     }
 
