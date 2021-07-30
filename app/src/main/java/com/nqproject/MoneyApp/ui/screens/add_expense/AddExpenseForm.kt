@@ -56,7 +56,7 @@ fun AddExpenseForm(onSave: (name: String, amount: Float) -> Unit, loading: Boole
         shape = RoundedCornerShape(10.dp),
         enabled = !loading,
         onClick = {
-            onSave(expenseName.value, expenseAmount.value.toFloat())
+            onSave(expenseName.value, expenseAmount.value.toFloatOrNull() ?: 0f)
         }) {
         Text("Save", style = MaterialTheme.typography.h4)
     }
