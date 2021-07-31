@@ -22,21 +22,29 @@ fun AddExpenseForm(onSave: (name: String, amount: Float) -> Unit, loading: Boole
     val expenseName = remember { mutableStateOf("") }
     val expenseAmount = remember { mutableStateOf("0") }
 
+    val expenseNameRequester = remember { FocusRequester() }
     val expenseAmountRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
     Spacer(modifier = Modifier.height(21.dp))
 
     InputField(
-        focusRequester = FocusRequester(),
+        focusRequester = expenseNameRequester,
         fieldState = expenseName,
         keyboardType = KeyboardType.Text,
         placeholder = "Name",
         focusRequesterAction = {
             expenseAmountRequester.requestFocus()
-        })
+        },
+        validator = {
+            when {
+                it.isEmpty() -> "Enter an expense name"
+                else -> ""
+            }
+        }
+    )
 
-    Spacer(modifier = Modifier.height(21.dp))
+    Spacer(modifier = Modifier.height(5.dp))
 
     InputField(
         focusRequester = expenseAmountRequester,
@@ -45,9 +53,18 @@ fun AddExpenseForm(onSave: (name: String, amount: Float) -> Unit, loading: Boole
         placeholder = "Amount",
         focusRequesterAction = {
             focusManager.clearFocus()
-        })
+        },
+        validator = {
+            val value = it.toFloatOrNull() ?: 0f
+            when {
+                value == 0f -> "Enter an expense amount"
+                value < 0f -> "Expense amount must be greater than zero"
+                else -> ""
+            }
+        }
+    )
 
-    Spacer(modifier = Modifier.height(21.dp))
+    Spacer(modifier = Modifier.height(5.dp))
 
     Button(
         modifier = Modifier

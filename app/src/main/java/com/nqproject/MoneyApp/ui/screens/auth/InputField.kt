@@ -10,6 +10,7 @@ import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -22,10 +23,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.ui.theme.AppTheme
+import androidx.compose.runtime.*
+import androidx.compose.ui.draw.clip
 
 
 @Composable
-fun InputField(focusRequester: FocusRequester, fieldState: MutableState<String>, focusRequesterAction: () -> Unit, placeholder: String, keyboardType: KeyboardType) {
+fun InputField(focusRequester: FocusRequester, fieldState: MutableState<String>, focusRequesterAction: () -> Unit, placeholder: String, keyboardType: KeyboardType, validator: ((content: String) -> String)? = null) {
+    val fieldShape = RoundedCornerShape(10.dp)
+    var invalidInputMessage by remember { mutableStateOf("") }
 
     val visualTransformation = if (keyboardType == KeyboardType.Password) {
         PasswordVisualTransformation()
@@ -34,7 +39,9 @@ fun InputField(focusRequester: FocusRequester, fieldState: MutableState<String>,
     }
 
     TextField(
+        isError = invalidInputMessage.isNotEmpty(),
         modifier = Modifier
+            .clip(shape = fieldShape)
             .fillMaxWidth()
             .focusRequester(focusRequester)
             .onKeyEvent {
@@ -48,9 +55,10 @@ fun InputField(focusRequester: FocusRequester, fieldState: MutableState<String>,
         value = fieldState.value,
         onValueChange = { newValue ->
             fieldState.value = newValue.filter { it != '\n' && it != '\t' }
+            invalidInputMessage = validator?.let { it(fieldState.value) } ?: ""
         },
         label = { Text(placeholder, color = AppTheme.colors.hintText) },
-        shape = RoundedCornerShape(10.dp),
+        shape = fieldShape,
         singleLine = true,
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = MaterialTheme.colors.surface,
@@ -65,6 +73,10 @@ fun InputField(focusRequester: FocusRequester, fieldState: MutableState<String>,
         ),
         keyboardActions = KeyboardActions(onNext = {
             focusRequesterAction()
-        })
+        }),
+    )
+    Text(
+        text = invalidInputMessage,
+        style = MaterialTheme.typography.caption.copy(color = MaterialTheme.colors.error),
     )
 }
