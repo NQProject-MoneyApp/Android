@@ -30,9 +30,9 @@ object GroupRepository {
         }
     }
 
-    suspend fun addGroup(name: String, icon: Int): SimpleResult<String> {
+    suspend fun addGroup(name: String, icon: Int, members: List<User>): SimpleResult<String> {
         val result = withContext(Dispatchers.IO) {
-            MoneyAppClient.addGroup(name=name, icon=icon)
+            MoneyAppClient.addGroup(name=name, icon=icon, members=members)
         }
 
         return when(result) {

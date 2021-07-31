@@ -5,7 +5,8 @@ import java.util.*
 
 data class NetworkAddGroupRequest(
     val name: String?,
-    val icon: Int?
+    val icon: Int?,
+    val members: List<Int>
 )
 
 data class NetworkGroupsResponse(

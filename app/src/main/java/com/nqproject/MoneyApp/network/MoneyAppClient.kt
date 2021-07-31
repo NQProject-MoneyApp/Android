@@ -4,6 +4,7 @@ import android.util.Log
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.manager.AuthenticationManager
 import com.nqproject.MoneyApp.network.models.*
+import com.nqproject.MoneyApp.repository.User
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -79,10 +80,14 @@ object MoneyAppClient {
         }
     }
 
-    suspend fun addGroup(name: String, icon: Int): SimpleResult<NetworkGroupsResponse> {
+    suspend fun addGroup(name: String, icon: Int, members: List<User>): SimpleResult<NetworkGroupsResponse> {
         return try {
-            val result = client.addGroup(NetworkAddGroupRequest(name=name, icon=icon))
-
+            val result = client.addGroup(
+                NetworkAddGroupRequest(
+                    name=name,
+                    icon=icon,
+                    members = members.map { it.pk } )
+            )
             SimpleResult.Success(result)
 
         } catch(e: HttpException) {

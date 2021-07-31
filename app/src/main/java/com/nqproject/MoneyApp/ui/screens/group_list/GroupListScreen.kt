@@ -4,6 +4,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -87,6 +88,7 @@ fun GroupListScreen(
                 )
             }
         ) {
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -96,12 +98,28 @@ fun GroupListScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                groupsList.forEach {
-                    GroupListComponent(it,
-                        didPressComponent = {
-                            onGroupDetailsNavigate(it)
-                        })
+                if (groupsList.isNotEmpty()) {
+                    groupsList.forEach {
+                        GroupListComponent(it,
+                            didPressComponent = {
+                                onGroupDetailsNavigate(it)
+                            })
+                        Spacer(modifier = Modifier.height(21.dp))
+                    }
+                } else {
+                    Text("You don't have any groups", style = MaterialTheme.typography.h4)
                     Spacer(modifier = Modifier.height(21.dp))
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(49.dp)
+                            .padding(horizontal = 16.dp),
+                        shape = RoundedCornerShape(10.dp),
+                        onClick = {
+                            onAddGroupNavigate()
+                        }) {
+                        Text("Add", style = MaterialTheme.typography.h4)
+                    }
                 }
             }
         }
