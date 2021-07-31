@@ -5,15 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nqproject.MoneyApp.network.MoneyAppClient.icons
 import com.nqproject.MoneyApp.network.SimpleResult
-import com.nqproject.MoneyApp.repository.GroupRepository
-import com.nqproject.MoneyApp.repository.IconsRepository
-import com.nqproject.MoneyApp.repository.MoneyAppIcon
+import com.nqproject.MoneyApp.repository.*
 
 class AddGroupViewModel: ViewModel() {
 
     private val _loading = MutableLiveData(false)
 
-    val loading: LiveData<Boolean> = _loading
+    init {}
 
     suspend fun addGroup(name: String, icon: MoneyAppIcon): SimpleResult<String> {
         _loading.value = true
@@ -26,5 +24,4 @@ class AddGroupViewModel: ViewModel() {
         val result = IconsRepository.icons()
         return result
     }
-
 }

@@ -34,4 +34,7 @@ interface MoneyAppApi {
 
     @GET("/api/icons")
     suspend fun icons(): NetworkIconsResponse
+
+    @GET("/api/friends")
+    suspend fun friends(): List<NetworkUser>
 }

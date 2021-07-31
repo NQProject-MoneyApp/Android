@@ -153,4 +153,13 @@ object MoneyAppClient {
             SimpleResult.Error("Unknown error")
         }
     }
+
+    suspend fun friends(): SimpleResult<List<NetworkUser>> {
+        return try {
+            SimpleResult.Success(client.friends())
+        } catch(e: HttpException) {
+            Log.e(Config.MAIN_TAG, "Failed to fetch friends", e)
+            SimpleResult.Error("Unknown error")
+        }
+    }
 }

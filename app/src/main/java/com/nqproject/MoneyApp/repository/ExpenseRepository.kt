@@ -19,7 +19,7 @@ object ExpenseRepository {
                 result.data.map { Expense(
                     name = it.name,
                     amount = it.amount,
-                    author = User(it.author.username!!, it.author.email!!, 0.0),
+                    author = User(pk = it.author.pk!!, it.author.username!!, it.author.email!!, 0.0),
                     createDate = it.create_date) })
         }
     }
