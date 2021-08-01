@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.network.SimpleResult
-import com.nqproject.MoneyApp.repository.Expense
+import com.nqproject.MoneyApp.repository.ExpenseDetails
 import com.nqproject.MoneyApp.ui.screens.add_expense.AddExpenseForm
 import com.nqproject.MoneyApp.ui.screens.add_expense.AddExpenseHeader
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun EditExpenseScreen(
     groupId: Int,
-    expense: Expense,
+    expense: ExpenseDetails,
     onBackNavigate: () -> Unit
 ) {
 

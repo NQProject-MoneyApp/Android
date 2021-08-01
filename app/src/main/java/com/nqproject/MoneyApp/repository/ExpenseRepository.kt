@@ -27,6 +27,25 @@ object ExpenseRepository {
         }
     }
 
+    suspend fun fetchExpenseDetails(groupId: Int, expenseId: Int): SimpleResult<ExpenseDetails> {
+        val result = withContext(Dispatchers.IO) {
+            MoneyAppClient.fetchExpenseDetails(groupId, expenseId)
+        }
+
+        return when (result) {
+            is SimpleResult.Error -> SimpleResult.Error(result.error)
+            is SimpleResult.Success -> SimpleResult.Success(
+                ExpenseDetails(
+                    pk = result.data.pk,
+                    name = result.data.name,
+                    amount = result.data.amount,
+                    author = User(result.data.author.username!!, result.data.author.email!!, 0.0),
+                    createDate = result.data.create_date
+                )
+            )
+        }
+    }
+
     suspend fun addExpense(groupId: Int, name: String, amount: Float): SimpleResult<String> {
         val result = withContext(Dispatchers.IO) {
             MoneyAppClient.addExpense(groupId, name = name, amount = amount)

@@ -24,7 +24,7 @@ class EditExpenseFragment : Fragment() {
                 MoneyAppTheme {
                     EditExpenseScreen(
                         groupId = args.group.id,
-                        expense = args.expense,
+                        expense = args.expenseDetails,
                         onBackNavigate = {
                             requireActivity().onBackPressed()
                         }

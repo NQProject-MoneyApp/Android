@@ -36,6 +36,12 @@ interface MoneyAppApi {
     @GET("/api/{id}/expenses/")
     suspend fun groupExpenses(@Path("id") id: Int): List<NetworkExpensesResponse>
 
+    @GET("/api/{groupId}/expenses/{expenseId}/")
+    suspend fun fetchExpenseDetails(
+        @Path("groupId") groupId: Int,
+        @Path("expenseId") expenseId: Int
+    ): NetworkExpenseDetailsResponse
+
     @POST("/api/group-codes/")
     suspend fun groupCode(@Body request: NetworkGroupCodeRequest): NetworkGroupCodeResponse
 

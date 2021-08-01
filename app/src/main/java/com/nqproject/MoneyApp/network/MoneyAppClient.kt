@@ -165,6 +165,17 @@ object MoneyAppClient {
         }
     }
 
+    suspend fun fetchExpenseDetails(groupId: Int, expenseId: Int):
+            SimpleResult<NetworkExpenseDetailsResponse> {
+        return try {
+            val result = client.fetchExpenseDetails(groupId, expenseId)
+            SimpleResult.Success(result)
+        } catch (e: HttpException) {
+            Log.e(Config.MAIN_TAG, "Failed to fetch expense details", e)
+            SimpleResult.Error("Unknown error")
+        }
+    }
+
     suspend fun groupCode(groupId: Int): SimpleResult<NetworkGroupCodeResponse> {
         return try {
             val result = client.groupCode(NetworkGroupCodeRequest(groupId))

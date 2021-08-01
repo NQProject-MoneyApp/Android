@@ -176,7 +176,7 @@
             android:name="group"
             app:argType="com.nqproject.MoneyApp.repository.Group" />
         <argument
-            android:name="expense"
-            app:argType="com.nqproject.MoneyApp.repository.Expense" />
+            android:name="expenseDetails"
+            app:argType="com.nqproject.MoneyApp.repository.ExpenseDetails" />
     </fragment>
 </navigation>
