@@ -1,4 +1,4 @@
-package com.nqproject.MoneyApp.ui.screens.expense_details
+package com.nqproject.MoneyApp.ui.screens.edit_expense
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -8,17 +8,17 @@ import androidx.compose.ui.res.painterResource
 import com.nqproject.MoneyApp.R
 
 @Composable
-fun ExpenseDetailsHeader(
+fun EditExpenseHeader (
     didPressBackButton: () -> Unit,
-    didPressEditExpense: () -> Unit, body:
-    @Composable () -> Unit, title: String) {
+    didPressEditExpense: () -> Unit,
+    body: @Composable () -> Unit) {
 
     var showMenu by remember { mutableStateOf(false) }
 
 
     Column() {
         TopAppBar(
-            title = { Text(text = title, style = MaterialTheme.typography.h4) },
+            title = { Text(text = "New Expense", style = MaterialTheme.typography.h4) },
             backgroundColor = MaterialTheme.colors.background,
             navigationIcon = {
                 IconButton(onClick = { didPressBackButton() }) {

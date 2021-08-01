@@ -1,5 +1,6 @@
-package com.nqproject.MoneyApp.ui.screens.add_expense
+package com.nqproject.MoneyApp.ui.screens.edit_expense
 
+import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -12,22 +13,26 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.network.SimpleResult
+import com.nqproject.MoneyApp.repository.Expense
+import com.nqproject.MoneyApp.ui.screens.add_expense.AddExpenseForm
+import com.nqproject.MoneyApp.ui.screens.add_expense.AddExpenseHeader
 import kotlinx.coroutines.launch
 
 
 @Composable
-fun AddExpenseScreen(
+fun EditExpenseScreen(
     groupId: Int,
+    expense: Expense,
     onBackNavigate: () -> Unit
 ) {
 
-    val viewModel = viewModel<AddExpenseViewModel>()
+    val viewModel = viewModel<EditExpenseViewModel>()
     val coroutineScope = rememberCoroutineScope()
     val loading = viewModel.loading.observeAsState(false).value
     val context = LocalContext.current
 
     AddExpenseHeader(
-        title="New expense",
+        title = expense.name,
         didPressBackButton = onBackNavigate,
         body = {
             Column(
@@ -39,12 +44,16 @@ fun AddExpenseScreen(
             ) {
 
                 AddExpenseForm(
+                    defaultName = expense.name,
+                    defaultAmount = expense.amount.toFloat(),
                     loading = loading,
                     onSave = { name, amount ->
-                        Log.d(Config.MAIN_TAG, "on save expense: $name")
+                        Log.d(Config.MAIN_TAG, "on save edited expense: $name")
                         coroutineScope.launch {
                             when (val result =
-                                viewModel.addExpense(groupId, name = name, amount = amount)) {
+                                viewModel.editExpense(
+                                    groupId, expense.pk, name = name, amount = amount
+                                )) {
                                 is SimpleResult.Error -> Toast.makeText(
                                     context,
                                     result.error,

@@ -13,8 +13,8 @@ import retrofit2.HttpException
 
 sealed class SimpleResult<T> {
 
-    class Success<T>(val data: T): SimpleResult<T>()
-    class Error<T>(val error: String): SimpleResult<T>()
+    class Success<T>(val data: T) : SimpleResult<T>()
+    class Error<T>(val error: String) : SimpleResult<T>()
 
 }
 
@@ -23,14 +23,21 @@ object MoneyAppClient {
     private val client = Retrofit.Builder()
         .baseUrl("https://money-app-nqproject-staging.herokuapp.com")
         .addConverterFactory(GsonConverterFactory.create())
-        .client(OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.HEADERS })
-            .addInterceptor(Interceptor() {
-                val builder = it.request().newBuilder()
-                AuthenticationManager.token?.let { it1 -> builder.addHeader("Authorization", it1) }
-                return@Interceptor it.proceed(builder.build())
-            })
-            .build())
+        .client(
+            OkHttpClient.Builder()
+                .addInterceptor(
+                    HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.HEADERS })
+                .addInterceptor(Interceptor() {
+                    val builder = it.request().newBuilder()
+                    AuthenticationManager.token?.let { it1 ->
+                        builder.addHeader(
+                            "Authorization", it1
+                        )
+                    }
+                    return@Interceptor it.proceed(builder.build())
+                })
+                .build()
+        )
         .build()
         .create(MoneyAppApi::class.java)
 
@@ -38,28 +45,36 @@ object MoneyAppClient {
         return try {
             val result = client.login(NetworkLoginRequest(username = username, password = password))
 
-            if(result.key != null) {
+            if (result.key != null) {
                 SimpleResult.Success(result.key)
             } else {
                 SimpleResult.Error("Unknown error, ${result.error}")
             }
-        } catch(e: HttpException) {
+        } catch (e: HttpException) {
             //TODO: parse error from backend
             Log.e(Config.MAIN_TAG, "Failed to login", e)
             SimpleResult.Error("Unknown error")
         }
     }
 
-    suspend fun registration(username: String, password: String, email: String): SimpleResult<String> {
+    suspend fun registration(
+        username: String,
+        password: String,
+        email: String
+    ): SimpleResult<String> {
         return try {
-            val result = client.registration(NetworkRegistrationRequest(username = username, email = email, password1 = password, password2 = password,))
+            val result = client.registration(
+                NetworkRegistrationRequest(
+                    username = username, email = email, password1 = password, password2 = password,
+                )
+            )
 
-            if(result.key != null) {
+            if (result.key != null) {
                 SimpleResult.Success(result.key)
             } else {
                 SimpleResult.Error("Unknown error, ${result.error}")
             }
-        } catch(e: HttpException) {
+        } catch (e: HttpException) {
             //TODO: parse error from backend
             Log.e(Config.MAIN_TAG, "Failed to registration", e)
             SimpleResult.Error("Unknown error")
@@ -73,7 +88,7 @@ object MoneyAppClient {
             println(result)
             SimpleResult.Success(result)
 
-        } catch(e: HttpException) {
+        } catch (e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to fetch groups", e)
             SimpleResult.Error("Unknown error")
         }
@@ -81,24 +96,49 @@ object MoneyAppClient {
 
     suspend fun addGroup(name: String, icon: Int): SimpleResult<NetworkGroupsResponse> {
         return try {
-            val result = client.addGroup(NetworkAddGroupRequest(name=name, icon=icon))
+            val result = client.addGroup(NetworkAddGroupRequest(name = name, icon = icon))
 
             SimpleResult.Success(result)
 
-        } catch(e: HttpException) {
+        } catch (e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to add groups", e)
             SimpleResult.Error("Unknown error")
         }
     }
 
-    suspend fun addExpense(groupId: Int, name: String, amount: Float): SimpleResult<NetworkExpensesResponse> {
+    suspend fun addExpense(
+        groupId: Int,
+        name: String,
+        amount: Float
+    ): SimpleResult<NetworkExpensesResponse> {
         return try {
-            val result = client.addExpense(groupId, NetworkAddExpenseRequest(name=name, amount=amount))
+            val result =
+                client.addExpense(groupId, NetworkAddExpenseRequest(name = name, amount = amount))
 
             SimpleResult.Success(result)
 
-        } catch(e: HttpException) {
+        } catch (e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to add expense", e)
+            SimpleResult.Error("Unknown error")
+        }
+    }
+
+    suspend fun editExpense(
+        groupId: Int,
+        expenseId: Int,
+        name: String,
+        amount: Float
+    ): SimpleResult<NetworkExpensesResponse> {
+        return try {
+            val result =
+                client.editExpense(
+                    groupId, expenseId, NetworkAddExpenseRequest(name = name, amount = amount)
+                )
+
+            SimpleResult.Success(result)
+
+        } catch (e: HttpException) {
+            Log.e(Config.MAIN_TAG, "Failed to edit expense", e)
             SimpleResult.Error("Unknown error")
         }
     }
@@ -109,7 +149,7 @@ object MoneyAppClient {
             result.forEach { println("$it.user.username $it.balance") }
             println(result)
             SimpleResult.Success(result)
-        } catch(e: HttpException) {
+        } catch (e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to fetch group users", e)
             SimpleResult.Error("Unknown error")
         }
@@ -119,7 +159,7 @@ object MoneyAppClient {
         return try {
             val result = client.groupExpenses(groupId)
             SimpleResult.Success(result)
-        } catch(e: HttpException) {
+        } catch (e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to fetch group expenses", e)
             SimpleResult.Error("Unknown error")
         }
@@ -129,7 +169,7 @@ object MoneyAppClient {
         return try {
             val result = client.groupCode(NetworkGroupCodeRequest(groupId))
             SimpleResult.Success(result)
-        } catch(e: HttpException) {
+        } catch (e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to fetch group code", e)
             SimpleResult.Error("Unknown error")
         }
@@ -139,7 +179,7 @@ object MoneyAppClient {
         return try {
             client.joinToGroup(code)
             SimpleResult.Success(true)
-        } catch(e: HttpException) {
+        } catch (e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to join to group", e)
             SimpleResult.Error("Unknown error")
         }
@@ -148,7 +188,7 @@ object MoneyAppClient {
     suspend fun icons(): SimpleResult<List<Int>> {
         return try {
             SimpleResult.Success(client.icons().icons)
-        } catch(e: HttpException) {
+        } catch (e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to fetch icons", e)
             SimpleResult.Error("Unknown error")
         }

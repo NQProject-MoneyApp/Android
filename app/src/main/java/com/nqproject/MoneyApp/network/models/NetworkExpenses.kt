@@ -7,7 +7,8 @@ data class NetworkAddExpenseRequest(
     val amount: Float,
 )
 
-data class NetworkExpensesResponse (
+data class NetworkExpensesResponse(
+    val pk: Int,
     val name: String,
     val author: NetworkUser,
     val amount: Double,

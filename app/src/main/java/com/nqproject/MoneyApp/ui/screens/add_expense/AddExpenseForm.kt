@@ -21,30 +21,39 @@ import androidx.compose.runtime.*
 
 
 @Composable
-fun AddExpenseForm(onSave: (name: String, amount: Float) -> Unit, loading: Boolean) {
-    val expenseName = remember { mutableStateOf("") }
-    val expenseAmount = remember { mutableStateOf("") }
+fun AddExpenseForm(
+    defaultName: String = "",
+    defaultAmount: Float? = null,
+    onSave: (name: String, amount: Float) -> Unit,
+    loading: Boolean
+) {
+    val expenseName = remember { mutableStateOf(defaultName) }
+    val expenseAmount = remember { mutableStateOf(defaultAmount?.toString() ?: "" ) }
 
     val expenseNameRequester by remember { mutableStateOf(FocusRequester()) }
     val expenseAmountRequester by remember { mutableStateOf(FocusRequester()) }
 
     val focusManager = LocalFocusManager.current
 
-    val nameValidator by remember { mutableStateOf(InputFieldValidator {
-        when {
-            it.isEmpty() -> "Enter an expense name"
-            else -> ""
-        }
-    })}
+    val nameValidator by remember {
+        mutableStateOf(InputFieldValidator {
+            when {
+                it.isEmpty() -> "Enter an expense name"
+                else -> ""
+            }
+        })
+    }
 
-    val amountValidator by remember { mutableStateOf(InputFieldValidator {
-        val value = it.toFloatOrNull() ?: 0f
-        when {
-            value == 0f -> "Enter an expense amount"
-            value < 0f -> "Expense amount must be greater than zero"
-            else -> ""
-        }
-    })}
+    val amountValidator by remember {
+        mutableStateOf(InputFieldValidator {
+            val value = it.toFloatOrNull() ?: 0f
+            when {
+                value == 0f -> "Enter an expense amount"
+                value < 0f -> "Expense amount must be greater than zero"
+                else -> ""
+            }
+        })
+    }
 
     Spacer(modifier = Modifier.height(21.dp))
 
@@ -83,7 +92,7 @@ fun AddExpenseForm(onSave: (name: String, amount: Float) -> Unit, loading: Boole
         onClick = {
             nameValidator.validate(expenseName.value)
             amountValidator.validate(expenseAmount.value)
-            if(!nameValidator.isError() and !amountValidator.isError())
+            if (!nameValidator.isError() and !amountValidator.isError())
                 onSave(expenseName.value, expenseAmount.value.toFloatOrNull() ?: 0f)
         }) {
         Text("Save", style = MaterialTheme.typography.h4)

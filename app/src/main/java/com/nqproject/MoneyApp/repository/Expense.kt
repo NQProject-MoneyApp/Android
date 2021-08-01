@@ -6,6 +6,7 @@ import java.util.*
 
 @Parcelize
 data class Expense (
+    val pk: Int,
     val name: String,
     val amount: Double,
     val createDate: Date,

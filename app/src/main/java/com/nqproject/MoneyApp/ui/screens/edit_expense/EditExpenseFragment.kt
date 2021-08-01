@@ -1,4 +1,4 @@
-package com.nqproject.MoneyApp.ui.screens.expense_details
+package com.nqproject.MoneyApp.ui.screens.edit_expense
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.nqproject.MoneyApp.ui.theme.MoneyAppTheme
 
+class EditExpenseFragment : Fragment() {
 
-class ExpenseDetailsFragment : Fragment() {
+    private val args: EditExpenseFragmentArgs by navArgs()
 
-    private val args: ExpenseDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,19 +22,12 @@ class ExpenseDetailsFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 MoneyAppTheme {
-                    ExpenseDetailsScreen(
+                    EditExpenseScreen(
+                        groupId = args.group.id,
                         expense = args.expense,
                         onBackNavigate = {
                             requireActivity().onBackPressed()
-                        },
-                        onEditExpenseNavigate = {
-                            val action = ExpenseDetailsFragmentDirections
-                                .actionExpenseDetailsFragmentToEditExpenseFragment(
-                                    args.group,
-                                    args.expense
-                                )
-                            findNavController().navigate(action)
-                        },
+                        }
                     )
                 }
             }

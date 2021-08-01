@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -13,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.repository.Expense
 import java.text.SimpleDateFormat
@@ -21,8 +19,11 @@ import java.util.*
 
 @SuppressLint("SimpleDateFormat")
 @Composable
-fun ExpenseDetailsScreen(onBackNavigate: () -> Unit,
-                         expense: Expense) {
+fun ExpenseDetailsScreen(
+    onBackNavigate: () -> Unit,
+    onEditExpenseNavigate: () -> Unit,
+    expense: Expense,
+) {
 
     val dateFormat = SimpleDateFormat("dd-MM-yyy")
 
@@ -31,7 +32,10 @@ fun ExpenseDetailsScreen(onBackNavigate: () -> Unit,
             Log.d(Config.MAIN_TAG, "didPressBackButton")
             onBackNavigate()
         },
-        didPressOptions = { Log.d(Config.MAIN_TAG, "didPressOptions") },
+        didPressEditExpense = {
+            Log.d(Config.MAIN_TAG, "didPressEditExpense")
+            onEditExpenseNavigate()
+        },
         body = {
             Column (
                 modifier = Modifier

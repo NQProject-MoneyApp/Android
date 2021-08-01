@@ -29,16 +29,22 @@ class ExpenseListFragment : Fragment() {
                     ExpenseListScreen(
                         group = args.group,
                         onAddExpenseNavigate = {
-                            val action = ExpenseListFragmentDirections
-                                .actionExpenseListFragmentToAddExpenseFragment(args.group)
+                            val action =
+                                ExpenseListFragmentDirections
+                                    .actionExpenseListFragmentToAddExpenseFragment(
+                                        args.group
+                                    )
                             findNavController().navigate(action)
                         },
                         onBackNavigate = {
                             requireActivity().onBackPressed()
                         },
                         onExpenseDetailsNavigate = { expense ->
-                            val action = ExpenseListFragmentDirections
-                                .actionExpenseListFragmentToExpenseDetailsFragment(expense)
+                            val action =
+                                ExpenseListFragmentDirections
+                                    .actionExpenseListFragmentToExpenseDetailsFragment(
+                                    expense, args.group
+                                )
                             findNavController().navigate(action)
                         }
                     )
@@ -46,5 +52,4 @@ class ExpenseListFragment : Fragment() {
             }
         }
     }
-
 }

@@ -1,4 +1,4 @@
-package com.nqproject.MoneyApp.ui.screens.add_expense
+package com.nqproject.MoneyApp.ui.screens.edit_expense
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,15 +7,16 @@ import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.repository.ExpenseRepository
 
 
-class AddExpenseViewModel : ViewModel() {
+class EditExpenseViewModel : ViewModel() {
 
     private val _loading = MutableLiveData(false)
 
     val loading: LiveData<Boolean> = _loading
 
-    suspend fun addExpense(groupId: Int, name: String, amount: Float): SimpleResult<String> {
+    suspend fun editExpense(groupId: Int, expenseId: Int, name: String, amount: Float):
+            SimpleResult<String> {
         _loading.value = true
-        val result = ExpenseRepository.addExpense(groupId, name = name, amount = amount)
+        val result = ExpenseRepository.editExpense(groupId, expenseId, name = name, amount = amount)
         _loading.value = false
         return result
     }
