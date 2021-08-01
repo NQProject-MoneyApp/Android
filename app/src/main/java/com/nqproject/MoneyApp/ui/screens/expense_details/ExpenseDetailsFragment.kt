@@ -56,7 +56,6 @@ class ExpenseDetailsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.updateExpense(args.group.id, args.expense.pk)
+        viewModel.updateExpense()
     }
-
 }
