@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nqproject.MoneyApp.network.SimpleResult
+import com.nqproject.MoneyApp.repository.ExpenseDetails
 import com.nqproject.MoneyApp.repository.ExpenseRepository
 
 
@@ -13,10 +14,11 @@ class EditExpenseViewModel : ViewModel() {
 
     val loading: LiveData<Boolean> = _loading
 
-    suspend fun editExpense(groupId: Int, expenseId: Int, name: String, amount: Float):
+    suspend fun editExpense(expense: ExpenseDetails, name: String, amount: Float):
             SimpleResult<String> {
         _loading.value = true
-        val result = ExpenseRepository.editExpense(groupId, expenseId, name = name, amount = amount)
+        val result =
+            ExpenseRepository.editExpense(expense.groupId, expense.pk, name = name, amount = amount)
         _loading.value = false
         return result
     }

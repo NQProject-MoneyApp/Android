@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.ui.screens.auth.InputField
 import com.nqproject.MoneyApp.ui.screens.auth.InputFieldValidator
 import androidx.compose.runtime.*
+import java.util.*
 
 
 @Composable
@@ -28,7 +29,12 @@ fun AddExpenseForm(
     loading: Boolean
 ) {
     val expenseName = remember { mutableStateOf(defaultName) }
-    val expenseAmount = remember { mutableStateOf(defaultAmount?.toString() ?: "" ) }
+    val expenseAmount = remember {
+        mutableStateOf(
+            if (defaultAmount != null) String.format(Locale.US, "%.2f", defaultAmount)
+            else ""
+        )
+    }
 
     val expenseNameRequester by remember { mutableStateOf(FocusRequester()) }
     val expenseAmountRequester by remember { mutableStateOf(FocusRequester()) }

@@ -42,9 +42,7 @@ class ExpenseListFragment : Fragment() {
                         onExpenseDetailsNavigate = { expense ->
                             val action =
                                 ExpenseListFragmentDirections
-                                    .actionExpenseListFragmentToExpenseDetailsFragment(
-                                    expense, args.group
-                                )
+                                    .actionExpenseListFragmentToExpenseDetailsFragment(expense)
                             findNavController().navigate(action)
                         }
                     )

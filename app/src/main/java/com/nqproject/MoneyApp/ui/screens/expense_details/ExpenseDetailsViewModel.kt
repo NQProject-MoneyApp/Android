@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nqproject.MoneyApp.network.SimpleResult
+import com.nqproject.MoneyApp.repository.Expense
 import com.nqproject.MoneyApp.repository.ExpenseDetails
 import com.nqproject.MoneyApp.repository.ExpenseRepository
 import kotlinx.coroutines.delay
@@ -21,16 +22,14 @@ class ExpenseDetailsViewModel() : ViewModel() {
     val loading: LiveData<Boolean> = _loading
     val expenseDetails: LiveData<ExpenseDetails?> = _expenseDetails
 
-    var groupId : Int? = null
-    var expenseId : Int? = null
+    var expense : Expense? = null
 
 
-    fun init (groupId: Int, expenseId: Int) {
+    fun init (expense: Expense) {
         if(initialized) return
         initialized = true
 
-        this.groupId = groupId
-        this.expenseId = expenseId
+        this.expense = expense
 
         updateExpense()
     }
@@ -44,7 +43,7 @@ class ExpenseDetailsViewModel() : ViewModel() {
     private suspend fun fetchExpense(): SimpleResult<ExpenseDetails> {
         val date = Date()
         _loading.value = true
-        val result = ExpenseRepository.fetchExpenseDetails(groupId!!, expenseId!!)
+        val result = ExpenseRepository.fetchExpenseDetails(expense!!.groupId, expense!!.pk)
         delay(1000 - (Date().time-date.time))
         _loading.value = false
 

@@ -125,6 +125,6 @@ fun ExpenseDetailsScreen(
                 }
             }
         },
-        title = expenseDetails?.name ?: "..."
+        title = expenseDetails?.name ?: viewModel.expense!!.name
     )
 }

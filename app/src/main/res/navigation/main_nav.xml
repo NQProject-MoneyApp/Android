@@ -156,9 +156,6 @@
         <action
             android:id="@+id/action_expenseDetailsFragment_to_editExpenseFragment"
             app:destination="@id/editExpenseFragment" />
-        <argument
-            android:name="group"
-            app:argType="com.nqproject.MoneyApp.repository.Group" />
     </fragment>
     <fragment
         android:id="@+id/addExpenseFragment"
@@ -172,9 +169,6 @@
         android:id="@+id/editExpenseFragment"
         android:name="com.nqproject.MoneyApp.ui.screens.edit_expense.EditExpenseFragment"
         android:label="EditExpenseFragment">
-        <argument
-            android:name="group"
-            app:argType="com.nqproject.MoneyApp.repository.Group" />
         <argument
             android:name="expenseDetails"
             app:argType="com.nqproject.MoneyApp.repository.ExpenseDetails" />

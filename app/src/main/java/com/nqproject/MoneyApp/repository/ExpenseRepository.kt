@@ -18,6 +18,7 @@ object ExpenseRepository {
                 result.data.map {
                     Expense(
                         pk = it.pk,
+                        groupId = it.group_id,
                         name = it.name,
                         amount = it.amount,
                         author = User(it.author.username!!, it.author.email!!, 0.0),
@@ -37,6 +38,7 @@ object ExpenseRepository {
             is SimpleResult.Success -> SimpleResult.Success(
                 ExpenseDetails(
                     pk = result.data.pk,
+                    groupId = result.data.group_id,
                     name = result.data.name,
                     amount = result.data.amount,
                     author = User(result.data.author.username!!, result.data.author.email!!, 0.0),

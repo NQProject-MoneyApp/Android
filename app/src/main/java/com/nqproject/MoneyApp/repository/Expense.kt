@@ -8,6 +8,7 @@ import java.util.*
 @Parcelize
 data class Expense (
     val pk: Int,
+    val groupId: Int,
     val name: String,
     val amount: Double,
     val createDate: Date,
@@ -18,6 +19,7 @@ data class Expense (
 @Parcelize
 data class ExpenseDetails (
     val pk: Int,
+    val groupId: Int,
     val name: String,
     val amount: Double,
     val createDate: Date,

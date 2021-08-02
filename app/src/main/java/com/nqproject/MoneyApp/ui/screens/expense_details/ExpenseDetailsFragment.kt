@@ -20,7 +20,7 @@ class ExpenseDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.init(args.group.id, args.expense.pk)
+        viewModel.init(args.expense)
     }
 
 
@@ -43,7 +43,6 @@ class ExpenseDetailsFragment : Fragment() {
 
                             val action = ExpenseDetailsFragmentDirections
                                 .actionExpenseDetailsFragmentToEditExpenseFragment(
-                                    args.group,
                                     viewModel.expenseDetails.value!!
                                 )
                             findNavController().navigate(action)

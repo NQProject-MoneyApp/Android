@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun EditExpenseScreen(
-    groupId: Int,
     expense: ExpenseDetails,
     onBackNavigate: () -> Unit
 ) {
@@ -51,9 +50,7 @@ fun EditExpenseScreen(
                         Log.d(Config.MAIN_TAG, "on save edited expense: $name")
                         coroutineScope.launch {
                             when (val result =
-                                viewModel.editExpense(
-                                    groupId, expense.pk, name = name, amount = amount
-                                )) {
+                                viewModel.editExpense(expense, name = name, amount = amount)) {
                                 is SimpleResult.Error -> Toast.makeText(
                                     context,
                                     result.error,

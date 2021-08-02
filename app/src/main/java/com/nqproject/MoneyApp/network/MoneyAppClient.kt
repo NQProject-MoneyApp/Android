@@ -171,7 +171,8 @@ object MoneyAppClient {
             val result = client.fetchExpenseDetails(groupId, expenseId)
             SimpleResult.Success(result)
         } catch (e: HttpException) {
-            Log.e(Config.MAIN_TAG, "Failed to fetch expense details", e)
+            Log.e(Config.MAIN_TAG, "Failed to fetch expense details, for group $groupId and " +
+                    "expense $expenseId", e)
             SimpleResult.Error("Unknown error")
         }
     }
