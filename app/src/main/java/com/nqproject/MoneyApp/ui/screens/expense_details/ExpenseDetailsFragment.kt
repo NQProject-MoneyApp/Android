@@ -40,7 +40,6 @@ class ExpenseDetailsFragment : Fragment() {
                             if(viewModel.expenseDetails.value == null) {
                                 // TODO: do nothing and return
                             }
-
                             val action = ExpenseDetailsFragmentDirections
                                 .actionExpenseDetailsFragmentToEditExpenseFragment(
                                     viewModel.expenseDetails.value!!

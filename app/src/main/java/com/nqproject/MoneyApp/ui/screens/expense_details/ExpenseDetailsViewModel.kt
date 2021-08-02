@@ -34,17 +34,17 @@ class ExpenseDetailsViewModel() : ViewModel() {
         updateExpense()
     }
 
-    fun updateExpense() {
+    fun updateExpense(noticeably: Boolean = false) {
         viewModelScope.launch {
-            fetchExpense()
+            fetchExpense(noticeably)
         }
     }
 
-    private suspend fun fetchExpense(): SimpleResult<ExpenseDetails> {
+    private suspend fun fetchExpense(noticeably: Boolean): SimpleResult<ExpenseDetails> {
         val date = Date()
         _loading.value = true
         val result = ExpenseRepository.fetchExpenseDetails(expense!!.groupId, expense!!.pk)
-        delay(1000 - (Date().time-date.time))
+        if (noticeably) delay(1000 - (Date().time-date.time))
         _loading.value = false
 
         if (result is SimpleResult.Success) {

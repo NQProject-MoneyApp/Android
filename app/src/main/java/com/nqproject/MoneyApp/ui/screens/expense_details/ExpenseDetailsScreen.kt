@@ -2,7 +2,9 @@ package com.nqproject.MoneyApp.ui.screens.expense_details
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
@@ -34,6 +36,7 @@ fun ExpenseDetailsScreen(
     val viewModel = viewModel<ExpenseDetailsViewModel>()
     val dateFormat = SimpleDateFormat("dd-MM-yyy")
     val expenseDetails = viewModel.expenseDetails.observeAsState().value
+    val scrollState = rememberScrollState()
     val isRefreshing by viewModel.loading.observeAsState(false)
 
     ExpenseDetailsHeader(
@@ -43,13 +46,14 @@ fun ExpenseDetailsScreen(
         },
         didPressEditExpense = {
             Log.d(Config.MAIN_TAG, "didPressEditExpense")
-            onEditExpenseNavigate()
+            if(expenseDetails != null)
+                onEditExpenseNavigate()
         },
         body = {
             SwipeRefresh(
                 state = rememberSwipeRefreshState(isRefreshing),
                 onRefresh = {
-                    viewModel.updateExpense()
+                    viewModel.updateExpense(noticeably = true)
                 },
                 indicator = { state, trigger ->
                     SwipeRefreshIndicator(
@@ -65,6 +69,7 @@ fun ExpenseDetailsScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
+                        .verticalScroll(scrollState)
                         .padding(32.dp),
                 ) {
                     if (expenseDetails != null) {
