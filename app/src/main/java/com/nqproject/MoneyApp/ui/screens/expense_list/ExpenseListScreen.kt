@@ -49,15 +49,6 @@ fun ExpenseListScreen(
                  verticalArrangement = Arrangement.Top,
                  horizontalAlignment = Alignment.CenterHorizontally,
              ) {
-                 TextButton(onClick = {
-                     viewModel.updateExpenses(group.id)
-                 }) {
-                     Text(
-                         text = "Fetch expenses",
-                         style = MaterialTheme.typography.h4,
-                         color = MaterialTheme.colors.primary
-                     )
-                 }
                  Button(onClick = {
                      onAddExpenseNavigate()
                  }, modifier = Modifier.fillMaxWidth(), shape = AbsoluteRoundedCornerShape(15))
