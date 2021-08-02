@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.nqproject.MoneyApp.ui.theme.MoneyAppTheme
 
@@ -26,6 +27,10 @@ class EditExpenseFragment : Fragment() {
                         expense = args.expenseDetails,
                         onBackNavigate = {
                             requireActivity().onBackPressed()
+                        },
+                        onDeleteExpenseNavigate = {
+                            findNavController().popBackStack()
+                            findNavController().popBackStack()
                         }
                     )
                 }

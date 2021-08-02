@@ -1,9 +1,10 @@
 package com.nqproject.MoneyApp.ui.screens.edit_expense
 
-import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -22,7 +23,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun EditExpenseScreen(
     expense: ExpenseDetails,
-    onBackNavigate: () -> Unit
+    onBackNavigate: () -> Unit,
+    onDeleteExpenseNavigate: () -> Unit,
 ) {
 
     val viewModel = viewModel<EditExpenseViewModel>()
@@ -65,6 +67,37 @@ fun EditExpenseScreen(
 
                     }
                 )
+
+                Spacer(modifier = Modifier.height(21.dp))
+
+                Button(
+                    modifier = Modifier
+                        .height(49.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.error,
+                    ),
+                    enabled = !loading,
+                    onClick = {
+                        Log.d(Config.MAIN_TAG, "on delete expense: ${expense.name}")
+                        coroutineScope.launch {
+                            when (val result =
+                                viewModel.deleteExpense(expense)) {
+                                is SimpleResult.Error -> Toast.makeText(
+                                    context,
+                                    result.error,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                is SimpleResult.Success -> {
+                                    SimpleResult.Success("Success")
+                                    onDeleteExpenseNavigate()
+                                }
+                            }
+                        }
+
+                    }) {
+                    Text("Delete", style = MaterialTheme.typography.h4)
+                }
             }
         })
 }

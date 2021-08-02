@@ -143,6 +143,22 @@ object MoneyAppClient {
         }
     }
 
+    suspend fun deleteExpense(groupId: Int, expenseId: Int): SimpleResult<Boolean> {
+        return try {
+            val result = client.deleteExpense(groupId, expenseId)
+
+            if (result.code() != 204) {
+                Log.e(Config.MAIN_TAG, "Failed to delete expense, response code ${result.code()}")
+                return SimpleResult.Error("Unknown error")
+            }
+            SimpleResult.Success(true)
+
+        } catch (e: HttpException) {
+            Log.e(Config.MAIN_TAG, "Failed to delete expense", e)
+            SimpleResult.Error("Unknown error")
+        }
+    }
+
     suspend fun groupUsers(groupId: Int): SimpleResult<List<NetworkGroupUsersResponse>> {
         return try {
             val result = client.groupUsers(groupId)
@@ -171,8 +187,10 @@ object MoneyAppClient {
             val result = client.fetchExpenseDetails(groupId, expenseId)
             SimpleResult.Success(result)
         } catch (e: HttpException) {
-            Log.e(Config.MAIN_TAG, "Failed to fetch expense details, for group $groupId and " +
-                    "expense $expenseId", e)
+            Log.e(
+                Config.MAIN_TAG, "Failed to fetch expense details, for group $groupId and " +
+                        "expense $expenseId", e
+            )
             SimpleResult.Error("Unknown error")
         }
     }

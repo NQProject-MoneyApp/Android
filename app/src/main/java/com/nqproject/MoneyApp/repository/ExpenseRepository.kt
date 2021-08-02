@@ -69,4 +69,15 @@ object ExpenseRepository {
             is SimpleResult.Success -> SimpleResult.Success("Success")
         }
     }
+
+    suspend fun deleteExpense(groupId: Int, expenseId: Int):
+            SimpleResult<String> {
+        val result = withContext(Dispatchers.IO) {
+            MoneyAppClient.deleteExpense(groupId, expenseId)
+        }
+        return when (result) {
+            is SimpleResult.Error -> SimpleResult.Error(result.error)
+            is SimpleResult.Success -> SimpleResult.Success("Success")
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.nqproject.MoneyApp.network
 
 import com.nqproject.MoneyApp.network.models.*
+import retrofit2.Response
 import retrofit2.http.*
 
 interface MoneyAppApi {
@@ -29,6 +30,12 @@ interface MoneyAppApi {
         @Path("expenseId") expenseId: Int,
         @Body request: NetworkAddExpenseRequest
     ): NetworkExpensesResponse
+
+    @DELETE("/api/{groupId}/expenses/{expenseId}/")
+    suspend fun deleteExpense(
+        @Path("groupId") groupId: Int,
+        @Path("expenseId") expenseId: Int,
+    ) : Response<Unit>
 
     @GET("/api/group/{id}/users/")
     suspend fun groupUsers(@Path("id") id: Int): List<NetworkGroupUsersResponse>

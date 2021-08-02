@@ -22,4 +22,12 @@ class EditExpenseViewModel : ViewModel() {
         _loading.value = false
         return result
     }
+
+    suspend fun deleteExpense(expense: ExpenseDetails): SimpleResult<String> {
+        _loading.value = true
+        val result =
+            ExpenseRepository.deleteExpense(expense.groupId, expense.pk)
+        _loading.value = false
+        return result
+    }
 }
