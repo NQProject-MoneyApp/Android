@@ -54,7 +54,7 @@ fun CodeAlertComponent(onClose: () -> Unit, code: String) {
                     .clickable {
                         val clipboard =
                             context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                        val clip = ClipData.newPlainText("label", code)
+                        val clip = ClipData.newPlainText("group code", code)
                         clipboard.setPrimaryClip(clip)
                         Toast
                             .makeText(context, "Copied", Toast.LENGTH_SHORT)

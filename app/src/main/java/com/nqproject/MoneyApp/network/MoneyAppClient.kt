@@ -22,10 +22,6 @@ sealed class SimpleResult<T> {
 
 }
 
-data class ErrorResponse(
-    val details : String?
-)
-
 @Suppress("BlockingMethodInNonBlockingContext")
 suspend fun ResponseBody.stringSuspending() =
     withContext(Dispatchers.IO) { string() }
