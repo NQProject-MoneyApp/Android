@@ -87,7 +87,7 @@ private fun LoginForm(
         }
     )
 
-    Spacer(modifier = Modifier.height(21.dp))
+    Spacer(modifier = Modifier.height(5.dp))
 
     Button(
         modifier = Modifier

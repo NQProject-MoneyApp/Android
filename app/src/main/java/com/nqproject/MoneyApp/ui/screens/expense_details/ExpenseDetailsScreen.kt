@@ -2,11 +2,9 @@ package com.nqproject.MoneyApp.ui.screens.expense_details
 
 import android.annotation.SuppressLint
 import android.util.Log
-import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -46,7 +44,7 @@ fun ExpenseDetailsScreen(
         },
         didPressEditExpense = {
             Log.d(Config.MAIN_TAG, "didPressEditExpense")
-            if(expenseDetails != null)
+            if (expenseDetails != null)
                 onEditExpenseNavigate()
         },
         body = {
@@ -65,7 +63,6 @@ fun ExpenseDetailsScreen(
                     )
                 }
             ) {
-
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -75,7 +72,7 @@ fun ExpenseDetailsScreen(
                     if (expenseDetails != null) {
                         Card(
                             backgroundColor = MaterialTheme.colors.secondary,
-                            shape = RoundedCornerShape(15),
+                            shape = RoundedCornerShape(10),
                             modifier = Modifier
                                 .fillMaxWidth()
                         ) {
@@ -111,6 +108,38 @@ fun ExpenseDetailsScreen(
                                         color = Color.White,
                                         style = MaterialTheme.typography.h4
                                     )
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(32.dp))
+
+                        Card(
+                            backgroundColor = MaterialTheme.colors.secondary,
+                            shape = RoundedCornerShape(10),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Column(
+                                verticalArrangement = Arrangement.SpaceBetween,
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+                                Text("Participants", color = Color.White)
+                                Spacer(modifier = Modifier.height(16.dp))
+
+
+                                expenseDetails.participants.forEach {
+                                    Row(
+                                        horizontalArrangement = Arrangement.Start,
+                                        modifier = Modifier.padding(horizontal = 24.dp),
+                                    ) {
+                                        Text(
+                                            it.name, color = Color.White, modifier = Modifier
+                                                .weight(1f)
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.height(8.dp))
                                 }
                             }
                         }

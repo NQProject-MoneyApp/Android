@@ -30,7 +30,7 @@ fun AuthInputFields(usernameState: MutableState<String>, passwordState: MutableS
             } ?: passwordFocusRequester.requestFocus()
         })
 
-    Spacer(modifier = Modifier.height(21.dp))
+    Spacer(modifier = Modifier.height(5.dp))
 
     if (emailState != null) {
         InputField(
@@ -41,7 +41,7 @@ fun AuthInputFields(usernameState: MutableState<String>, passwordState: MutableS
             focusRequesterAction = {
                 passwordFocusRequester.requestFocus()
             })
-        Spacer(modifier = Modifier.height(21.dp))
+        Spacer(modifier = Modifier.height(5.dp))
     }
 
     InputField(
