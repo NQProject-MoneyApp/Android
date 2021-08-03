@@ -17,7 +17,7 @@ class AddExpenseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.init(args.group.id)
+        viewModel.init(args.group)
     }
 
     override fun onCreateView(

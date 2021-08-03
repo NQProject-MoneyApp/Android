@@ -3,13 +3,8 @@ package com.nqproject.MoneyApp.ui.screens.add_expense
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.nqproject.MoneyApp.network.SimpleResult
-import com.nqproject.MoneyApp.repository.ExpenseDetails
-import com.nqproject.MoneyApp.repository.ExpenseRepository
-import com.nqproject.MoneyApp.repository.GroupRepository
-import com.nqproject.MoneyApp.repository.User
-import kotlinx.coroutines.launch
+import com.nqproject.MoneyApp.repository.*
 
 
 class AddExpenseViewModel : ViewModel() {
@@ -23,22 +18,23 @@ class AddExpenseViewModel : ViewModel() {
     val groupMembers: LiveData<List<User>> = _groupMembers
     val chosenParticipants: LiveData<List<User>> = _chosenParticipants
 
-    fun init(groupId: Int, participants: List<User>? = null) {
+    fun init(group: Group, participants: List<User>? = null) {
         _loading.value = true
-        if(initialized) return
+        if (initialized) return
         initialized = true
 
-
-        viewModelScope.launch {
-            fetchMembers(groupId, participants)
-            _loading.value = false
-        }
+        _groupMembers.value =
+            group.members.map { User(pk = it.pk, name = it.name, email = it.email, balance = 0.0) }
+        _chosenParticipants.value = participants ?: _groupMembers.value
+        _loading.value = false
     }
 
     suspend fun addExpense(groupId: Int, name: String, amount: Float): SimpleResult<String> {
         _loading.value = true
-        val result = ExpenseRepository.addExpense(groupId, name = name, amount = amount, participants
-        = _chosenParticipants.value!!)
+        val result = ExpenseRepository.addExpense(
+            groupId, name = name, amount = amount, participants
+            = _chosenParticipants.value!!
+        )
         _loading.value = false
         return result
     }
@@ -47,8 +43,10 @@ class AddExpenseViewModel : ViewModel() {
             SimpleResult<String> {
         _loading.value = true
         val result =
-            ExpenseRepository.editExpense(expense.groupId, expense.pk, name = name, amount =
-            amount, participants = _chosenParticipants.value!!)
+            ExpenseRepository.editExpense(
+                expense.groupId, expense.pk, name = name, amount =
+                amount, participants = _chosenParticipants.value!!
+            )
         _loading.value = false
         return result
     }
@@ -68,15 +66,4 @@ class AddExpenseViewModel : ViewModel() {
     fun removeChosenMember(user: User) {
         _chosenParticipants.value = _chosenParticipants.value?.filter { it.pk != user.pk }
     }
-
-    private suspend fun fetchMembers(groupId: Int, participants: List<User>?): SimpleResult<List<User>> {
-        val result = GroupRepository.fetchGroupUsers(groupId)
-        if (result is SimpleResult.Success) {
-            _groupMembers.value = result.data.map { User(pk = it.pk, name = it.name, email = it
-                .email, balance = 0.0) }
-        }
-        _chosenParticipants.value = participants ?: _groupMembers.value
-        return result
-    }
-
 }

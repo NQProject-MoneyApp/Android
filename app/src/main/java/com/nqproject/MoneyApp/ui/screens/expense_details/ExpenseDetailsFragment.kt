@@ -42,7 +42,7 @@ class ExpenseDetailsFragment : Fragment() {
                             }
                             val action = ExpenseDetailsFragmentDirections
                                 .actionExpenseDetailsFragmentToEditExpenseFragment(
-                                    viewModel.expenseDetails.value!!
+                                    viewModel.expenseDetails.value!!, args.group
                                 )
                             findNavController().navigate(action)
                         },

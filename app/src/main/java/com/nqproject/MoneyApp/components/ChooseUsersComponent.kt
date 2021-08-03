@@ -50,7 +50,9 @@ fun ChooseUsersComponent(
     validator: InputFieldValidator<List<User>> = InputFieldValidator(),
 ) {
     val errorMessage = validator.errorMessage.observeAsState().value!!
-    validator.validate(chosenMembers)
+
+    if(groupMembers.isNotEmpty())
+        validator.validate(chosenMembers)
 
     val cardShape = RoundedCornerShape(10.dp)
     var cardModifier = Modifier

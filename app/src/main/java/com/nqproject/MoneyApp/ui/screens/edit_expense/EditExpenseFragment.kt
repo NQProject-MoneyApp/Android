@@ -19,7 +19,7 @@ class EditExpenseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.init(args.expenseDetails.groupId, args.expenseDetails.participants)
+        viewModel.init(args.group, args.expenseDetails.participants)
     }
 
 

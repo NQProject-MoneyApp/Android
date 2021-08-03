@@ -104,16 +104,14 @@ fun AddExpenseForm(
 
     Spacer(modifier = Modifier.height(5.dp))
 
-    if(groupMembers.isNotEmpty()) {
-        ChooseUsersComponent(
-            title = "Participants",
-            groupMembers = groupMembers,
-            chosenMembers = chosenMembers,
-            onAddUser = { viewModel.addChosenMember(it) },
-            onRemoveUser = { viewModel.removeChosenMember(it) },
-            validator = usersValidator,
-        )
-    }
+    ChooseUsersComponent(
+        title = "Participants",
+        groupMembers = groupMembers,
+        chosenMembers = chosenMembers,
+        onAddUser = { viewModel.addChosenMember(it) },
+        onRemoveUser = { viewModel.removeChosenMember(it) },
+        validator = usersValidator,
+    )
 
     Spacer(modifier = Modifier.height(5.dp))
 
