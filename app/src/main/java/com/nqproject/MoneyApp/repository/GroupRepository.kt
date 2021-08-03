@@ -12,26 +12,34 @@ object GroupRepository {
             MoneyAppClient.fetchGroups()
         }
 
-        return when(result) {
+        return when (result) {
             is SimpleResult.Error -> SimpleResult.Error(result.error)
             is SimpleResult.Success -> SimpleResult.Success(
-                result.data.map { Group(
-                    id = it.pk!!,
-                    name = it.name!!,
-                    totalCost = it.total_cost!!,
-                    icon = MoneyAppIcon.from(it.icon!!).icon(),
-                    isFavourite = false,
-                    userBalance = it.user_balance!!,
-                    createDate = it.create_date!!) })
+                result.data.map {
+                    Group(
+                        id = it.pk!!,
+                        name = it.name!!,
+                        totalCost = it.total_cost!!,
+                        icon = MoneyAppIcon.from(it.icon!!).icon(),
+                        userBalance = it.user_balance!!,
+                        createDate = it.create_date!!,
+                        members = it.members.map { member ->
+                            User(
+                                pk = member.user.pk, name = member.user.username,
+                                email = member.user.email, balance = member.balance!!
+                            )
+                        }
+                    )
+                })
         }
     }
 
     suspend fun addGroup(name: String, icon: Int, members: List<User>): SimpleResult<String> {
         val result = withContext(Dispatchers.IO) {
-            MoneyAppClient.addGroup(name=name, icon=icon, members=members)
+            MoneyAppClient.addGroup(name = name, icon = icon, members = members)
         }
 
-        return when(result) {
+        return when (result) {
             is SimpleResult.Error -> SimpleResult.Error(result.error)
             is SimpleResult.Success -> SimpleResult.Success("Success")
         }
@@ -42,12 +50,16 @@ object GroupRepository {
             MoneyAppClient.groupUsers(groupId)
         }
 
-        return when(result) {
+        return when (result) {
             is SimpleResult.Error -> SimpleResult.Error(result.error)
             is SimpleResult.Success -> SimpleResult.Success(
-                result.data.map { User(pk = it.user.pk, name = it.user.username,
-                    email = it.user.email, balance = it.balance!!) })
-                //TODO: Parse if not null
+                result.data.map {
+                    User(
+                        pk = it.user.pk, name = it.user.username,
+                        email = it.user.email, balance = it.balance!!
+                    )
+                })
+            //TODO: Parse if not null
         }
     }
 
@@ -56,7 +68,7 @@ object GroupRepository {
             MoneyAppClient.groupCode(groupId)
         }
 
-        return when(result) {
+        return when (result) {
             is SimpleResult.Error -> SimpleResult.Error(result.error)
             is SimpleResult.Success -> SimpleResult.Success(result.data.code)
         }
@@ -67,7 +79,7 @@ object GroupRepository {
             MoneyAppClient.joinToGroup(code)
         }
 
-        return when(result) {
+        return when (result) {
             is SimpleResult.Error -> SimpleResult.Error(result.error)
             is SimpleResult.Success -> SimpleResult.Success("Success")
         }

@@ -16,6 +16,7 @@ data class NetworkGroupsResponse(
     val total_cost: Double?,
     val user_balance: Double?,
     val icon: Int?,
+    val members: List<NetworkGroupUsersResponse>,
     @SerializedName("non_field_errors")
     val error: String?,
 )

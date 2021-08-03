@@ -12,5 +12,5 @@ data class Group(
     val userBalance: Double,
     val icon: Int,
     val createDate: Date,
-    var isFavourite: Boolean
+    val members: List<User>,
 ) : Parcelable
