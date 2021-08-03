@@ -7,7 +7,7 @@ import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.repository.ExpenseRepository
 
 
-class AddExpenseViewModel: ViewModel() {
+class AddExpenseViewModel : ViewModel() {
 
     private val _loading = MutableLiveData(false)
 
@@ -15,9 +15,8 @@ class AddExpenseViewModel: ViewModel() {
 
     suspend fun addExpense(groupId: Int, name: String, amount: Float): SimpleResult<String> {
         _loading.value = true
-        val result = ExpenseRepository.addExpense(groupId, name=name, amount=amount)
+        val result = ExpenseRepository.addExpense(groupId, name = name, amount = amount)
         _loading.value = false
         return result
     }
-
 }

@@ -16,27 +16,65 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.ui.screens.auth.InputField
+import com.nqproject.MoneyApp.ui.screens.auth.InputFieldValidator
+import androidx.compose.runtime.*
+import java.util.*
+
 
 @Composable
-fun AddExpenseForm(onSave: (name: String, amount: Float) -> Unit, loading: Boolean) {
-    val expenseName = remember { mutableStateOf("") }
-    val expenseAmount = remember { mutableStateOf("0") }
+fun AddExpenseForm(
+    defaultName: String = "",
+    defaultAmount: Float? = null,
+    onSave: (name: String, amount: Float) -> Unit,
+    loading: Boolean
+) {
+    val expenseName = remember { mutableStateOf(defaultName) }
+    val expenseAmount = remember {
+        mutableStateOf(
+            if (defaultAmount != null) String.format(Locale.US, "%.2f", defaultAmount)
+            else ""
+        )
+    }
 
-    val expenseAmountRequester = remember { FocusRequester() }
+    val expenseNameRequester by remember { mutableStateOf(FocusRequester()) }
+    val expenseAmountRequester by remember { mutableStateOf(FocusRequester()) }
+
     val focusManager = LocalFocusManager.current
+
+    val nameValidator by remember {
+        mutableStateOf(InputFieldValidator {
+            when {
+                it.isEmpty() -> "Enter an expense name"
+                else -> ""
+            }
+        })
+    }
+
+    val amountValidator by remember {
+        mutableStateOf(InputFieldValidator {
+            val value = it.toFloatOrNull() ?: 0f
+            when {
+                value == 0f -> "Enter an expense amount"
+                value < 0f -> "Expense amount must be greater than zero"
+                else -> ""
+            }
+        })
+    }
 
     Spacer(modifier = Modifier.height(21.dp))
 
     InputField(
-        focusRequester = FocusRequester(),
+        focusRequester = expenseNameRequester,
         fieldState = expenseName,
         keyboardType = KeyboardType.Text,
         placeholder = "Name",
         focusRequesterAction = {
             expenseAmountRequester.requestFocus()
-        })
+        },
+        validator = nameValidator
+    )
 
-    Spacer(modifier = Modifier.height(21.dp))
+    Spacer(modifier = Modifier.height(5.dp))
 
     InputField(
         focusRequester = expenseAmountRequester,
@@ -45,9 +83,11 @@ fun AddExpenseForm(onSave: (name: String, amount: Float) -> Unit, loading: Boole
         placeholder = "Amount",
         focusRequesterAction = {
             focusManager.clearFocus()
-        })
+        },
+        validator = amountValidator
+    )
 
-    Spacer(modifier = Modifier.height(21.dp))
+    Spacer(modifier = Modifier.height(5.dp))
 
     Button(
         modifier = Modifier
@@ -56,7 +96,10 @@ fun AddExpenseForm(onSave: (name: String, amount: Float) -> Unit, loading: Boole
         shape = RoundedCornerShape(10.dp),
         enabled = !loading,
         onClick = {
-            onSave(expenseName.value, expenseAmount.value.toFloat())
+            nameValidator.validate(expenseName.value)
+            amountValidator.validate(expenseAmount.value)
+            if (!nameValidator.isError() and !amountValidator.isError())
+                onSave(expenseName.value, expenseAmount.value.toFloatOrNull() ?: 0f)
         }) {
         Text("Save", style = MaterialTheme.typography.h4)
     }

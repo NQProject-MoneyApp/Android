@@ -6,19 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import com.nqproject.MoneyApp.ui.screens.LoginScreen
-import com.nqproject.MoneyApp.ui.screens.auth.login.LoginFragmentDirections
-import com.nqproject.MoneyApp.ui.screens.expense_list.ExpenseListFragmentArgs
-import com.nqproject.MoneyApp.ui.screens.expense_list.ExpenseListScreen
-import com.nqproject.MoneyApp.ui.screens.group_details.GroupDetailsFragmentArgs
 import com.nqproject.MoneyApp.ui.theme.MoneyAppTheme
 
 
 class ExpenseDetailsFragment : Fragment() {
 
     private val args: ExpenseDetailsFragmentArgs by navArgs()
+    private val viewModel: ExpenseDetailsViewModel by viewModels()
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.init(args.expense)
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,14 +33,27 @@ class ExpenseDetailsFragment : Fragment() {
             setContent {
                 MoneyAppTheme {
                     ExpenseDetailsScreen(
-                        expense = args.expense,
                         onBackNavigate = {
                             requireActivity().onBackPressed()
-                        }
+                        },
+                        onEditExpenseNavigate = {
+                            if(viewModel.expenseDetails.value == null) {
+                                // TODO: do nothing and return
+                            }
+                            val action = ExpenseDetailsFragmentDirections
+                                .actionExpenseDetailsFragmentToEditExpenseFragment(
+                                    viewModel.expenseDetails.value!!
+                                )
+                            findNavController().navigate(action)
+                        },
                     )
                 }
             }
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateExpense()
+    }
 }

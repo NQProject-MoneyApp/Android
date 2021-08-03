@@ -1,6 +1,7 @@
 package com.nqproject.MoneyApp.network
 
 import com.nqproject.MoneyApp.network.models.*
+import retrofit2.Response
 import retrofit2.http.*
 
 interface MoneyAppApi {
@@ -18,13 +19,35 @@ interface MoneyAppApi {
     suspend fun addGroup(@Body request: NetworkAddGroupRequest): NetworkGroupsResponse
 
     @POST("/api/{id}/expenses/")
-    suspend fun addExpense(@Path("id") id: Int, @Body request: NetworkAddExpenseRequest): NetworkExpensesResponse
+    suspend fun addExpense(
+        @Path("id") id: Int,
+        @Body request: NetworkAddExpenseRequest
+    ): NetworkExpensesResponse
+
+    @PUT("/api/{groupId}/expenses/{expenseId}/")
+    suspend fun editExpense(
+        @Path("groupId") groupId: Int,
+        @Path("expenseId") expenseId: Int,
+        @Body request: NetworkAddExpenseRequest
+    ): NetworkExpensesResponse
+
+    @DELETE("/api/{groupId}/expenses/{expenseId}/")
+    suspend fun deleteExpense(
+        @Path("groupId") groupId: Int,
+        @Path("expenseId") expenseId: Int,
+    ) : Response<Unit>
 
     @GET("/api/group/{id}/users/")
     suspend fun groupUsers(@Path("id") id: Int): List<NetworkGroupUsersResponse>
 
     @GET("/api/{id}/expenses/")
     suspend fun groupExpenses(@Path("id") id: Int): List<NetworkExpensesResponse>
+
+    @GET("/api/{groupId}/expenses/{expenseId}/")
+    suspend fun fetchExpenseDetails(
+        @Path("groupId") groupId: Int,
+        @Path("expenseId") expenseId: Int
+    ): NetworkExpenseDetailsResponse
 
     @POST("/api/group-codes/")
     suspend fun groupCode(@Body request: NetworkGroupCodeRequest): NetworkGroupCodeResponse

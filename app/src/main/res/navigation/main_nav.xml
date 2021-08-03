@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
     app:startDestination="@id/splashFragment">
 
@@ -152,6 +153,9 @@
         <argument
             android:name="expense"
             app:argType="com.nqproject.MoneyApp.repository.Expense" />
+        <action
+            android:id="@+id/action_expenseDetailsFragment_to_editExpenseFragment"
+            app:destination="@id/editExpenseFragment" />
     </fragment>
     <fragment
         android:id="@+id/addExpenseFragment"
@@ -160,5 +164,13 @@
         <argument
             android:name="group"
             app:argType="com.nqproject.MoneyApp.repository.Group" />
+    </fragment>
+    <fragment
+        android:id="@+id/editExpenseFragment"
+        android:name="com.nqproject.MoneyApp.ui.screens.edit_expense.EditExpenseFragment"
+        android:label="EditExpenseFragment">
+        <argument
+            android:name="expenseDetails"
+            app:argType="com.nqproject.MoneyApp.repository.ExpenseDetails" />
     </fragment>
 </navigation>

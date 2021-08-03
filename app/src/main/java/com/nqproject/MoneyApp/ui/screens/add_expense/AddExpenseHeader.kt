@@ -12,11 +12,15 @@ import com.nqproject.MoneyApp.R
 
 
 @Composable
-fun AddExpenseHeader(didPressBackButton: () -> Unit, body: @Composable () -> Unit) {
+fun AddExpenseHeader(
+    title: String,
+    didPressBackButton: () -> Unit,
+    body: @Composable () -> Unit
+) {
 
     Column() {
         TopAppBar(
-            title = { Text(text = "New Expense", style = MaterialTheme.typography.h4) },
+            title = { Text(text = title, style = MaterialTheme.typography.h4) },
             backgroundColor = MaterialTheme.colors.background,
             navigationIcon = {
                 IconButton(onClick = { didPressBackButton() }) {

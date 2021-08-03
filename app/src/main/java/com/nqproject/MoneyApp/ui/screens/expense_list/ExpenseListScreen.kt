@@ -31,7 +31,6 @@ fun ExpenseListScreen(
     onAddExpenseNavigate: () -> Unit,
 ) {
 
-    val coroutineScope = rememberCoroutineScope()
     val viewModel = viewModel<ExpenseListViewModel>()
     val scrollState = rememberScrollState()
     val groupExpenses = viewModel.groupExpenses.observeAsState(emptyList()).value
@@ -50,17 +49,6 @@ fun ExpenseListScreen(
                  verticalArrangement = Arrangement.Top,
                  horizontalAlignment = Alignment.CenterHorizontally,
              ) {
-                 TextButton(onClick = {
-                     coroutineScope.launch {
-                         viewModel.fetchExpenses(group.id)
-                     }
-                 }) {
-                     Text(
-                         text = "Fetch expenses",
-                         style = MaterialTheme.typography.h4,
-                         color = MaterialTheme.colors.primary
-                     )
-                 }
                  Button(onClick = {
                      onAddExpenseNavigate()
                  }, modifier = Modifier.fillMaxWidth(), shape = AbsoluteRoundedCornerShape(15))
