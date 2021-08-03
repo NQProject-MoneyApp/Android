@@ -38,7 +38,8 @@ object ExpenseRepository {
                     groupId = result.data.group_id,
                     name = result.data.name,
                     amount = result.data.amount,
-                    author = User(result.data.author.username!!, result.data.author.email!!, 0.0),
+                    author = User(result.data.author.pk!!, result.data.author.username!!, result
+                        .data.author.email!!, 0.0),
                     createDate = result.data.create_date
                 )
             )
