@@ -1,5 +1,4 @@
 package com.nqproject.MoneyApp.network
-
 import android.util.Log
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.manager.AuthenticationManager
@@ -7,16 +6,40 @@ import com.nqproject.MoneyApp.network.models.*
 import com.nqproject.MoneyApp.repository.User
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.HttpException
+import java.io.IOException
+import java.net.UnknownHostException
 
 sealed class SimpleResult<T> {
 
     class Success<T>(val data: T): SimpleResult<T>()
     class Error<T>(val error: String): SimpleResult<T>()
+}
 
+class ConnectivityInterceptor : Interceptor {
+
+    override fun intercept(chain: Interceptor.Chain): Response {
+        Log.d(Config.MAIN_TAG, "intercept")
+
+        try {
+            val response = chain.proceed(chain.request())
+            // TODO check 413
+            return response
+
+        } catch (t: UnknownHostException) {
+            // throw error??
+//            throw HttpException(
+//                retrofit2.Response.error<Any>(409, ""
+//                    .toResponseBody("plain/text".toMediaTypeOrNull()),
+//                )
+//            )
+            throw NoConnectivityException()
+        }
+    }
 }
 
 object MoneyAppClient {
@@ -25,7 +48,12 @@ object MoneyAppClient {
         .baseUrl("https://money-app-nqproject-staging.herokuapp.com")
         .addConverterFactory(GsonConverterFactory.create())
         .client(OkHttpClient.Builder()
+            .addInterceptor(ConnectivityInterceptor())
             .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.HEADERS })
+            .callTimeout(Config.SOCKET_TIMEOUT)
+            .connectTimeout(Config.SOCKET_TIMEOUT)
+            .readTimeout(Config.SOCKET_TIMEOUT)
+            .writeTimeout(Config.SOCKET_TIMEOUT)
             .addInterceptor(Interceptor() {
                 val builder = it.request().newBuilder()
                 AuthenticationManager.token?.let { it1 -> builder.addHeader("Authorization", it1) }
@@ -48,12 +76,20 @@ object MoneyAppClient {
             //TODO: parse error from backend
             Log.e(Config.MAIN_TAG, "Failed to login", e)
             SimpleResult.Error("Unknown error")
+        } catch (e: NoConnectivityException) {
+            Log.e(Config.MAIN_TAG, "No internet", e)
+            SimpleResult.Error(e.message)
         }
     }
 
     suspend fun registration(username: String, password: String, email: String): SimpleResult<String> {
         return try {
-            val result = client.registration(NetworkRegistrationRequest(username = username, email = email, password1 = password, password2 = password,))
+            val result = client.registration(NetworkRegistrationRequest(
+                username = username,
+                email = email,
+                password1 = password,
+                password2 = password
+            ))
 
             if(result.key != null) {
                 SimpleResult.Success(result.key)
