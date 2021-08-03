@@ -1,10 +1,9 @@
 package com.nqproject.MoneyApp.ui.screens.add_expense
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +17,11 @@ import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.ui.screens.auth.InputField
 import com.nqproject.MoneyApp.ui.screens.auth.InputFieldValidator
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.nqproject.MoneyApp.ui.screens.add_group.AddUserComponent
 import java.util.*
 
 
@@ -28,6 +32,12 @@ fun AddExpenseForm(
     onSave: (name: String, amount: Float) -> Unit,
     loading: Boolean
 ) {
+    val viewModel = viewModel<AddExpenseViewModel>()
+    val chosenMembers = viewModel.chosenParticipants.observeAsState(emptyList()).value
+    val groupMembers = viewModel.groupMembers.observeAsState(emptyList()).value
+
+
+
     val expenseName = remember { mutableStateOf(defaultName) }
     val expenseAmount = remember {
         mutableStateOf(
@@ -86,6 +96,41 @@ fun AddExpenseForm(
         },
         validator = amountValidator
     )
+
+    Spacer(modifier = Modifier.height(5.dp))
+
+    Card(
+        backgroundColor = MaterialTheme.colors.secondary,
+        shape = RoundedCornerShape(15),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+
+    ) {
+        Column(
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text("Members", color = Color.White)
+            Spacer(modifier = Modifier.height(16.dp))
+
+
+            groupMembers.forEach {
+                AddUserComponent(
+                    user = it,
+                    check=chosenMembers.contains(it),
+                    didPressComponent = {
+                        if (chosenMembers.contains(it)) {
+                            viewModel.removeChosenMember(it)
+                        } else {
+                            viewModel.addChosenMember(it)
+                        }
+                    })
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+        }
+    }
 
     Spacer(modifier = Modifier.height(5.dp))
 

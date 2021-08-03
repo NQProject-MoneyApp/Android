@@ -24,6 +24,7 @@ fun AddExpenseScreen(
     val viewModel = viewModel<AddExpenseViewModel>()
     val coroutineScope = rememberCoroutineScope()
     val loading = viewModel.loading.observeAsState(false).value
+
     val context = LocalContext.current
 
     AddExpenseHeader(

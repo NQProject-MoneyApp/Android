@@ -122,11 +122,13 @@ object MoneyAppClient {
     suspend fun addExpense(
         groupId: Int,
         name: String,
-        amount: Float
+        amount: Float,
+        participants: List<User>,
     ): SimpleResult<NetworkExpensesResponse> {
         return try {
             val result =
-                client.addExpense(groupId, NetworkAddExpenseRequest(name = name, amount = amount))
+                client.addExpense(groupId, NetworkAddExpenseRequest(name = name, amount = amount,
+                    participants = participants.map { it.pk } ))
 
             SimpleResult.Success(result)
 
@@ -140,12 +142,14 @@ object MoneyAppClient {
         groupId: Int,
         expenseId: Int,
         name: String,
-        amount: Float
-    ): SimpleResult<NetworkExpensesResponse> {
+        amount: Float,
+        participants: List<User>,
+        ): SimpleResult<NetworkExpensesResponse> {
         return try {
             val result =
                 client.editExpense(
-                    groupId, expenseId, NetworkAddExpenseRequest(name = name, amount = amount)
+                    groupId, expenseId, NetworkAddExpenseRequest(name = name, amount = amount,
+                        participants = participants.map { it.pk } )
                 )
 
             SimpleResult.Success(result)

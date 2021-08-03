@@ -2,7 +2,6 @@ package com.nqproject.MoneyApp.repository
 
 import com.nqproject.MoneyApp.network.MoneyAppClient
 import com.nqproject.MoneyApp.network.SimpleResult
-import com.nqproject.MoneyApp.ui.screens.group_details.UserBalance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -38,7 +37,7 @@ object GroupRepository {
         }
     }
 
-    suspend fun fetchGroupUsers(groupId: Int): SimpleResult<List<UserBalance>> {
+    suspend fun fetchGroupUsers(groupId: Int): SimpleResult<List<User>> {
         val result = withContext(Dispatchers.IO) {
             MoneyAppClient.groupUsers(groupId)
         }
@@ -46,7 +45,8 @@ object GroupRepository {
         return when(result) {
             is SimpleResult.Error -> SimpleResult.Error(result.error)
             is SimpleResult.Success -> SimpleResult.Success(
-                result.data.map { UserBalance(name = it.user!!.username!!, balance = it.balance!!) })
+                result.data.map { User(pk = it.user.pk, name = it.user.username,
+                    email = it.user.email, balance = it.balance!!) })
                 //TODO: Parse if not null
         }
     }

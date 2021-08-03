@@ -20,7 +20,7 @@ object ExpenseRepository {
                     groupId = it.group_id,
                     name = it.name,
                     amount = it.amount,
-                    author = User(pk = it.author.pk!!, it.author.username!!, it.author.email!!, 0.0),
+                    author = User(pk = it.author.pk, it.author.username, it.author.email, 0.0),
                     createDate = it.create_date) })
         }
     }
@@ -38,17 +38,20 @@ object ExpenseRepository {
                     groupId = result.data.group_id,
                     name = result.data.name,
                     amount = result.data.amount,
-                    author = User(result.data.author.pk!!, result.data.author.username!!, result
-                        .data.author.email!!, 0.0),
-                    createDate = result.data.create_date
+                    author = User(result.data.author.pk, result.data.author.username, result
+                        .data.author.email, 0.0),
+                    createDate = result.data.create_date,
+                    participants = result.data.participants.map { User(pk = it.pk, it.username,
+                        it.email, 0.0) }
                 )
             )
         }
     }
 
-    suspend fun addExpense(groupId: Int, name: String, amount: Float): SimpleResult<String> {
+    suspend fun addExpense(groupId: Int, name: String, amount: Float, participants: List<User>):
+            SimpleResult<String> {
         val result = withContext(Dispatchers.IO) {
-            MoneyAppClient.addExpense(groupId, name = name, amount = amount)
+            MoneyAppClient.addExpense(groupId, name = name, amount = amount, participants = participants)
         }
 
         return when (result) {
@@ -57,10 +60,11 @@ object ExpenseRepository {
         }
     }
 
-    suspend fun editExpense(groupId: Int, expenseId: Int, name: String, amount: Float):
+    suspend fun editExpense(groupId: Int, expenseId: Int, name: String, amount: Float, participants:
+    List<User>):
             SimpleResult<String> {
         val result = withContext(Dispatchers.IO) {
-            MoneyAppClient.editExpense(groupId, expenseId, name = name, amount = amount)
+            MoneyAppClient.editExpense(groupId, expenseId, name = name, amount = amount, participants = participants)
         }
         return when (result) {
             is SimpleResult.Error -> SimpleResult.Error(result.error)

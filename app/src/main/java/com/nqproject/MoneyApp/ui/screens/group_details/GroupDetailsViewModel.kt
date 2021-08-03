@@ -5,20 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.repository.GroupRepository
+import com.nqproject.MoneyApp.repository.User
 
 class GroupDetailsViewModel: ViewModel() {
 
     var initialized = false
 
-    private val _groupDetails = MutableLiveData(emptyList<UserBalance>())
-    val groupDetails: LiveData<List<UserBalance>> = _groupDetails
+    private val _groupDetails = MutableLiveData(emptyList<User>())
+    val groupDetails: LiveData<List<User>> = _groupDetails
 
     fun init() {
         if(initialized) return
         initialized = true
     }
 
-    suspend fun fetchGroupUsers(groupId: Int): SimpleResult<List<UserBalance>> {
+    suspend fun fetchGroupUsers(groupId: Int): SimpleResult<List<User>> {
         val result = GroupRepository.fetchGroupUsers(groupId)
         if(result is SimpleResult.Success) {
             _groupDetails.value = result.data

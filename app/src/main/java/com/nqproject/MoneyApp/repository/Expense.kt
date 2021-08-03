@@ -23,5 +23,6 @@ data class ExpenseDetails (
     val name: String,
     val amount: Double,
     val createDate: Date,
-    val author: User
+    val author: User,
+    val participants: List<User>,
 ) : Parcelable
