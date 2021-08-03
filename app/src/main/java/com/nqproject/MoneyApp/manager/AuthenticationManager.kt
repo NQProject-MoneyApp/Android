@@ -9,4 +9,7 @@ object AuthenticationManager {
         set(value) {
             SharedPreferencesManager.write(TOKEN_KEY, if (value == null) null else "Token $value")
         }
+
+    val isLoggedIn: Boolean
+        get() = token != null
 }

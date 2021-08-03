@@ -29,22 +29,32 @@ suspend fun ResponseBody.stringSuspending() =
 
 object MoneyAppClient {
 
+    var logoutCallback: (() -> Unit)? = null
+
     private val client = Retrofit.Builder()
         .baseUrl("https://money-app-nqproject-staging.herokuapp.com")
         .addConverterFactory(GsonConverterFactory.create())
         .client(
             OkHttpClient.Builder()
-                .addInterceptor(
-                    HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.HEADERS })
                 .addInterceptor(Interceptor() {
                     val builder = it.request().newBuilder()
-                    AuthenticationManager.token?.let { it1 ->
+                    AuthenticationManager.token?.let { token ->
                         builder.addHeader(
-                            "Authorization", it1
+                            "Authorization", token
                         )
                     }
                     return@Interceptor it.proceed(builder.build())
                 })
+                .addInterceptor {
+                    val builder = it.request().newBuilder()
+                    val result = it.proceed(builder.build())
+                    if(result.code == 401 && AuthenticationManager.isLoggedIn) {
+                        logoutCallback?.invoke()
+                    }
+                    return@addInterceptor result
+                }
+                .addInterceptor(
+                    HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
                 .build()
         )
         .build()
