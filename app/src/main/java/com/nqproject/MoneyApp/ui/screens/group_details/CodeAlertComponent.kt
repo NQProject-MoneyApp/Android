@@ -1,5 +1,6 @@
 package com.nqproject.MoneyApp.ui.screens.group_details
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,13 +13,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.ui.AlertComponent
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import androidx.compose.ui.draw.clip
 
 
 @Composable
 fun CodeAlertComponent(onClose: () -> Unit, code: String) {
+    val context = LocalContext.current
+    val shape = RoundedCornerShape(25)
     AlertComponent(onClose = { onClose() }) {
         Column(
 
@@ -27,25 +35,30 @@ fun CodeAlertComponent(onClose: () -> Unit, code: String) {
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text(
-                "Share the code",
+                "Share the code with friends!",
                 color = Color.White,
                 style = MaterialTheme.typography.h4,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(horizontal = 10.dp),
             )
-            Text(
-                "with friends!",
-                color = Color.White,
-                style = MaterialTheme.typography.h4,
-            )
+
             Spacer(modifier = Modifier.height(8.dp))
             Card(
                 backgroundColor = MaterialTheme.colors.secondary,
-                shape = RoundedCornerShape(25),
+                shape = shape,
                 border = BorderStroke(3.dp, MaterialTheme.colors.primary),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
+                    .clip(shape)
                     .clickable {
-                        //copy it
+                        val clipboard =
+                            context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                        val clip = ClipData.newPlainText("group code", code)
+                        clipboard.setPrimaryClip(clip)
+                        Toast
+                            .makeText(context, "Copied", Toast.LENGTH_SHORT)
+                            .show()
                     }
             ) {
                 Text(
@@ -59,7 +72,8 @@ fun CodeAlertComponent(onClose: () -> Unit, code: String) {
             Spacer(modifier = Modifier.height(8.dp))
 
             TextButton(onClick = { onClose() }) {
-                Text("Back",
+                Text(
+                    "Back",
                     color = MaterialTheme.colors.primary,
                     style = MaterialTheme.typography.h4,
                 )

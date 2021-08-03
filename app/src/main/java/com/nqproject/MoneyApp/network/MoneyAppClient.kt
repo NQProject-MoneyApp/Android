@@ -1,12 +1,16 @@
 package com.nqproject.MoneyApp.network
 
 import android.util.Log
+import com.google.gson.Gson
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.manager.AuthenticationManager
 import com.nqproject.MoneyApp.network.models.*
 import com.nqproject.MoneyApp.repository.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,6 +22,10 @@ sealed class SimpleResult<T> {
     class Error<T>(val error: String): SimpleResult<T>()
 
 }
+
+@Suppress("BlockingMethodInNonBlockingContext")
+suspend fun ResponseBody.stringSuspending() =
+    withContext(Dispatchers.IO) { string() }
 
 object MoneyAppClient {
 
@@ -146,7 +154,9 @@ object MoneyAppClient {
             SimpleResult.Success(true)
         } catch(e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to join to group", e)
-            SimpleResult.Error("Unknown error")
+            val errorContent = e.response()?.errorBody()?.stringSuspending()
+            val message = Gson().fromJson(errorContent, ErrorResponse::class.java).details
+            SimpleResult.Error(message ?: "Unknown error")
         }
     }
 

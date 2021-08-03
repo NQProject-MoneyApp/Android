@@ -67,7 +67,7 @@ fun GroupListScreen(
                 coroutineScope.launch {
                     val result = viewModel.join(it)
                     if (result is SimpleResult.Error) {
-                        Toast.makeText(context, "Error on join to group", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
