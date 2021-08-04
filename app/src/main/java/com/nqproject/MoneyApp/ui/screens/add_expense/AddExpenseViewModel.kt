@@ -39,7 +39,7 @@ class AddExpenseViewModel : ViewModel() {
         return result
     }
 
-    suspend fun editExpense(expense: ExpenseDetails, name: String, amount: Float):
+    suspend fun editExpense(expense: Expense, name: String, amount: Float):
             SimpleResult<String> {
         _loading.value = true
         val result =
@@ -51,7 +51,7 @@ class AddExpenseViewModel : ViewModel() {
         return result
     }
 
-    suspend fun deleteExpense(expense: ExpenseDetails): SimpleResult<String> {
+    suspend fun deleteExpense(expense: Expense): SimpleResult<String> {
         _loading.value = true
         val result =
             ExpenseRepository.deleteExpense(expense.groupId, expense.pk)

@@ -19,7 +19,7 @@ class EditExpenseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.init(args.group, args.expenseDetails.participants)
+        viewModel.init(args.group, args.expense.participants)
     }
 
 
@@ -32,7 +32,7 @@ class EditExpenseFragment : Fragment() {
             setContent {
                 MoneyAppTheme {
                     EditExpenseScreen(
-                        expense = args.expenseDetails,
+                        expense = args.expense,
                         onBackNavigate = {
                             requireActivity().onBackPressed()
                         },

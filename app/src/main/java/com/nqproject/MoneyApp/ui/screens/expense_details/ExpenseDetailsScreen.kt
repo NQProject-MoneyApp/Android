@@ -18,9 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.Config
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.nqproject.MoneyApp.repository.Expense
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,9 +31,8 @@ fun ExpenseDetailsScreen(
 
     val viewModel = viewModel<ExpenseDetailsViewModel>()
     val dateFormat = SimpleDateFormat("dd-MM-yyy")
-    val expenseDetails = viewModel.expenseDetails.observeAsState().value
     val scrollState = rememberScrollState()
-    val isRefreshing by viewModel.loading.observeAsState(false)
+    val expense by viewModel.expense.observeAsState()
 
     ExpenseDetailsHeader(
         didPressBackButton = {
@@ -44,121 +41,105 @@ fun ExpenseDetailsScreen(
         },
         didPressEditExpense = {
             Log.d(Config.MAIN_TAG, "didPressEditExpense")
-            if (expenseDetails != null)
-                onEditExpenseNavigate()
+            onEditExpenseNavigate()
         },
         body = {
-            SwipeRefresh(
-                state = rememberSwipeRefreshState(isRefreshing),
-                onRefresh = {
-                    viewModel.updateExpense(noticeably = true)
-                },
-                indicator = { state, trigger ->
-                    SwipeRefreshIndicator(
-                        state = state,
-                        refreshTriggerDistance = trigger,
-                        scale = true,
-                        backgroundColor = MaterialTheme.colors.primary,
-                        contentColor = MaterialTheme.colors.background,
-                    )
-                }
-            ) {
+            if(expense != null) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(scrollState)
                         .padding(32.dp),
                 ) {
-                    if (expenseDetails != null) {
-                        Card(
-                            backgroundColor = MaterialTheme.colors.secondary,
-                            shape = RoundedCornerShape(10),
+                    Card(
+                        backgroundColor = MaterialTheme.colors.secondary,
+                        shape = RoundedCornerShape(10),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Column(
+                            verticalArrangement = Arrangement.SpaceBetween,
                             modifier = Modifier
-                                .fillMaxWidth()
+                                .padding(24.dp)
                         ) {
-                            Column(
-                                verticalArrangement = Arrangement.SpaceBetween,
-                                modifier = Modifier
-                                    .padding(24.dp)
-                            ) {
-                                Row {
-                                    Text(
-                                        modifier = Modifier.weight(1f),
-                                        text = "Amount",
-                                        color = Color.White,
-                                        style = MaterialTheme.typography.h4
-                                    )
-                                    Text(
-                                        text = String.format(
-                                            Locale.US, "%.2f", expenseDetails.amount
-                                        ),
-                                        color = Color.White,
-                                        style = MaterialTheme.typography.h4
-                                    )
-                                }
-                                Row {
-                                    Text(
-                                        modifier = Modifier.weight(1f),
-                                        text = "Paid by",
-                                        color = Color.White,
-                                        style = MaterialTheme.typography.h4
-                                    )
-                                    Text(
-                                        text = expenseDetails.author.name,
-                                        color = Color.White,
-                                        style = MaterialTheme.typography.h4
-                                    )
-                                }
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.height(32.dp))
-
-                        Card(
-                            backgroundColor = MaterialTheme.colors.secondary,
-                            shape = RoundedCornerShape(10),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        ) {
-                            Column(
-                                verticalArrangement = Arrangement.SpaceBetween,
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier.padding(16.dp)
-                            ) {
-                                Text("Participants", color = Color.White)
-                                Spacer(modifier = Modifier.height(16.dp))
-
-
-                                expenseDetails.participants.forEach {
-                                    Row(
-                                        horizontalArrangement = Arrangement.Start,
-                                        modifier = Modifier.padding(horizontal = 24.dp),
-                                    ) {
-                                        Text(
-                                            it.name, color = Color.White, modifier = Modifier
-                                                .weight(1f)
-                                        )
-                                    }
-                                    Spacer(modifier = Modifier.height(8.dp))
-                                }
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(32.dp))
-                        Text(
-                            text = "Created on\n ${
-                                dateFormat.format(
-                                    expenseDetails.createDate
+                            Row {
+                                Text(
+                                    modifier = Modifier.weight(1f),
+                                    text = "Amount",
+                                    color = Color.White,
+                                    style = MaterialTheme.typography.h4
                                 )
-                            }",
-                            color = Color.White,
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.h4,
-                            modifier = Modifier.fillMaxWidth()
-                        )
+                                Text(
+                                    text = String.format(
+                                        Locale.US, "%.2f", expense!!.amount
+                                    ),
+                                    color = Color.White,
+                                    style = MaterialTheme.typography.h4
+                                )
+                            }
+                            Row {
+                                Text(
+                                    modifier = Modifier.weight(1f),
+                                    text = "Paid by",
+                                    color = Color.White,
+                                    style = MaterialTheme.typography.h4
+                                )
+                                Text(
+                                    text = expense!!.author.name,
+                                    color = Color.White,
+                                    style = MaterialTheme.typography.h4
+                                )
+                            }
+                        }
                     }
+
+                    Spacer(modifier = Modifier.height(32.dp))
+
+                    Card(
+                        backgroundColor = MaterialTheme.colors.secondary,
+                        shape = RoundedCornerShape(10),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Column(
+                            verticalArrangement = Arrangement.SpaceBetween,
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.padding(16.dp)
+                        ) {
+                            Text("Participants", color = Color.White)
+                            Spacer(modifier = Modifier.height(16.dp))
+
+
+                            expense!!.participants.forEach {
+                                Row(
+                                    horizontalArrangement = Arrangement.Start,
+                                    modifier = Modifier.padding(horizontal = 24.dp),
+                                ) {
+                                    Text(
+                                        it.name, color = Color.White, modifier = Modifier
+                                            .weight(1f)
+                                    )
+                                }
+                                Spacer(modifier = Modifier.height(8.dp))
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(32.dp))
+                    Text(
+                        text = "Created on\n ${
+                            dateFormat.format(
+                                expense!!.createDate
+                            )
+                        }",
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.h4,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
                 }
             }
         },
-        title = expenseDetails?.name ?: viewModel.expense!!.name
+        title = expense?.name ?: ""
     )
 }
