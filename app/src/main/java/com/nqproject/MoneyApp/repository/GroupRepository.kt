@@ -24,6 +24,7 @@ object GroupRepository {
                         icon = MoneyAppIcon.from(it.icon!!).icon(),
                         userBalance = it.user_balance!!,
                         createDate = DateUtils.parseDate(it.create_date!!),
+                        isFavourite = it.isFavourite!!,
                         members = it.members.map { member ->
                             User(
                                 pk = member.user.pk, name = member.user.username,
@@ -32,6 +33,16 @@ object GroupRepository {
                         }
                     )
             })
+        }
+    }
+
+    suspend fun markGroupAsFavourite(groupId: Int, isFavourite: Boolean): SimpleResult<String> {
+        val result = withContext(Dispatchers.IO) {
+            MoneyAppClient.editGroup(groupId = groupId, isFavourite = isFavourite)
+        }
+        return when (result) {
+            is SimpleResult.Error -> SimpleResult.Error(result.error)
+            is SimpleResult.Success -> SimpleResult.Success("Success")
         }
     }
 

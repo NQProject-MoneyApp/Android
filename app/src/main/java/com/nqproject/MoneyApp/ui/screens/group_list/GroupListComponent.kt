@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -15,19 +16,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.repository.Group
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 
 @Composable
 fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
-//    val icon = if (group.isFavourite) R.drawable.ic_star_select else R.drawable.ic_star
-    val icon = R.drawable.ic_star
+    val icon = if (group.isFavourite) R.drawable.ic_star_select else R.drawable.ic_star
     val dateFormat = SimpleDateFormat("dd-MM-yyy")
     val cardShape = RoundedCornerShape(15)
+    val viewModel = viewModel<GroupsListViewModel>()
+
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
         shape = cardShape,
@@ -54,20 +56,36 @@ fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
                     contentDescription = "",
                     colorFilter = ColorFilter.tint(MaterialTheme.colors.primary)
                 )
-                Column(modifier = Modifier
-                    .weight(1f)
-                    .padding(8.dp)) {
-                    Text(text = group.name, style = MaterialTheme.typography.h4, color= Color.White)
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(8.dp)
+                ) {
+                    Text(
+                        text = group.name, style = MaterialTheme.typography.h4, color = Color.White
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "$ ${String.format(Locale.US, "%.2f", group.userBalance)}", style = MaterialTheme.typography.subtitle2, color= Color.White)
+                    Text(
+                        text = "$ ${String.format(Locale.US, "%.2f", group.userBalance)}",
+                        style = MaterialTheme.typography.subtitle2, color = Color.White
+                    )
                 }
                 Column(
                     verticalArrangement = Arrangement.SpaceEvenly,
                     horizontalAlignment = Alignment.End,
                 ) {
-                    Image(painterResource(id = icon), contentDescription = "")
+                    IconButton(
+                        onClick = { viewModel.markAsFavourite(group.id, !group.isFavourite) }) {
+                        Image(
+                            painterResource(id = icon),
+                            contentDescription = "",
+                        )
+                    }
                     Spacer(modifier = Modifier.height(65.dp))
-                    Text(text = dateFormat.format(group.createDate), style = MaterialTheme.typography.subtitle2, color= Color.White)
+                    Text(
+                        text = dateFormat.format(group.createDate),
+                        style = MaterialTheme.typography.subtitle2, color = Color.White
+                    )
                 }
             }
         }
