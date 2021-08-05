@@ -22,7 +22,7 @@ object ExpenseRepository {
                         name = it.name,
                         amount = it.amount,
                         author = User(pk = it.author.pk, it.author.username, it.author.email, 0.0),
-                        createDate = DateUtils.parseDate(it.create_date),
+                        createDate = DateUtils.parseDate(it.createDate),
                         participants = it.participants.map {
                             User(pk = it.pk, it.username, it.email, 0.0)
                         }
@@ -48,7 +48,7 @@ object ExpenseRepository {
                         result.data.author.pk, result.data.author.username,
                         result.data.author.email, 0.0
                     ),
-                    createDate = DateUtils.parseDate(result.data.create_date),
+                    createDate = DateUtils.parseDate(result.data.createDate),
                     participants = result.data.participants.map {
                         User(
                             pk = it.pk, it.username,

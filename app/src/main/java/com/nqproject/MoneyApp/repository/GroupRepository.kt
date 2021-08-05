@@ -20,10 +20,10 @@ object GroupRepository {
                     Group(
                         id = it.pk!!,
                         name = it.name!!,
-                        totalCost = it.total_cost!!,
+                        totalCost = it.totalCost!!,
                         icon = MoneyAppIcon.from(it.icon!!).icon(),
-                        userBalance = it.user_balance!!,
-                        createDate = DateUtils.parseDate(it.create_date!!),
+                        userBalance = it.userBalance!!,
+                        createDate = DateUtils.parseDate(it.createDate!!),
                         isFavourite = it.isFavourite!!,
                         members = it.members.map { member ->
                             User(
@@ -57,10 +57,10 @@ object GroupRepository {
                 Group(
                     id = result.data.pk!!,
                     name = result.data.name!!,
-                    totalCost = result.data.total_cost!!,
+                    totalCost = result.data.totalCost!!,
                     icon = MoneyAppIcon.from(result.data.icon!!).icon(),
-                    userBalance = result.data.user_balance!!,
-                    createDate = DateUtils.parseDate(result.data.create_date!!),
+                    userBalance = result.data.userBalance!!,
+                    createDate = DateUtils.parseDate(result.data.createDate!!),
                     members = result.data.members.map { member ->
                         User(
                             pk = member.user.pk, name = member.user.username,

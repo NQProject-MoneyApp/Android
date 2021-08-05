@@ -17,9 +17,12 @@ data class NetworkAddGroupRequest(
 data class NetworkGroupsResponse(
     val pk: Int?,
     val name: String?,
-    val create_date: String?,
-    val total_cost: Double?,
-    val user_balance: Double?,
+    @SerialName("create_date")
+    val createDate: String?,
+    @SerialName("total_cost")
+    val totalCost: Double?,
+    @SerialName("user_balance")
+    val userBalance: Double?,
     val icon: Int?,
     @SerialName("is_favourite")
     val isFavourite: Boolean?,
