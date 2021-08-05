@@ -60,13 +60,14 @@ object GroupRepository {
                     totalCost = result.data.total_cost!!,
                     icon = MoneyAppIcon.from(result.data.icon!!).icon(),
                     userBalance = result.data.user_balance!!,
-                    createDate = result.data.create_date!!,
+                    createDate = DateUtils.parseDate(result.data.create_date!!),
                     members = result.data.members.map { member ->
                         User(
                             pk = member.user.pk, name = member.user.username,
                             email = member.user.email, balance = member.balance!!
                         )
-                    }
+                    },
+                    isFavourite = result.data.isFavourite!!
                 )
             )
         }

@@ -9,7 +9,7 @@ data class NetworkAddGroupRequest(
     val name: String? = null,
     val icon: Int? = null,
     val members: List<Int>? = null,
-    @SerializedName("is_favourite")
+    @SerialName("is_favourite")
     val isFavourite: Boolean? = null
 )
 
@@ -21,7 +21,7 @@ data class NetworkGroupsResponse(
     val total_cost: Double?,
     val user_balance: Double?,
     val icon: Int?,
-    @SerializedName("is_favourite")
+    @SerialName("is_favourite")
     val isFavourite: Boolean?,
     val members: List<NetworkGroupUsersResponse>,
     @SerialName("non_field_errors")
