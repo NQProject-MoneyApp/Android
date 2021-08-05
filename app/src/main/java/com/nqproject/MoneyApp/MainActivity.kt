@@ -1,6 +1,7 @@
 package com.nqproject.MoneyApp
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.fragment.app.FragmentActivity
@@ -25,6 +26,8 @@ class MainActivity : FragmentActivity() {
             runOnUiThread {
                 AuthenticationManager.token = null
                 findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_loginFragment)
+                Toast.makeText(this@MainActivity, "Logged out", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }
