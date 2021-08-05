@@ -43,7 +43,7 @@ fun GroupListHeader(
                             showLeftMenu = false
                         }
                     ) {
-                            Text("Logout", color = MaterialTheme.colors.primary)
+                            Text("Log out", color = MaterialTheme.colors.primary)
                     }
                 }
             },

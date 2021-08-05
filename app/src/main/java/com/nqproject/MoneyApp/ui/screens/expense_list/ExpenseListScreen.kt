@@ -25,7 +25,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ExpenseListScreen(
-    group: Group,
     onBackNavigate: () -> Unit,
     onExpenseDetailsNavigate: (expense: Expense) -> Unit,
     onAddExpenseNavigate: () -> Unit,
@@ -40,6 +39,9 @@ fun ExpenseListScreen(
             Log.d(Config.MAIN_TAG, "didPressBackButton")
             onBackNavigate()
         },
+        didPressAddExpense = {
+            onAddExpenseNavigate()
+        },
         body = {
              Column(
                  modifier = Modifier
@@ -49,15 +51,6 @@ fun ExpenseListScreen(
                  verticalArrangement = Arrangement.Top,
                  horizontalAlignment = Alignment.CenterHorizontally,
              ) {
-                 Button(onClick = {
-                     onAddExpenseNavigate()
-                 }, modifier = Modifier.fillMaxWidth(), shape = AbsoluteRoundedCornerShape(15))
-                 { Text(
-                     text = "New expense",
-                     style = MaterialTheme.typography.h4
-                 )
-                 }
-                 Spacer(modifier = Modifier.height(20.dp))
                  groupExpenses.forEach { it ->
                      ExpenseListComponent(it,
                      didPressComponent = {
