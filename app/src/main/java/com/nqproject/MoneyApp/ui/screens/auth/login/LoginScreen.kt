@@ -19,6 +19,7 @@ import com.nqproject.MoneyApp.ui.screens.auth.AuthHeader
 import com.nqproject.MoneyApp.ui.screens.auth.login.LoginResult
 import com.nqproject.MoneyApp.ui.screens.auth.AuthInputFields
 import com.nqproject.MoneyApp.ui.screens.auth.BottomOption
+import com.nqproject.MoneyApp.ui.screens.auth.InputFieldValidator
 
 @Composable
 fun LoginScreen(
@@ -79,12 +80,32 @@ private fun LoginForm(
     val usernameState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
 
+    val usernameValidator = remember {
+        InputFieldValidator<String> {
+            when {
+                it.isEmpty() -> "Enter a username"
+                else -> ""
+            }
+        }
+    }
+
+    val passwordValidator = remember {
+        InputFieldValidator<String> {
+            when {
+                it.isEmpty() -> "Enter a password"
+                else -> ""
+            }
+        }
+    }
+
     AuthInputFields(
         usernameState = usernameState,
         passwordState = passwordState,
         onDone = {
             onLoginPressed(usernameState.value, passwordState.value)
-        }
+        },
+        usernameValidator = usernameValidator,
+        passwordValidator = passwordValidator
     )
 
     Spacer(modifier = Modifier.height(5.dp))
@@ -96,7 +117,10 @@ private fun LoginForm(
         shape = RoundedCornerShape(10.dp),
         enabled = !loading,
         onClick = {
-            onLoginPressed(usernameState.value, passwordState.value)
+            usernameValidator.validate(usernameState.value)
+            passwordValidator.validate(passwordState.value)
+            if (!usernameValidator.isError() and !passwordValidator.isError())
+                onLoginPressed(usernameState.value, passwordState.value)
         }) {
         Text("Log in", style = MaterialTheme.typography.h4)
     }

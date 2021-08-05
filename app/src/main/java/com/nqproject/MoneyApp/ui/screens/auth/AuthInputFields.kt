@@ -12,7 +12,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AuthInputFields(usernameState: MutableState<String>, passwordState: MutableState<String>, onDone: () -> Unit, emailState: MutableState<String>? = null) {
+fun AuthInputFields(
+    usernameState: MutableState<String>,
+    passwordState: MutableState<String>,
+    onDone: () -> Unit,
+    emailState: MutableState<String>? = null,
+    usernameValidator: InputFieldValidator<String> = InputFieldValidator(),
+    emailValidator: InputFieldValidator<String> = InputFieldValidator(),
+    passwordValidator: InputFieldValidator<String> = InputFieldValidator(),
+) {
 
     val emailFocusRequester = remember { FocusRequester() }
     val passwordFocusRequester = remember { FocusRequester() }
@@ -28,7 +36,9 @@ fun AuthInputFields(usernameState: MutableState<String>, passwordState: MutableS
             emailState?.let {
                 emailFocusRequester.requestFocus()
             } ?: passwordFocusRequester.requestFocus()
-        })
+        },
+        validator = usernameValidator,
+    )
 
     Spacer(modifier = Modifier.height(5.dp))
 
@@ -40,7 +50,9 @@ fun AuthInputFields(usernameState: MutableState<String>, passwordState: MutableS
             placeholder = "Email",
             focusRequesterAction = {
                 passwordFocusRequester.requestFocus()
-            })
+            },
+            validator = emailValidator,
+        )
         Spacer(modifier = Modifier.height(5.dp))
     }
 
@@ -53,5 +65,6 @@ fun AuthInputFields(usernameState: MutableState<String>, passwordState: MutableS
             onDone()
             focusManager.clearFocus()
         },
+        validator = passwordValidator,
     )
 }

@@ -47,33 +47,33 @@ fun AddExpenseForm(
 
     val focusManager = LocalFocusManager.current
 
-    val nameValidator by remember {
-        mutableStateOf(InputFieldValidator<String> {
+    val nameValidator = remember {
+        InputFieldValidator<String> {
             when {
                 it.isEmpty() -> "Enter an expense name"
                 else -> ""
             }
-        })
+        }
     }
 
-    val amountValidator by remember {
-        mutableStateOf(InputFieldValidator<String> {
+    val amountValidator = remember {
+        InputFieldValidator<String> {
             val value = it.toFloatOrNull() ?: 0f
             when {
                 value == 0f -> "Enter an expense amount"
                 value < 0f -> "Expense amount must be greater than zero"
                 else -> ""
             }
-        })
+        }
     }
 
-    val usersValidator by remember {
-        mutableStateOf(InputFieldValidator<List<User>> {
+    val usersValidator = remember {
+        InputFieldValidator<List<User>> {
             when {
                 it.isEmpty() -> "Choose expense participants"
                 else -> ""
             }
-        })
+        }
     }
 
     Spacer(modifier = Modifier.height(21.dp))
