@@ -28,14 +28,38 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 
-class InputFieldValidator<T>(private val validateFun: (content: T) -> String = { "" }){
+class ValidableValue<T>(
+    defaultValue: T,
+    private val validateFun: (value: T) -> String = { "" }
+) {
+    private val _value = MutableLiveData(defaultValue)
+    private val _errorMessage = MutableLiveData("")
+
+    val value: LiveData<T> = _value
+    val errorMessage: LiveData<String> = _errorMessage
+
+    fun updateValue(value: T){
+        _value.value = value
+        validate()
+    }
+
+    fun validate() {
+        _errorMessage.value = validateFun(value.value!!)
+    }
+
+    fun isError(): Boolean {
+        return _errorMessage.value?.isNotEmpty() ?: false
+    }
+}
+
+class InputFieldValidator<T>(private val validateFun: (content: T) -> String = { "" }) {
 
     private val _errorMessage = MutableLiveData("")
 
-    val errorMessage : LiveData<String> = _errorMessage
+    val errorMessage: LiveData<String> = _errorMessage
 
     fun validate(content: T) {
-        _errorMessage.value =  validateFun(content)
+        _errorMessage.value = validateFun(content)
     }
 
     fun isError(): Boolean {
@@ -47,14 +71,14 @@ class InputFieldValidator<T>(private val validateFun: (content: T) -> String = {
 @Composable
 fun InputField(
     focusRequester: FocusRequester,
-    fieldState: MutableState<String>,
+    fieldState: ValidableValue<String>,
     focusRequesterAction: () -> Unit,
     placeholder: String,
     keyboardType: KeyboardType,
-    validator: InputFieldValidator<String> = InputFieldValidator()
 ) {
     val fieldShape = RoundedCornerShape(10.dp)
-    val errorMessage = validator.errorMessage.observeAsState().value!!
+    val value = fieldState.value.observeAsState().value!!
+    val errorMessage = fieldState.errorMessage.observeAsState().value!!
 
     val visualTransformation = if (keyboardType == KeyboardType.Password) {
         PasswordVisualTransformation()
@@ -76,10 +100,9 @@ fun InputField(
                     true //true -> consumed
                 } else false
             },
-        value = fieldState.value,
+        value = value,
         onValueChange = { newValue ->
-            fieldState.value = newValue.filter { it != '\n' && it != '\t' }
-            validator.validate(fieldState.value)
+            fieldState.updateValue(newValue.filter { it != '\n' && it != '\t' })
         },
         label = { Text(placeholder, color = AppTheme.colors.hintText) },
         shape = fieldShape,

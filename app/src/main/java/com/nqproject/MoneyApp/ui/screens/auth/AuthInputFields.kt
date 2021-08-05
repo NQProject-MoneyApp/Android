@@ -13,13 +13,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AuthInputFields(
-    usernameState: MutableState<String>,
-    passwordState: MutableState<String>,
+    usernameState: ValidableValue<String>,
+    passwordState: ValidableValue<String>,
     onDone: () -> Unit,
-    emailState: MutableState<String>? = null,
-    usernameValidator: InputFieldValidator<String> = InputFieldValidator(),
-    emailValidator: InputFieldValidator<String> = InputFieldValidator(),
-    passwordValidator: InputFieldValidator<String> = InputFieldValidator(),
+    emailState: ValidableValue<String>? = null,
 ) {
 
     val emailFocusRequester = remember { FocusRequester() }
@@ -37,7 +34,6 @@ fun AuthInputFields(
                 emailFocusRequester.requestFocus()
             } ?: passwordFocusRequester.requestFocus()
         },
-        validator = usernameValidator,
     )
 
     Spacer(modifier = Modifier.height(5.dp))
@@ -51,7 +47,6 @@ fun AuthInputFields(
             focusRequesterAction = {
                 passwordFocusRequester.requestFocus()
             },
-            validator = emailValidator,
         )
         Spacer(modifier = Modifier.height(5.dp))
     }
@@ -65,6 +60,5 @@ fun AuthInputFields(
             onDone()
             focusManager.clearFocus()
         },
-        validator = passwordValidator,
     )
 }

@@ -35,60 +35,60 @@ fun AddGroupScreen(
     val context = LocalContext.current
     val loading = viewModel.loading.observeAsState(false).value
     var showImageAlert by remember { mutableStateOf(false) }
-    val chosenUsers = viewModel.chosenUsers.observeAsState().value
     var chosenIcon by remember { mutableStateOf<MoneyAppIcon?>(null) }
     val icons = viewModel.icons.observeAsState().value
 
     AddGroupHeader(
         didPressBackButton = onBackNavigate,
         body = {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally,) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
 
-            if (showImageAlert) {
-                ImageAlertComponent(icons ?: MoneyAppIcon.values().toList(),
-                    onIconChoose = {
-                        showImageAlert = false
-                        chosenIcon = it
-                    },
-                    onClose = {
-                    showImageAlert = false
+                if (showImageAlert) {
+                    ImageAlertComponent(icons ?: MoneyAppIcon.values().toList(),
+                        onIconChoose = {
+                            showImageAlert = false
+                            chosenIcon = it
+                        },
+                        onClose = {
+                            showImageAlert = false
 
-                })
-            }
-
-            if (loading) {
-                Box(modifier = Modifier, contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
+                        })
                 }
-            } else {
 
-                AddGroupForm(
-                    icon = chosenIcon,
-                    onAddImage = {
-                        showImageAlert = true
-                    },
-                    onSave = {
+                if (loading) {
+                    Box(modifier = Modifier, contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator()
+                    }
+                } else {
 
-                        if (it.isEmpty()) {
-                            Toast.makeText(context, "Enter a group name", Toast.LENGTH_SHORT).show()
-                        } else {
+                    AddGroupForm(
+                        icon = chosenIcon,
+                        onAddImage = {
+                            showImageAlert = true
+                        },
+                        onSave = { name: String, members: List<User> ->
                             coroutineScope.launch {
-                                val result = viewModel.addGroup(name=it, icon = chosenIcon ?: MoneyAppIcon.values().random(), chosenUsers ?: emptyList())
-
-                                when(result) {
-                                    is SimpleResult.Error -> Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
+                                val result = viewModel.addGroup(
+                                    name = name,
+                                    icon = chosenIcon ?: MoneyAppIcon.values().random(),
+                                    members = members
+                                )
+                                when (result) {
+                                    is SimpleResult.Error -> Toast
+                                        .makeText(context, result.error, Toast.LENGTH_SHORT).show()
                                     is SimpleResult.Success -> {
                                         SimpleResult.Success("Success")
                                         onBackNavigate()
                                     }
                                 }
                             }
-                        }
-                    })
+
+                        })
+                }
             }
-        }
-    })
+        })
 }

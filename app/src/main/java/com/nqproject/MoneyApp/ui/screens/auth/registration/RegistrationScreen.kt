@@ -17,10 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.Config
-import com.nqproject.MoneyApp.ui.screens.auth.AuthHeader
-import com.nqproject.MoneyApp.ui.screens.auth.AuthInputFields
-import com.nqproject.MoneyApp.ui.screens.auth.BottomOption
-import com.nqproject.MoneyApp.ui.screens.auth.InputFieldValidator
+import com.nqproject.MoneyApp.ui.screens.auth.*
 import kotlinx.coroutines.launch
 
 
@@ -50,7 +47,7 @@ fun RegistrationScreen(
                 Log.d(Config.MAIN_TAG, "On register $username $email $password")
                 val result = viewModel.register(username, password, email)
 
-                when(result) {
+                when (result) {
                     is RegistrationResult.Success -> {
                         onLoginNavigate()
                     }
@@ -78,47 +75,50 @@ private fun RegistrationForm(
     loading: Boolean,
     onRegisterPressed: (username: String, password: String, email: String) -> Unit
 ) {
-    val usernameState = remember { mutableStateOf("") }
-    val passwordState = remember { mutableStateOf("") }
-    val emailState = remember { mutableStateOf("") }
-
-    val usernameValidator = remember {
-        InputFieldValidator<String> {
-            when {
-                it.isEmpty() -> "Enter a username"
-                else -> ""
+    val usernameState = remember {
+        ValidableValue("",
+            {
+                when {
+                    it.isEmpty() -> "Enter a username"
+                    else -> ""
+                }
             }
-        }
+        )
+    }
+    val passwordState = remember {
+        ValidableValue("",
+            {
+                when {
+                    it.isEmpty() -> "Enter a username"
+                    else -> ""
+                }
+            }
+        )
+    }
+    val emailState = remember {
+        ValidableValue("",
+            {
+                when {
+                    it.isEmpty() -> "Enter an email"
+                    else -> ""
+                }
+            }
+        )
     }
 
-    val emailValidator = remember {
-        InputFieldValidator<String> {
-            when {
-                it.isEmpty() -> "Enter an email"
-                else -> ""
-            }
-        }
-    }
-
-    val passwordValidator = remember {
-        InputFieldValidator<String> {
-            when {
-                it.isEmpty() -> "Enter a password"
-                else -> ""
-            }
-        }
-    }
+    val usernameValue = usernameState.value.observeAsState().value!!
+    val passwordValue = passwordState.value.observeAsState().value!!
+    val emailValue = passwordState.value.observeAsState().value!!
 
     AuthInputFields(
         usernameState = usernameState,
         passwordState = passwordState,
         emailState = emailState,
         onDone = {
-            onRegisterPressed(usernameState.value, passwordState.value, emailState.value)
+            onRegisterPressed(
+                usernameValue, passwordValue, emailValue
+            )
         },
-        usernameValidator = usernameValidator,
-        emailValidator = emailValidator,
-        passwordValidator = passwordValidator,
     )
 
     Spacer(modifier = Modifier.height(21.dp))
@@ -130,11 +130,14 @@ private fun RegistrationForm(
         shape = RoundedCornerShape(10.dp),
         enabled = !loading,
         onClick = {
-            usernameValidator.validate(usernameState.value)
-            passwordValidator.validate(passwordState.value)
-            emailValidator.validate(emailState.value)
-            if (!usernameValidator.isError() and !passwordValidator.isError() and !emailValidator.isError())
-                onRegisterPressed(usernameState.value, passwordState.value, emailState.value)
+            usernameState.validate()
+            passwordState.validate()
+            emailState.validate()
+            if (!usernameState.isError() and !passwordState.isError() and !emailState.isError())
+                onRegisterPressed(
+                    usernameValue, passwordValue,
+                    emailValue
+                )
         }) {
         Text("Register", style = MaterialTheme.typography.h4)
     }

@@ -19,7 +19,6 @@ class AddGroupViewModel: ViewModel() {
     private val _userFriends = MutableLiveData(emptyList<User>())
 
     val userFriends: LiveData<List<User>> = _userFriends
-    val chosenUsers: LiveData<List<User>> = _chosenUsers
     val icons: LiveData<List<MoneyAppIcon>> = _icons
     val loading: LiveData<Boolean> = _loading
     val addGroupLoading: LiveData<Boolean> = _addGrouploading

@@ -41,11 +41,12 @@ fun AddExpenseScreen(
 
                 AddExpenseForm(
                     loading = loading,
-                    onSave = { name, amount ->
+                    onSave = { name, amount, participants ->
                         Log.d(Config.MAIN_TAG, "on save expense: $name")
                         coroutineScope.launch {
                             when (val result =
-                                viewModel.addExpense(groupId, name = name, amount = amount)) {
+                                viewModel.addExpense(groupId, name = name, amount = amount,
+                                    participants = participants)) {
                                 is SimpleResult.Error -> Toast.makeText(
                                     context,
                                     result.error,

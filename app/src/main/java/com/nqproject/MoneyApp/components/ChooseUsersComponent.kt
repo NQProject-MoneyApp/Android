@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.repository.User
 import com.nqproject.MoneyApp.ui.screens.add_group.AddUserComponent
 import com.nqproject.MoneyApp.ui.screens.auth.InputFieldValidator
+import com.nqproject.MoneyApp.ui.screens.auth.ValidableValue
 
 @Suppress("UnnecessaryComposedModifier")
 fun Modifier.bottomRectBorder(width: Dp = Dp.Hairline, color: Color = Color.Black):
@@ -44,15 +45,10 @@ fun Modifier.bottomRectBorder(width: Dp = Dp.Hairline, color: Color = Color.Blac
 fun ChooseUsersComponent(
     title: String,
     groupMembers: List<User>,
-    chosenMembers: List<User>,
-    onAddUser: (user: User) -> Unit,
-    onRemoveUser: (user: User) -> Unit,
-    validator: InputFieldValidator<List<User>> = InputFieldValidator(),
+    chosenMembers: ValidableValue<List<User>>,
 ) {
-    val errorMessage = validator.errorMessage.observeAsState().value!!
-
-    if(groupMembers.isNotEmpty())
-        validator.validate(chosenMembers)
+    val errorMessage = chosenMembers.errorMessage.observeAsState().value!!
+    val chosenMembersValue = chosenMembers.value.observeAsState().value!!
 
     val cardShape = RoundedCornerShape(10.dp)
     var cardModifier = Modifier
@@ -78,15 +74,16 @@ fun ChooseUsersComponent(
             Spacer(modifier = Modifier.height(16.dp))
 
 
-            groupMembers.forEach {
+            groupMembers.forEach { user ->
                 AddUserComponent(
-                    user = it,
-                    check = chosenMembers.contains(it),
+                    user = user,
+                    check = chosenMembersValue.contains(user),
                     didPressComponent = {
-                        if (chosenMembers.contains(it)) {
-                            onRemoveUser(it)
+                        if (chosenMembersValue.contains(user)) {
+                            chosenMembers.updateValue(
+                                chosenMembersValue.filter { it.pk != user.pk })
                         } else {
-                            onAddUser(it)
+                            chosenMembers.updateValue(chosenMembersValue.plus(user))
                         }
                     })
                 Spacer(modifier = Modifier.height(8.dp))
