@@ -70,7 +70,6 @@ fun CodeAlertComponent(onClose: () -> Unit, code: String) {
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-
             TextButton(onClick = { onClose() }) {
                 Text(
                     "Back",
