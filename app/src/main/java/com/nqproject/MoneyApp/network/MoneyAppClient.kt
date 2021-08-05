@@ -247,7 +247,7 @@ object MoneyAppClient {
                 val errorContent = e.response()?.errorBody()?.stringSuspending()
                 try {
                     val message = Json.decodeFromString<ErrorResponse>(errorContent ?: "").details
-                    return@runRequest SimpleResult.Error(message!!)
+                    return@runRequest SimpleResult.Error(message ?: "Unknown error")
                 }
                 catch (e: Exception) {
                     return@runRequest SimpleResult.Error("Unknown error")

@@ -15,18 +15,17 @@ data class NetworkAddGroupRequest(
 
 @Serializable
 data class NetworkGroupsResponse(
-    val pk: Int?,
-    val name: String?,
+    val pk: Int,
+    val name: String,
     @SerialName("create_date")
-    val createDate: String?,
+    val createDate: String,
     @SerialName("total_cost")
-    val totalCost: Double?,
+    val totalCost: Double,
     @SerialName("user_balance")
-    val userBalance: Double?,
-    val icon: Int?,
+    val userBalance: Double,
+    val icon: Int,
     @SerialName("is_favourite")
-    val isFavourite: Boolean?,
+    val isFavourite: Boolean,
     val members: List<NetworkGroupUsersResponse>,
-    @SerialName("non_field_errors")
-    val error: String? = null,
+    @SerialName("non_field_errors") val error: String? = null,
 )

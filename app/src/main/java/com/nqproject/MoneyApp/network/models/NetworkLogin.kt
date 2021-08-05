@@ -10,7 +10,7 @@ data class NetworkLoginRequest(
 
 @Serializable
 data class NetworkLoginResponse(
-    val key: String?,
+    val key: String? = null,
     //TODO: change on backend!
     @SerialName("non_field_errors")
     val error: String? = null,

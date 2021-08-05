@@ -13,7 +13,7 @@ data class NetworkRegistrationRequest(
 
 @Serializable
 data class NetworkRegistrationResponse(
-    val key: String?,
+    val key: String? = null,
     //TODO: change on backend!
     @SerialName("non_field_errors")
     val error: String? = null,
