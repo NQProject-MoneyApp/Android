@@ -45,7 +45,6 @@ fun GroupDetailsScreen(
 
     val coroutineScope = rememberCoroutineScope()
     val viewModel = viewModel<GroupDetailsViewModel>()
-    val groupUsersList = viewModel.groupDetails.observeAsState(emptyList()).value
     val scrollState = rememberScrollState()
     // TODO move to view model
     var showCode by remember { mutableStateOf(false) }
@@ -149,16 +148,8 @@ fun GroupDetailsScreen(
                     style = MaterialTheme.typography.h4
                 )}
                 Spacer(modifier = Modifier.height(20.dp))
-                Button(onClick = {
-                    coroutineScope.launch {
-                        viewModel.fetchGroupUsers(group.id)
-                    }
-                }) {
-                    Text("Show group users")
-                }
-                Spacer(modifier = Modifier.height(20.dp))
                 GroupUsersListComponent(
-                    userBalanceList = groupUsersList,
+                    userBalanceList = group.members,
                     group = group,
                     didPressAllExpenses = { onExpensesListNavigate() }
                 )

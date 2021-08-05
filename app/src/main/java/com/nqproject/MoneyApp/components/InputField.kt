@@ -28,13 +28,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 
-class InputFieldValidator(private val validateFun: (content: String) -> String = { "" }){
+class InputFieldValidator<T>(private val validateFun: (content: T) -> String = { "" }){
 
     private val _errorMessage = MutableLiveData("")
 
     val errorMessage : LiveData<String> = _errorMessage
 
-    fun validate(content: String) {
+    fun validate(content: T) {
         _errorMessage.value =  validateFun(content)
     }
 
@@ -51,7 +51,7 @@ fun InputField(
     focusRequesterAction: () -> Unit,
     placeholder: String,
     keyboardType: KeyboardType,
-    validator: InputFieldValidator = InputFieldValidator()
+    validator: InputFieldValidator<String> = InputFieldValidator()
 ) {
     val fieldShape = RoundedCornerShape(10.dp)
     val errorMessage = validator.errorMessage.observeAsState().value!!

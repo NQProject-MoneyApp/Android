@@ -2,22 +2,22 @@ package com.nqproject.MoneyApp.ui.screens.group_details
 
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.material.Text
 import androidx.compose.ui.graphics.Color
+import com.nqproject.MoneyApp.repository.User
 import java.util.*
 
 @Composable
-fun GroupBalanceComponent(userBalance: UserBalance) {
+fun GroupBalanceComponent(user: User) {
 
     Row {
         Text(
             modifier = Modifier.weight(1f),
-            text = userBalance.name,
+            text = user.name,
             color = Color.White
         )
-        Text(String.format(Locale.US, "%.2f", userBalance.balance),
+        Text(String.format(Locale.US, "%.2f", user.balance),
             color = Color.White
         )
     }

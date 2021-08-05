@@ -5,6 +5,7 @@ import java.util.*
 data class NetworkAddExpenseRequest(
     val name: String,
     val amount: Float,
+    val participants: List<Int>,
 )
 
 data class NetworkExpensesResponse(
@@ -13,7 +14,8 @@ data class NetworkExpensesResponse(
     val name: String,
     val author: NetworkUser,
     val amount: Double,
-    val create_date: Date
+    val create_date: Date,
+    val participants: List<NetworkUser>,
 )
 
 
@@ -23,5 +25,6 @@ data class NetworkExpenseDetailsResponse(
     val name: String,
     val author: NetworkUser,
     val amount: Double,
-    val create_date: Date
+    val create_date: Date,
+    val participants: List<NetworkUser>,
 )

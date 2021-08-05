@@ -12,16 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.R
+import com.nqproject.MoneyApp.components.ChooseUsersComponent
 import com.nqproject.MoneyApp.repository.MoneyAppIcon
 import com.nqproject.MoneyApp.ui.screens.auth.InputField
 
@@ -74,38 +73,13 @@ fun AddGroupForm(onSave: (name: String) -> Unit, icon: MoneyAppIcon?, onAddImage
     )
 
     if (friends.isNotEmpty()) {
-        Card(
-            backgroundColor = MaterialTheme.colors.secondary,
-            shape = RoundedCornerShape(15),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-
-        ) {
-            Column(
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Text("Members", color = Color.White)
-                Spacer(modifier = Modifier.height(16.dp))
-
-
-                friends.forEach {
-                    AddUserComponent(
-                        user = it,
-                        check=chosenUsers.contains(it),
-                        didPressComponent = {
-                            if (chosenUsers.contains(it)) {
-                                viewModel.removeChosenMember(it)
-                            } else {
-                                viewModel.addChosenMember(it)
-                            }
-                        })
-                    Spacer(modifier = Modifier.height(8.dp))
-                }
-            }
-        }
+        ChooseUsersComponent(
+            title = "Members",
+            groupMembers = friends,
+            chosenMembers = chosenUsers,
+            onAddUser = { viewModel.addChosenMember(it) },
+            onRemoveUser = { viewModel.removeChosenMember(it) },
+        )
     }
 
     Spacer(modifier = Modifier.height(21.dp))

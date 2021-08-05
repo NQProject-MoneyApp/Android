@@ -14,20 +14,21 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.network.SimpleResult
-import com.nqproject.MoneyApp.repository.ExpenseDetails
+import com.nqproject.MoneyApp.repository.Expense
 import com.nqproject.MoneyApp.ui.screens.add_expense.AddExpenseForm
 import com.nqproject.MoneyApp.ui.screens.add_expense.AddExpenseHeader
+import com.nqproject.MoneyApp.ui.screens.add_expense.AddExpenseViewModel
 import kotlinx.coroutines.launch
 
 
 @Composable
 fun EditExpenseScreen(
-    expense: ExpenseDetails,
+    expense: Expense,
     onBackNavigate: () -> Unit,
     onDeleteExpenseNavigate: () -> Unit,
 ) {
 
-    val viewModel = viewModel<EditExpenseViewModel>()
+    val viewModel = viewModel<AddExpenseViewModel>()
     val coroutineScope = rememberCoroutineScope()
     val loading = viewModel.loading.observeAsState(false).value
     val context = LocalContext.current

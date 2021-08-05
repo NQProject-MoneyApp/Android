@@ -12,9 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.repository.Group
+import com.nqproject.MoneyApp.repository.User
 
 @Composable
-fun GroupUsersListComponent(userBalanceList: List<UserBalance>, group: Group, didPressAllExpenses: (Group) -> Unit) {
+fun GroupUsersListComponent(userBalanceList: List<User>, group: Group, didPressAllExpenses: (Group) -> Unit) {
 
     Card(
         backgroundColor = MaterialTheme.colors.secondary,

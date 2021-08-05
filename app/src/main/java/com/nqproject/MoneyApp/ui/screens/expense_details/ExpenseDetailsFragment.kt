@@ -37,12 +37,9 @@ class ExpenseDetailsFragment : Fragment() {
                             requireActivity().onBackPressed()
                         },
                         onEditExpenseNavigate = {
-                            if(viewModel.expenseDetails.value == null) {
-                                // TODO: do nothing and return
-                            }
                             val action = ExpenseDetailsFragmentDirections
                                 .actionExpenseDetailsFragmentToEditExpenseFragment(
-                                    viewModel.expenseDetails.value!!
+                                   args.expense, args.group
                                 )
                             findNavController().navigate(action)
                         },

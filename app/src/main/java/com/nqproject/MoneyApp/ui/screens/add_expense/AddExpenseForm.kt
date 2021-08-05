@@ -1,8 +1,6 @@
 package com.nqproject.MoneyApp.ui.screens.add_expense
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -18,6 +16,10 @@ import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.ui.screens.auth.InputField
 import com.nqproject.MoneyApp.ui.screens.auth.InputFieldValidator
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.nqproject.MoneyApp.components.ChooseUsersComponent
+import com.nqproject.MoneyApp.repository.User
 import java.util.*
 
 
@@ -28,6 +30,10 @@ fun AddExpenseForm(
     onSave: (name: String, amount: Float) -> Unit,
     loading: Boolean
 ) {
+    val viewModel = viewModel<AddExpenseViewModel>()
+    val chosenMembers = viewModel.chosenParticipants.observeAsState(emptyList()).value
+    val groupMembers = viewModel.groupMembers.observeAsState(emptyList()).value
+
     val expenseName = remember { mutableStateOf(defaultName) }
     val expenseAmount = remember {
         mutableStateOf(
@@ -42,7 +48,7 @@ fun AddExpenseForm(
     val focusManager = LocalFocusManager.current
 
     val nameValidator by remember {
-        mutableStateOf(InputFieldValidator {
+        mutableStateOf(InputFieldValidator<String> {
             when {
                 it.isEmpty() -> "Enter an expense name"
                 else -> ""
@@ -51,11 +57,20 @@ fun AddExpenseForm(
     }
 
     val amountValidator by remember {
-        mutableStateOf(InputFieldValidator {
+        mutableStateOf(InputFieldValidator<String> {
             val value = it.toFloatOrNull() ?: 0f
             when {
                 value == 0f -> "Enter an expense amount"
                 value < 0f -> "Expense amount must be greater than zero"
+                else -> ""
+            }
+        })
+    }
+
+    val usersValidator by remember {
+        mutableStateOf(InputFieldValidator<List<User>> {
+            when {
+                it.isEmpty() -> "Choose expense participants"
                 else -> ""
             }
         })
@@ -89,6 +104,17 @@ fun AddExpenseForm(
 
     Spacer(modifier = Modifier.height(5.dp))
 
+    ChooseUsersComponent(
+        title = "Participants",
+        groupMembers = groupMembers,
+        chosenMembers = chosenMembers,
+        onAddUser = { viewModel.addChosenMember(it) },
+        onRemoveUser = { viewModel.removeChosenMember(it) },
+        validator = usersValidator,
+    )
+
+    Spacer(modifier = Modifier.height(5.dp))
+
     Button(
         modifier = Modifier
             .fillMaxWidth()
@@ -98,7 +124,8 @@ fun AddExpenseForm(
         onClick = {
             nameValidator.validate(expenseName.value)
             amountValidator.validate(expenseAmount.value)
-            if (!nameValidator.isError() and !amountValidator.isError())
+            usersValidator.validate(chosenMembers)
+            if (!nameValidator.isError() and !amountValidator.isError() and !usersValidator.isError())
                 onSave(expenseName.value, expenseAmount.value.toFloatOrNull() ?: 0f)
         }) {
         Text("Save", style = MaterialTheme.typography.h4)

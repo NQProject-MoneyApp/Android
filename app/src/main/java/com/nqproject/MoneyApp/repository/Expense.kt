@@ -6,22 +6,12 @@ import java.util.*
 
 
 @Parcelize
-data class Expense (
+data class Expense(
     val pk: Int,
     val groupId: Int,
     val name: String,
     val amount: Double,
     val createDate: Date,
-    val author: User
-) : Parcelable
-
-
-@Parcelize
-data class ExpenseDetails (
-    val pk: Int,
-    val groupId: Int,
-    val name: String,
-    val amount: Double,
-    val createDate: Date,
-    val author: User
+    val author: User,
+    val participants: List<User>,
 ) : Parcelable
