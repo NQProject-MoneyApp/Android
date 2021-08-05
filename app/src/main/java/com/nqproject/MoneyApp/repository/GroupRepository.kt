@@ -2,6 +2,7 @@ package com.nqproject.MoneyApp.repository
 
 import com.nqproject.MoneyApp.network.MoneyAppClient
 import com.nqproject.MoneyApp.network.SimpleResult
+import com.nqproject.MoneyApp.utils.DateUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -22,7 +23,7 @@ object GroupRepository {
                         totalCost = it.total_cost!!,
                         icon = MoneyAppIcon.from(it.icon!!).icon(),
                         userBalance = it.user_balance!!,
-                        createDate = it.create_date!!,
+                        createDate = DateUtils.parseDate(it.create_date!!),
                         members = it.members.map { member ->
                             User(
                                 pk = member.user.pk, name = member.user.username,

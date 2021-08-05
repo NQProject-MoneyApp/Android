@@ -1,21 +1,25 @@
 package com.nqproject.MoneyApp.network
 
 import android.util.Log
-import com.google.gson.Gson
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.manager.AuthenticationManager
 import com.nqproject.MoneyApp.network.models.*
 import com.nqproject.MoneyApp.repository.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.HttpException
 import java.io.IOException
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
+import java.lang.Exception
 
 sealed class SimpleResult<T> {
 
@@ -34,7 +38,10 @@ object MoneyAppClient {
 
     private val client = Retrofit.Builder()
         .baseUrl("https://money-app-nqproject-staging.herokuapp.com")
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(Json {
+            ignoreUnknownKeys = true
+            isLenient
+        }.asConverterFactory("application/json".toMediaType()))
         .client(
             OkHttpClient.Builder()
                 .addInterceptor(Interceptor() {
@@ -73,6 +80,9 @@ object MoneyAppClient {
         } catch(e: IOException) {
             Log.e(Config.MAIN_TAG, "Failed to run request", e)
             SimpleResult.Error("Something failed, check your internet connection.")
+        } catch(e: Exception) {
+            Log.e(Config.MAIN_TAG, "Failed to run request", e)
+            SimpleResult.Error("Unknown error")
         }
     }
 
@@ -111,7 +121,9 @@ object MoneyAppClient {
     suspend fun fetchGroups(): SimpleResult<List<NetworkGroupsResponse>> {
         return runRequest {
             val result = client.groups()
-            result.forEach { println(it.name) }
+            result.forEach {
+                println(it.name)
+            }
             println(result)
             SimpleResult.Success(result)
         }
@@ -215,8 +227,13 @@ object MoneyAppClient {
             onError = { e ->
                 Log.e(Config.MAIN_TAG, "Failed to join to group", e)
                 val errorContent = e.response()?.errorBody()?.stringSuspending()
-                val message = Gson().fromJson(errorContent, ErrorResponse::class.java).details
-                SimpleResult.Error(message ?: "Unknown error")
+                try {
+                    val message = Json.decodeFromString<ErrorResponse>(errorContent ?: "").details
+                    return@runRequest SimpleResult.Error(message!!)
+                }
+                catch (e: Exception) {
+                    return@runRequest SimpleResult.Error("Unknown error")
+                }
             }
         )
     }
