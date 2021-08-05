@@ -17,14 +17,3 @@ data class NetworkExpensesResponse(
     val create_date: Date,
     val participants: List<NetworkUser>,
 )
-
-
-//data class NetworkExpenseDetailsResponse(
-//    val pk: Int,
-//    val group_id: Int,
-//    val name: String,
-//    val author: NetworkUser,
-//    val amount: Double,
-//    val create_date: Date,
-//    val participants: List<NetworkUser>,
-//)
