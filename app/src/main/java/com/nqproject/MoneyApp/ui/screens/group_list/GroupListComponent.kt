@@ -24,8 +24,7 @@ import java.util.*
 
 @Composable
 fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
-//    val icon = if (group.isFavourite) R.drawable.ic_star_select else R.drawable.ic_star
-    val icon = R.drawable.ic_star
+    val icon = if (group.isFavourite) R.drawable.ic_star_select else R.drawable.ic_star
     val dateFormat = SimpleDateFormat("dd-MM-yyy")
     val cardShape = RoundedCornerShape(15)
     Card(

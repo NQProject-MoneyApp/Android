@@ -23,6 +23,7 @@ object GroupRepository {
                         icon = MoneyAppIcon.from(it.icon!!).icon(),
                         userBalance = it.user_balance!!,
                         createDate = it.create_date!!,
+                        isFavourite = it.isFavourite!!,
                         members = it.members.map { member ->
                             User(
                                 pk = member.user.pk, name = member.user.username,
