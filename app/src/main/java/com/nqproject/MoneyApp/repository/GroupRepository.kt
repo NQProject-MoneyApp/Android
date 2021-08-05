@@ -46,6 +46,16 @@ object GroupRepository {
         }
     }
 
+    suspend fun markGroupAsFavourite(groupId: Int, isFavourite: Boolean): SimpleResult<String> {
+        val result = withContext(Dispatchers.IO) {
+            MoneyAppClient.editGroup(groupId = groupId, isFavourite = isFavourite)
+        }
+        return when (result) {
+            is SimpleResult.Error -> SimpleResult.Error(result.error)
+            is SimpleResult.Success -> SimpleResult.Success("Success")
+        }
+    }
+
     suspend fun fetchGroupUsers(groupId: Int): SimpleResult<List<User>> {
         val result = withContext(Dispatchers.IO) {
             MoneyAppClient.groupUsers(groupId)

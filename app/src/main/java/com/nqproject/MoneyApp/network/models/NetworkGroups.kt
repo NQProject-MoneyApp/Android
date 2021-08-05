@@ -4,9 +4,11 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 data class NetworkAddGroupRequest(
-    val name: String?,
-    val icon: Int?,
-    val members: List<Int>
+    val name: String? = null,
+    val icon: Int? = null,
+    val members: List<Int>? = null,
+    @SerializedName("is_favourite")
+    val isFavourite: Boolean? = null
 )
 
 data class NetworkGroupsResponse(

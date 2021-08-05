@@ -49,7 +49,7 @@ object MoneyAppClient {
                 .addInterceptor {
                     val builder = it.request().newBuilder()
                     val result = it.proceed(builder.build())
-                    if(result.code == 401 && AuthenticationManager.isLoggedIn) {
+                    if (result.code == 401 && AuthenticationManager.isLoggedIn) {
                         logoutCallback?.invoke()
                     }
                     return@addInterceptor result
@@ -61,7 +61,7 @@ object MoneyAppClient {
         .build()
         .create(MoneyAppApi::class.java)
 
-    private suspend fun <T>runRequest(
+    private suspend fun <T> runRequest(
         onError: (suspend (e: HttpException) -> SimpleResult<T>)? = null,
         request: suspend () -> SimpleResult<T>,
     ): SimpleResult<T> {
@@ -70,7 +70,7 @@ object MoneyAppClient {
         } catch (e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to run request", e)
             onError?.invoke(e) ?: SimpleResult.Error("Unknown error")
-        } catch(e: IOException) {
+        } catch (e: IOException) {
             Log.e(Config.MAIN_TAG, "Failed to run request", e)
             SimpleResult.Error("Something failed, check your internet connection.")
         }
@@ -117,13 +117,30 @@ object MoneyAppClient {
         }
     }
 
-    suspend fun addGroup(name: String, icon: Int, members: List<User>): SimpleResult<NetworkGroupsResponse> {
+    suspend fun addGroup(
+        name: String,
+        icon: Int,
+        members: List<User>
+    ): SimpleResult<NetworkGroupsResponse> {
         return runRequest {
             val result = client.addGroup(
                 NetworkAddGroupRequest(
                     name = name,
                     icon = icon,
-                    members = members.map { it.pk } )
+                    members = members.map { it.pk })
+            )
+            SimpleResult.Success(result)
+        }
+    }
+
+    suspend fun editGroup(
+        groupId: Int,
+        isFavourite: Boolean
+    ): SimpleResult<NetworkGroupsResponse> {
+        return runRequest {
+            val result = client.editGroup(
+                groupId,
+                NetworkAddGroupRequest(isFavourite = isFavourite)
             )
             SimpleResult.Success(result)
         }
@@ -137,8 +154,10 @@ object MoneyAppClient {
     ): SimpleResult<NetworkExpensesResponse> {
         return runRequest {
             val result =
-                client.addExpense(groupId, NetworkAddExpenseRequest(name = name, amount = amount,
-                    participants = participants.map { it.pk } ))
+                client.addExpense(
+                    groupId, NetworkAddExpenseRequest(
+                        name = name, amount = amount, participants = participants.map { it.pk })
+                )
 
             SimpleResult.Success(result)
         }
@@ -150,12 +169,12 @@ object MoneyAppClient {
         name: String,
         amount: Float,
         participants: List<User>,
-        ): SimpleResult<NetworkExpensesResponse> {
+    ): SimpleResult<NetworkExpensesResponse> {
         return runRequest {
             val result =
                 client.editExpense(
                     groupId, expenseId, NetworkAddExpenseRequest(name = name, amount = amount,
-                        participants = participants.map { it.pk } )
+                        participants = participants.map { it.pk })
                 )
 
             SimpleResult.Success(result)
