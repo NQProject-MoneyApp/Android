@@ -9,11 +9,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,6 +20,7 @@ import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.ui.screens.auth.AuthHeader
 import com.nqproject.MoneyApp.ui.screens.auth.AuthInputFields
 import com.nqproject.MoneyApp.ui.screens.auth.BottomOption
+import com.nqproject.MoneyApp.ui.screens.auth.InputFieldValidator
 import kotlinx.coroutines.launch
 
 
@@ -84,6 +82,33 @@ private fun RegistrationForm(
     val passwordState = remember { mutableStateOf("") }
     val emailState = remember { mutableStateOf("") }
 
+    val usernameValidator by remember {
+        mutableStateOf(InputFieldValidator<String> {
+            when {
+                it.isEmpty() -> "Enter a username"
+                else -> ""
+            }
+        })
+    }
+
+    val emailValidator by remember {
+        mutableStateOf(InputFieldValidator<String> {
+            when {
+                it.isEmpty() -> "Enter an email"
+                else -> ""
+            }
+        })
+    }
+
+    val passwordValidator by remember {
+        mutableStateOf(InputFieldValidator<String> {
+            when {
+                it.isEmpty() -> "Enter a password"
+                else -> ""
+            }
+        })
+    }
+
     AuthInputFields(
         usernameState = usernameState,
         passwordState = passwordState,
@@ -91,6 +116,9 @@ private fun RegistrationForm(
         onDone = {
             onRegisterPressed(usernameState.value, passwordState.value, emailState.value)
         },
+        usernameValidator = usernameValidator,
+        emailValidator = emailValidator,
+        passwordValidator = passwordValidator,
     )
 
     Spacer(modifier = Modifier.height(21.dp))
@@ -102,7 +130,11 @@ private fun RegistrationForm(
         shape = RoundedCornerShape(10.dp),
         enabled = !loading,
         onClick = {
-            onRegisterPressed(usernameState.value, passwordState.value, emailState.value)
+            usernameValidator.validate(usernameState.value)
+            passwordValidator.validate(passwordState.value)
+            emailValidator.validate(emailState.value)
+            if (!usernameValidator.isError() and !passwordValidator.isError() and !emailValidator.isError())
+                onRegisterPressed(usernameState.value, passwordState.value, emailState.value)
         }) {
         Text("Register", style = MaterialTheme.typography.h4)
     }
