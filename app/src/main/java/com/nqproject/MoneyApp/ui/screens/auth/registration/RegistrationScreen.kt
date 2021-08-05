@@ -82,31 +82,31 @@ private fun RegistrationForm(
     val passwordState = remember { mutableStateOf("") }
     val emailState = remember { mutableStateOf("") }
 
-    val usernameValidator by remember {
-        mutableStateOf(InputFieldValidator<String> {
+    val usernameValidator = remember {
+        InputFieldValidator<String> {
             when {
                 it.isEmpty() -> "Enter a username"
                 else -> ""
             }
-        })
+        }
     }
 
-    val emailValidator by remember {
-        mutableStateOf(InputFieldValidator<String> {
+    val emailValidator = remember {
+        InputFieldValidator<String> {
             when {
                 it.isEmpty() -> "Enter an email"
                 else -> ""
             }
-        })
+        }
     }
 
-    val passwordValidator by remember {
-        mutableStateOf(InputFieldValidator<String> {
+    val passwordValidator = remember {
+        InputFieldValidator<String> {
             when {
                 it.isEmpty() -> "Enter a password"
                 else -> ""
             }
-        })
+        }
     }
 
     AuthInputFields(

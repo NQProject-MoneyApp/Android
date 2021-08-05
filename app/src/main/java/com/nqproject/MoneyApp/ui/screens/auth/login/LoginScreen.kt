@@ -80,22 +80,22 @@ private fun LoginForm(
     val usernameState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
 
-    val usernameValidator by remember {
-        mutableStateOf(InputFieldValidator<String> {
+    val usernameValidator = remember {
+        InputFieldValidator<String> {
             when {
                 it.isEmpty() -> "Enter a username"
                 else -> ""
             }
-        })
+        }
     }
 
-    val passwordValidator by remember {
-        mutableStateOf(InputFieldValidator<String> {
+    val passwordValidator = remember {
+        InputFieldValidator<String> {
             when {
                 it.isEmpty() -> "Enter a password"
                 else -> ""
             }
-        })
+        }
     }
 
     AuthInputFields(

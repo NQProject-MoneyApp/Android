@@ -35,13 +35,13 @@ fun AddGroupForm(onSave: (name: String) -> Unit, icon: MoneyAppIcon?, onAddImage
     val friends = viewModel.userFriends.observeAsState(emptyList()).value
     val addGroupLoading = viewModel.addGroupLoading.observeAsState(false).value
 
-    val nameValidator by remember {
-        mutableStateOf(InputFieldValidator<String> {
+    val nameValidator = remember {
+        InputFieldValidator<String> {
             when {
                 it.isEmpty() -> "Enter a group name"
                 else -> ""
             }
-        })
+        }
     }
 
     Card(
