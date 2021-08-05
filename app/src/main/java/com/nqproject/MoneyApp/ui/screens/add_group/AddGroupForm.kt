@@ -9,6 +9,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,6 +24,7 @@ import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.components.ChooseUsersComponent
 import com.nqproject.MoneyApp.repository.MoneyAppIcon
 import com.nqproject.MoneyApp.ui.screens.auth.InputField
+import com.nqproject.MoneyApp.ui.screens.auth.InputFieldValidator
 
 @Composable
 fun AddGroupForm(onSave: (name: String) -> Unit, icon: MoneyAppIcon?, onAddImage: () -> Unit) {
@@ -32,6 +34,15 @@ fun AddGroupForm(onSave: (name: String) -> Unit, icon: MoneyAppIcon?, onAddImage
     val chosenUsers = viewModel.chosenUsers.observeAsState(emptyList()).value
     val friends = viewModel.userFriends.observeAsState(emptyList()).value
     val addGroupLoading = viewModel.addGroupLoading.observeAsState(false).value
+
+    val nameValidator by remember {
+        mutableStateOf(InputFieldValidator<String> {
+            when {
+                it.isEmpty() -> "Enter a group name"
+                else -> ""
+            }
+        })
+    }
 
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
@@ -70,6 +81,7 @@ fun AddGroupForm(onSave: (name: String) -> Unit, icon: MoneyAppIcon?, onAddImage
         focusRequesterAction = {},
         placeholder = "Group name",
         keyboardType = KeyboardType.Text,
+        validator = nameValidator
     )
 
     if (friends.isNotEmpty()) {
@@ -92,7 +104,9 @@ fun AddGroupForm(onSave: (name: String) -> Unit, icon: MoneyAppIcon?, onAddImage
         shape = RoundedCornerShape(10.dp),
         enabled = !addGroupLoading,
         onClick = {
-            onSave(groupName.value)
+            nameValidator.validate(groupName.value)
+            if(!nameValidator.isError())
+                onSave(groupName.value)
         }) {
         Text("Save", style = MaterialTheme.typography.h4)
     }
