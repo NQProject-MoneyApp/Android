@@ -27,7 +27,6 @@ class ExpenseListFragment : Fragment() {
             setContent {
                 MoneyAppTheme {
                     ExpenseListScreen(
-                        group = args.group,
                         onAddExpenseNavigate = {
                             val action =
                                 ExpenseListFragmentDirections
@@ -49,5 +48,10 @@ class ExpenseListFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateExpenses()
     }
 }

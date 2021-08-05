@@ -11,6 +11,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -18,6 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.repository.Expense
 import com.nqproject.MoneyApp.repository.Group
@@ -25,7 +29,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ExpenseListScreen(
-    group: Group,
     onBackNavigate: () -> Unit,
     onExpenseDetailsNavigate: (expense: Expense) -> Unit,
     onAddExpenseNavigate: () -> Unit,
@@ -34,38 +37,49 @@ fun ExpenseListScreen(
     val viewModel = viewModel<ExpenseListViewModel>()
     val scrollState = rememberScrollState()
     val groupExpenses = viewModel.groupExpenses.observeAsState(emptyList()).value
+    val isRefreshing by viewModel.loading.observeAsState(false)
 
     ExpenseListHeader(
         didPressBackButton = {
             Log.d(Config.MAIN_TAG, "didPressBackButton")
             onBackNavigate()
         },
+        didPressAddExpense = {
+            onAddExpenseNavigate()
+        },
         body = {
-             Column(
-                 modifier = Modifier
-                     .fillMaxSize()
-                     .verticalScroll(scrollState)
-                     .padding(32.dp),
-                 verticalArrangement = Arrangement.Top,
-                 horizontalAlignment = Alignment.CenterHorizontally,
-             ) {
-                 Button(onClick = {
-                     onAddExpenseNavigate()
-                 }, modifier = Modifier.fillMaxWidth(), shape = AbsoluteRoundedCornerShape(15))
-                 { Text(
-                     text = "New expense",
-                     style = MaterialTheme.typography.h4
-                 )
-                 }
-                 Spacer(modifier = Modifier.height(20.dp))
-                 groupExpenses.forEach { it ->
-                     ExpenseListComponent(it,
-                     didPressComponent = {
-                         onExpenseDetailsNavigate(it)
-                     })
-                     Spacer(modifier = Modifier.height(20.dp))
-                 }
-             }
+            SwipeRefresh(
+                state = rememberSwipeRefreshState(isRefreshing),
+                onRefresh = {
+                    viewModel.updateExpenses()
+                },
+                indicator = { state, trigger ->
+                    SwipeRefreshIndicator(
+                        state = state,
+                        refreshTriggerDistance = trigger,
+                        scale = true,
+                        backgroundColor = MaterialTheme.colors.primary,
+                        contentColor = MaterialTheme.colors.background,
+                    )
+                }
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(scrollState)
+                        .padding(32.dp),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    groupExpenses.forEach { it ->
+                        ExpenseListComponent(it,
+                            didPressComponent = {
+                                onExpenseDetailsNavigate(it)
+                            })
+                        Spacer(modifier = Modifier.height(20.dp))
+                    }
+                }
+            }
         },
         title = "Expenses")
 }

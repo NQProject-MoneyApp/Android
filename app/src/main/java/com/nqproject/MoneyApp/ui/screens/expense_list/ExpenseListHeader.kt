@@ -8,7 +8,11 @@ import androidx.compose.ui.res.painterResource
 import com.nqproject.MoneyApp.R
 
 @Composable
-fun ExpenseListHeader(didPressBackButton: () -> Unit,  body: @Composable () -> Unit, title: String) {
+fun ExpenseListHeader(
+    didPressBackButton: () -> Unit,
+    didPressAddExpense: () -> Unit,
+    body: @Composable () -> Unit,
+    title: String) {
 
     Column() {
         TopAppBar(
@@ -18,6 +22,17 @@ fun ExpenseListHeader(didPressBackButton: () -> Unit,  body: @Composable () -> U
                 IconButton(onClick = { didPressBackButton() }) {
                     Image(
                         painterResource(id = R.drawable.ic_back_arrow),
+                        contentDescription = "",
+                    )
+                }
+            },
+            actions = {
+                IconButton(
+                    onClick = {
+                        didPressAddExpense()
+                    }) {
+                    Image(
+                        painterResource(id = R.drawable.ic_add),
                         contentDescription = "",
                     )
                 }

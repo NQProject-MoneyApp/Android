@@ -21,10 +21,6 @@ class GroupsListViewModel: ViewModel() {
     val loading: LiveData<Boolean> = _loading
     val groupsList: LiveData<List<Group>> = _groupsList
 
-    init {
-        updateGroups()
-    }
-
     fun updateGroups() {
         viewModelScope.launch {
             fetchGroups()

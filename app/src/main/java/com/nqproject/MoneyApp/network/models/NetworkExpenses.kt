@@ -20,14 +20,3 @@ data class NetworkExpensesResponse(
     val create_date: String,
     val participants: List<NetworkUser>,
 )
-
-@Serializable
-data class NetworkExpenseDetailsResponse(
-    val pk: Int,
-    val group_id: Int,
-    val name: String,
-    val author: NetworkUser,
-    val amount: Double,
-    val create_date: String,
-    val participants: List<NetworkUser>,
-)

@@ -129,6 +129,14 @@ object MoneyAppClient {
         }
     }
 
+    suspend fun fetchGroupDetails(groupId: Int):
+            SimpleResult<NetworkGroupsResponse> {
+        return runRequest {
+            val result = client.fetchGroupDetails(groupId)
+            SimpleResult.Success(result)
+        }
+    }
+
     suspend fun addGroup(name: String, icon: Int, members: List<User>): SimpleResult<NetworkGroupsResponse> {
         return runRequest {
             val result = client.addGroup(
@@ -186,15 +194,6 @@ object MoneyAppClient {
         }
     }
 
-    suspend fun groupUsers(groupId: Int): SimpleResult<List<NetworkGroupUsersResponse>> {
-        return runRequest {
-            val result = client.groupUsers(groupId)
-            result.forEach { println("$it.user.username $it.balance") }
-            println(result)
-            SimpleResult.Success(result)
-        }
-    }
-
     suspend fun fetchExpenses(groupId: Int): SimpleResult<List<NetworkExpensesResponse>> {
         return runRequest {
             val result = client.groupExpenses(groupId)
@@ -203,7 +202,7 @@ object MoneyAppClient {
     }
 
     suspend fun fetchExpenseDetails(groupId: Int, expenseId: Int):
-            SimpleResult<NetworkExpenseDetailsResponse> {
+            SimpleResult<NetworkExpensesResponse> {
 
         return runRequest {
             val result = client.fetchExpenseDetails(groupId, expenseId)
