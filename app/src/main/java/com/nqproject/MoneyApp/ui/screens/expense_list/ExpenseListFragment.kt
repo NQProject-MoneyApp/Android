@@ -49,4 +49,9 @@ class ExpenseListFragment : Fragment() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateExpenses()
+    }
 }
