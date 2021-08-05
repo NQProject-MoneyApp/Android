@@ -119,14 +119,9 @@ object MoneyAppClient {
 
     suspend fun fetchGroupDetails(groupId: Int):
             SimpleResult<NetworkGroupsResponse> {
-        return try {
+        return runRequest {
             val result = client.fetchGroupDetails(groupId)
             SimpleResult.Success(result)
-        } catch (e: HttpException) {
-            Log.e(
-                Config.MAIN_TAG, "Failed to fetch group details for group $groupId"
-            )
-            SimpleResult.Error("Unknown error")
         }
     }
 
