@@ -22,7 +22,7 @@ class GroupDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.init()
+        viewModel.init(args.group)
     }
 
     override fun onCreateView(
@@ -34,7 +34,6 @@ class GroupDetailsFragment : Fragment() {
             setContent {
                 MoneyAppTheme {
                     GroupDetailsScreen(
-                        group = args.group,
                         onExpensesListNavigate = {
                             val action = GroupDetailsFragmentDirections
                                 .actionGroupDetailsFragmentToExpenseListFragment(args.group)
@@ -54,4 +53,8 @@ class GroupDetailsFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateGroup()
+    }
 }

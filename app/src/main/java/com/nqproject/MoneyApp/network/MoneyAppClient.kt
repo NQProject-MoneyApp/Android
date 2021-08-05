@@ -113,6 +113,19 @@ object MoneyAppClient {
         }
     }
 
+    suspend fun fetchGroupDetails(groupId: Int):
+            SimpleResult<NetworkGroupsResponse> {
+        return try {
+            val result = client.fetchGroupDetails(groupId)
+            SimpleResult.Success(result)
+        } catch (e: HttpException) {
+            Log.e(
+                Config.MAIN_TAG, "Failed to fetch group details for group $groupId"
+            )
+            SimpleResult.Error("Unknown error")
+        }
+    }
+
     suspend fun addGroup(name: String, icon: Int, members: List<User>): SimpleResult<NetworkGroupsResponse> {
         return try {
             val result = client.addGroup(
@@ -186,18 +199,6 @@ object MoneyAppClient {
         }
     }
 
-    suspend fun groupUsers(groupId: Int): SimpleResult<List<NetworkGroupUsersResponse>> {
-        return try {
-            val result = client.groupUsers(groupId)
-            result.forEach { println("$it.user.username $it.balance") }
-            println(result)
-            SimpleResult.Success(result)
-        } catch (e: HttpException) {
-            Log.e(Config.MAIN_TAG, "Failed to fetch group users", e)
-            SimpleResult.Error("Unknown error")
-        }
-    }
-
     suspend fun fetchExpenses(groupId: Int): SimpleResult<List<NetworkExpensesResponse>> {
         return try {
             val result = client.groupExpenses(groupId)
@@ -209,7 +210,7 @@ object MoneyAppClient {
     }
 
     suspend fun fetchExpenseDetails(groupId: Int, expenseId: Int):
-            SimpleResult<NetworkExpenseDetailsResponse> {
+            SimpleResult<NetworkExpensesResponse> {
         return try {
             val result = client.fetchExpenseDetails(groupId, expenseId)
             SimpleResult.Success(result)

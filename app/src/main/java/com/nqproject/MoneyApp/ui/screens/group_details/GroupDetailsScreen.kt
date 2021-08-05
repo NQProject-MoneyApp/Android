@@ -37,7 +37,6 @@ import java.util.*
 
 @Composable
 fun GroupDetailsScreen(
-    group: Group,
     onExpensesListNavigate: () -> Unit,
     onBackNavigate: () -> Unit,
     onAddExpenseNavigate: () -> Unit
@@ -50,6 +49,7 @@ fun GroupDetailsScreen(
     var showCode by remember { mutableStateOf(false) }
     var code = ""
     val context = LocalContext.current
+    val group = viewModel.group.observeAsState().value!!
 
     GroupDetailsHeader(
         didPressBackButton = {
@@ -94,6 +94,7 @@ fun GroupDetailsScreen(
                     contentDescription = "",
                     colorFilter = ColorFilter.tint(MaterialTheme.colors.primary)
                 )
+                Spacer(modifier = Modifier.height(32.dp))
                 Row(
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
@@ -127,7 +128,7 @@ fun GroupDetailsScreen(
                         color = Color.Green
                     )
                 }
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(24.dp))
                 TextButton(onClick = { /*TODO*/ }) {
                     Text(
                         text = "Settle up",
@@ -135,7 +136,7 @@ fun GroupDetailsScreen(
                         color = MaterialTheme.colors.primary
                     )
                 }
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(24.dp))
                 Button(onClick = {
                     Log.d(Config.MAIN_TAG, "new expense")
                     onAddExpenseNavigate()
@@ -147,7 +148,7 @@ fun GroupDetailsScreen(
                     text = "New expense",
                     style = MaterialTheme.typography.h4
                 )}
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(24.dp))
                 GroupUsersListComponent(
                     userBalanceList = group.members,
                     group = group,
