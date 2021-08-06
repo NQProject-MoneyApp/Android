@@ -18,6 +18,10 @@ interface MoneyAppApi {
     @POST("api/groups/")
     suspend fun addGroup(@Body request: NetworkAddGroupRequest): NetworkGroupsResponse
 
+    @PATCH("api/groups/{groupId}/")
+    suspend fun editGroup(@Path("groupId") groupId: Int, @Body request: NetworkAddGroupRequest):
+            NetworkGroupsResponse
+
     @POST("/api/{id}/expenses/")
     suspend fun addExpense(
         @Path("id") id: Int,

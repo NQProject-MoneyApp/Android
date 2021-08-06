@@ -24,7 +24,6 @@ class ExpenseDetailsViewModel: ViewModel() {
 
 
     fun init (expense: Expense) {
-        _loading.value = true
         if(initialized) return
         initialized = true
 

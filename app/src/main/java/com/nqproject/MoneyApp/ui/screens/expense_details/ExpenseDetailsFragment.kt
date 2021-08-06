@@ -39,7 +39,7 @@ class ExpenseDetailsFragment : Fragment() {
                         onEditExpenseNavigate = {
                             val action = ExpenseDetailsFragmentDirections
                                 .actionExpenseDetailsFragmentToEditExpenseFragment(
-                                    viewModel.expense.value!!, args.group
+                                   viewModel.expense.value!!, args.group
                                 )
                             findNavController().navigate(action)
                         },

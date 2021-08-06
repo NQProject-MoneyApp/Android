@@ -19,25 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.repository.User
 import com.nqproject.MoneyApp.ui.screens.add_group.AddUserComponent
 
-@Suppress("UnnecessaryComposedModifier")
-fun Modifier.bottomRectBorder(width: Dp = Dp.Hairline, color: Color = Color.Black):
-        Modifier = composed(
-    factory = {
-        this.then(
-            Modifier.drawWithCache {
-                onDrawWithContent {
-                    drawContent()
-                    drawLine(
-                        color,
-                        Offset(width.value, size.height - width.value),
-                        Offset(size.width - width.value, size.height - width.value),
-                        strokeWidth = width.value
-                    )
-                }
-            }
-        )
-    },
-)
 
 @Composable
 fun ChooseUsersComponent(
