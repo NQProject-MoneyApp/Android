@@ -52,21 +52,6 @@ class ValidableValue<T>(
     }
 }
 
-class InputFieldValidator<T>(private val validateFun: (content: T) -> String = { "" }) {
-
-    private val _errorMessage = MutableLiveData("")
-
-    val errorMessage: LiveData<String> = _errorMessage
-
-    fun validate(content: T) {
-        _errorMessage.value = validateFun(content)
-    }
-
-    fun isError(): Boolean {
-        return _errorMessage.value?.isNotEmpty() ?: false
-    }
-}
-
 
 @Composable
 fun InputField(
