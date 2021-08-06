@@ -13,14 +13,13 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.nqproject.MoneyApp.ui.screens.auth.InputField
-import com.nqproject.MoneyApp.ui.screens.auth.InputFieldValidator
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.components.ChooseUsersComponent
+import com.nqproject.MoneyApp.components.InputField
+import com.nqproject.MoneyApp.components.ValidableValue
 import com.nqproject.MoneyApp.repository.User
-import com.nqproject.MoneyApp.ui.screens.auth.ValidableValue
 import java.util.*
 
 

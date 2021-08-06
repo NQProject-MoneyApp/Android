@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.components.ValidableValue
 import com.nqproject.MoneyApp.ui.screens.auth.*
 import kotlinx.coroutines.launch
 

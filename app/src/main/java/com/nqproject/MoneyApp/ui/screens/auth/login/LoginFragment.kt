@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.nqproject.MoneyApp.ui.screens.LoginScreen
 import com.nqproject.MoneyApp.ui.theme.MoneyAppTheme
 
 class LoginFragment : Fragment() {

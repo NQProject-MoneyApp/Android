@@ -1,4 +1,4 @@
-package com.nqproject.MoneyApp.ui.screens
+package com.nqproject.MoneyApp.ui.screens.auth.login
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -12,11 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nqproject.MoneyApp.ui.screens.auth.login.LoginViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.livedata.observeAsState
+import com.nqproject.MoneyApp.components.ValidableValue
 import com.nqproject.MoneyApp.ui.screens.auth.*
-import com.nqproject.MoneyApp.ui.screens.auth.login.LoginResult
 
 @Composable
 fun LoginScreen(

@@ -8,7 +8,7 @@ import com.nqproject.MoneyApp.repository.*
 
 
 class AddExpenseViewModel : ViewModel() {
-    var initialized = false
+    private var initialized = false
 
     private val _loading = MutableLiveData(false)
     private val _groupMembers = MutableLiveData(emptyList<User>())

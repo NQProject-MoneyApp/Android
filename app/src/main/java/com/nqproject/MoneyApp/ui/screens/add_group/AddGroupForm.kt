@@ -9,9 +9,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -22,11 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.components.ChooseUsersComponent
+import com.nqproject.MoneyApp.components.InputField
+import com.nqproject.MoneyApp.components.ValidableValue
 import com.nqproject.MoneyApp.repository.MoneyAppIcon
 import com.nqproject.MoneyApp.repository.User
-import com.nqproject.MoneyApp.ui.screens.auth.InputField
-import com.nqproject.MoneyApp.ui.screens.auth.InputFieldValidator
-import com.nqproject.MoneyApp.ui.screens.auth.ValidableValue
 
 @Composable
 fun AddGroupForm(onSave: (name: String, members: List<User>) -> Unit, icon: MoneyAppIcon?,

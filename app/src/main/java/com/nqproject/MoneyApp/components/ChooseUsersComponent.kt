@@ -18,8 +18,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.repository.User
 import com.nqproject.MoneyApp.ui.screens.add_group.AddUserComponent
-import com.nqproject.MoneyApp.ui.screens.auth.InputFieldValidator
-import com.nqproject.MoneyApp.ui.screens.auth.ValidableValue
 
 @Suppress("UnnecessaryComposedModifier")
 fun Modifier.bottomRectBorder(width: Dp = Dp.Hairline, color: Color = Color.Black):
