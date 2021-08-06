@@ -48,17 +48,18 @@ fun EditExpenseScreen(
                 AddExpenseForm(
                     defaultName = expense.name,
                     defaultAmount = expense.amount.toFloat(),
+                    defaultParticipants = expense.participants,
                     loading = loading,
-                    onSave = { name, amount ->
+                    onSave = { name, amount, participants ->
                         Log.d(Config.MAIN_TAG, "on save edited expense: $name")
                         coroutineScope.launch {
                             when (val result =
-                                viewModel.editExpense(expense, name = name, amount = amount)) {
-                                is SimpleResult.Error -> Toast.makeText(
-                                    context,
-                                    result.error,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                viewModel.editExpense(
+                                    expense, name = name, amount = amount,
+                                    participants = participants
+                                )) {
+                                is SimpleResult.Error -> Toast
+                                    .makeText(context, result.error, Toast.LENGTH_SHORT).show()
                                 is SimpleResult.Success -> {
                                     SimpleResult.Success("Success")
                                     onBackNavigate()

@@ -1,4 +1,4 @@
-package com.nqproject.MoneyApp.ui.screens
+package com.nqproject.MoneyApp.ui.screens.auth.login
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -12,14 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nqproject.MoneyApp.ui.screens.auth.login.LoginViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.livedata.observeAsState
-import com.nqproject.MoneyApp.ui.screens.auth.AuthHeader
-import com.nqproject.MoneyApp.ui.screens.auth.login.LoginResult
-import com.nqproject.MoneyApp.ui.screens.auth.AuthInputFields
-import com.nqproject.MoneyApp.ui.screens.auth.BottomOption
-import com.nqproject.MoneyApp.ui.screens.auth.InputFieldValidator
+import com.nqproject.MoneyApp.components.ValidableValue
+import com.nqproject.MoneyApp.ui.screens.auth.*
 
 @Composable
 fun LoginScreen(
@@ -77,35 +73,37 @@ private fun LoginForm(
     loading: Boolean,
     onLoginPressed: (username: String, password: String) -> Unit
 ) {
-    val usernameState = remember { mutableStateOf("") }
-    val passwordState = remember { mutableStateOf("") }
 
-    val usernameValidator = remember {
-        InputFieldValidator<String> {
-            when {
-                it.isEmpty() -> "Enter a username"
-                else -> ""
+    val usernameState = remember {
+        ValidableValue("",
+            {
+                when {
+                    it.isEmpty() -> "Enter a username"
+                    else -> ""
+                }
             }
-        }
+        )
+    }
+    val passwordState = remember {
+        ValidableValue("",
+            {
+                when {
+                    it.isEmpty() -> "Enter a username"
+                    else -> ""
+                }
+            }
+        )
     }
 
-    val passwordValidator = remember {
-        InputFieldValidator<String> {
-            when {
-                it.isEmpty() -> "Enter a password"
-                else -> ""
-            }
-        }
-    }
+    val usernameValue = usernameState.value.observeAsState().value!!
+    val passwordValue = passwordState.value.observeAsState().value!!
 
     AuthInputFields(
         usernameState = usernameState,
         passwordState = passwordState,
         onDone = {
-            onLoginPressed(usernameState.value, passwordState.value)
+            onLoginPressed(usernameValue, passwordValue)
         },
-        usernameValidator = usernameValidator,
-        passwordValidator = passwordValidator
     )
 
     Spacer(modifier = Modifier.height(5.dp))
@@ -117,10 +115,10 @@ private fun LoginForm(
         shape = RoundedCornerShape(10.dp),
         enabled = !loading,
         onClick = {
-            usernameValidator.validate(usernameState.value)
-            passwordValidator.validate(passwordState.value)
-            if (!usernameValidator.isError() and !passwordValidator.isError())
-                onLoginPressed(usernameState.value, passwordState.value)
+            usernameState.validate()
+            passwordState.validate()
+            if (!usernameState.isError() and !passwordState.isError())
+                onLoginPressed(usernameValue, passwordValue)
         }) {
         Text("Log in", style = MaterialTheme.typography.h4)
     }

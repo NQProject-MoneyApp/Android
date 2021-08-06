@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.repository.*
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class AddGroupViewModel: ViewModel() {
@@ -15,11 +14,9 @@ class AddGroupViewModel: ViewModel() {
     private val _addGrouploading = MutableLiveData(false)
     private val _icons = MutableLiveData(emptyList<MoneyAppIcon>())
 
-    private val _chosenUsers = MutableLiveData(emptyList<User>())
     private val _userFriends = MutableLiveData(emptyList<User>())
 
     val userFriends: LiveData<List<User>> = _userFriends
-    val chosenUsers: LiveData<List<User>> = _chosenUsers
     val icons: LiveData<List<MoneyAppIcon>> = _icons
     val loading: LiveData<Boolean> = _loading
     val addGroupLoading: LiveData<Boolean> = _addGrouploading
@@ -38,14 +35,6 @@ class AddGroupViewModel: ViewModel() {
         val result = GroupRepository.addGroup(name=name, icon=icon.id, members = members)
         _addGrouploading.value = false
         return result
-    }
-
-    fun addChosenMember(user: User) {
-        _chosenUsers.value = _chosenUsers.value?.plus(user)
-    }
-
-    fun removeChosenMember(user: User) {
-        _chosenUsers.value = _chosenUsers.value?.filter { it.pk != user.pk }
     }
 
     private suspend fun fetchIcons(): SimpleResult<List<MoneyAppIcon>> {

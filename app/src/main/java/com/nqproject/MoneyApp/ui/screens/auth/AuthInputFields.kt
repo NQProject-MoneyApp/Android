@@ -3,23 +3,21 @@ package com.nqproject.MoneyApp.ui.screens.auth
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.nqproject.MoneyApp.components.InputField
+import com.nqproject.MoneyApp.components.ValidableValue
 
 @Composable
 fun AuthInputFields(
-    usernameState: MutableState<String>,
-    passwordState: MutableState<String>,
+    usernameState: ValidableValue<String>,
+    passwordState: ValidableValue<String>,
     onDone: () -> Unit,
-    emailState: MutableState<String>? = null,
-    usernameValidator: InputFieldValidator<String> = InputFieldValidator(),
-    emailValidator: InputFieldValidator<String> = InputFieldValidator(),
-    passwordValidator: InputFieldValidator<String> = InputFieldValidator(),
+    emailState: ValidableValue<String>? = null,
 ) {
 
     val emailFocusRequester = remember { FocusRequester() }
@@ -37,7 +35,6 @@ fun AuthInputFields(
                 emailFocusRequester.requestFocus()
             } ?: passwordFocusRequester.requestFocus()
         },
-        validator = usernameValidator,
     )
 
     Spacer(modifier = Modifier.height(5.dp))
@@ -51,7 +48,6 @@ fun AuthInputFields(
             focusRequesterAction = {
                 passwordFocusRequester.requestFocus()
             },
-            validator = emailValidator,
         )
         Spacer(modifier = Modifier.height(5.dp))
     }
@@ -65,6 +61,5 @@ fun AuthInputFields(
             onDone()
             focusManager.clearFocus()
         },
-        validator = passwordValidator,
     )
 }

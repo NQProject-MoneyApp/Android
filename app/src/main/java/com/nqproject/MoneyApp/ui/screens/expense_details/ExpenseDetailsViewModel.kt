@@ -11,9 +11,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
-class ExpenseDetailsViewModel() : ViewModel() {
+class ExpenseDetailsViewModel: ViewModel() {
 
-    var initialized = false
+    private var initialized = false
 
     private val _loading = MutableLiveData(false)
     private val _expense = MutableLiveData<Expense>(null)
