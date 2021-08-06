@@ -2,6 +2,7 @@ package com.nqproject.MoneyApp.repository
 
 import com.nqproject.MoneyApp.network.MoneyAppClient
 import com.nqproject.MoneyApp.network.SimpleResult
+import com.nqproject.MoneyApp.utils.DateUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -17,20 +18,31 @@ object GroupRepository {
             is SimpleResult.Success -> SimpleResult.Success(
                 result.data.map {
                     Group(
-                        id = it.pk!!,
-                        name = it.name!!,
-                        totalCost = it.total_cost!!,
-                        icon = MoneyAppIcon.from(it.icon!!).icon(),
-                        userBalance = it.user_balance!!,
-                        createDate = it.create_date!!,
+                        id = it.pk,
+                        name = it.name,
+                        totalCost = it.totalCost,
+                        icon = MoneyAppIcon.from(it.icon).icon(),
+                        userBalance = it.userBalance,
+                        createDate = DateUtils.parseDate(it.createDate),
+                        isFavourite = it.isFavourite,
                         members = it.members.map { member ->
                             User(
                                 pk = member.user.pk, name = member.user.username,
-                                email = member.user.email, balance = member.balance!!
+                                email = member.user.email, balance = member.balance
                             )
                         }
                     )
             })
+        }
+    }
+
+    suspend fun markGroupAsFavourite(groupId: Int, isFavourite: Boolean): SimpleResult<String> {
+        val result = withContext(Dispatchers.IO) {
+            MoneyAppClient.editGroup(groupId = groupId, isFavourite = isFavourite)
+        }
+        return when (result) {
+            is SimpleResult.Error -> SimpleResult.Error(result.error)
+            is SimpleResult.Success -> SimpleResult.Success("Success")
         }
     }
 
@@ -43,18 +55,19 @@ object GroupRepository {
             is SimpleResult.Error -> SimpleResult.Error(result.error)
             is SimpleResult.Success -> SimpleResult.Success(
                 Group(
-                    id = result.data.pk!!,
-                    name = result.data.name!!,
-                    totalCost = result.data.total_cost!!,
-                    icon = MoneyAppIcon.from(result.data.icon!!).icon(),
-                    userBalance = result.data.user_balance!!,
-                    createDate = result.data.create_date!!,
+                    id = result.data.pk,
+                    name = result.data.name,
+                    totalCost = result.data.totalCost,
+                    icon = MoneyAppIcon.from(result.data.icon).icon(),
+                    userBalance = result.data.userBalance,
+                    createDate = DateUtils.parseDate(result.data.createDate),
                     members = result.data.members.map { member ->
                         User(
                             pk = member.user.pk, name = member.user.username,
-                            email = member.user.email, balance = member.balance!!
+                            email = member.user.email, balance = member.balance
                         )
-                    }
+                    },
+                    isFavourite = result.data.isFavourite
                 )
             )
         }

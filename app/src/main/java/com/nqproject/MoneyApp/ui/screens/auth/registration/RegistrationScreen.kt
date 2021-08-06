@@ -9,20 +9,16 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.Config
-import com.nqproject.MoneyApp.ui.screens.auth.AuthHeader
-import com.nqproject.MoneyApp.ui.screens.auth.AuthInputFields
-import com.nqproject.MoneyApp.ui.screens.auth.BottomOption
+import com.nqproject.MoneyApp.components.ValidableValue
+import com.nqproject.MoneyApp.ui.screens.auth.*
 import kotlinx.coroutines.launch
 
 
@@ -52,7 +48,7 @@ fun RegistrationScreen(
                 Log.d(Config.MAIN_TAG, "On register $username $email $password")
                 val result = viewModel.register(username, password, email)
 
-                when(result) {
+                when (result) {
                     is RegistrationResult.Success -> {
                         onLoginNavigate()
                     }
@@ -80,16 +76,49 @@ private fun RegistrationForm(
     loading: Boolean,
     onRegisterPressed: (username: String, password: String, email: String) -> Unit
 ) {
-    val usernameState = remember { mutableStateOf("") }
-    val passwordState = remember { mutableStateOf("") }
-    val emailState = remember { mutableStateOf("") }
+    val usernameState = remember {
+        ValidableValue("",
+            {
+                when {
+                    it.isEmpty() -> "Enter a username"
+                    else -> ""
+                }
+            }
+        )
+    }
+    val passwordState = remember {
+        ValidableValue("",
+            {
+                when {
+                    it.isEmpty() -> "Enter a username"
+                    else -> ""
+                }
+            }
+        )
+    }
+    val emailState = remember {
+        ValidableValue("",
+            {
+                when {
+                    it.isEmpty() -> "Enter an email"
+                    else -> ""
+                }
+            }
+        )
+    }
+
+    val usernameValue = usernameState.value.observeAsState().value!!
+    val passwordValue = passwordState.value.observeAsState().value!!
+    val emailValue = passwordState.value.observeAsState().value!!
 
     AuthInputFields(
         usernameState = usernameState,
         passwordState = passwordState,
         emailState = emailState,
         onDone = {
-            onRegisterPressed(usernameState.value, passwordState.value, emailState.value)
+            onRegisterPressed(
+                usernameValue, passwordValue, emailValue
+            )
         },
     )
 
@@ -102,7 +131,14 @@ private fun RegistrationForm(
         shape = RoundedCornerShape(10.dp),
         enabled = !loading,
         onClick = {
-            onRegisterPressed(usernameState.value, passwordState.value, emailState.value)
+            usernameState.validate()
+            passwordState.validate()
+            emailState.validate()
+            if (!usernameState.isError() and !passwordState.isError() and !emailState.isError())
+                onRegisterPressed(
+                    usernameValue, passwordValue,
+                    emailValue
+                )
         }) {
         Text("Register", style = MaterialTheme.typography.h4)
     }

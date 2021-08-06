@@ -10,7 +10,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -21,16 +20,33 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.components.ChooseUsersComponent
+import com.nqproject.MoneyApp.components.InputField
+import com.nqproject.MoneyApp.components.ValidableValue
 import com.nqproject.MoneyApp.repository.MoneyAppIcon
-import com.nqproject.MoneyApp.ui.screens.auth.InputField
+import com.nqproject.MoneyApp.repository.User
 
 @Composable
-fun AddGroupForm(onSave: (name: String) -> Unit, icon: MoneyAppIcon?, onAddImage: () -> Unit) {
-    val groupName = remember { mutableStateOf("") }
+fun AddGroupForm(onSave: (name: String, members: List<User>) -> Unit, icon: MoneyAppIcon?,
+                 onAddImage: ()
+-> Unit) {
+    val groupName = remember {
+        ValidableValue("",
+            {
+                when {
+                    it.isEmpty() -> "Enter a group name"
+                    else -> ""
+                }
+            }
+        )
+    }
+
     val viewModel = viewModel<AddGroupViewModel>()
 
-    val chosenUsers = viewModel.chosenUsers.observeAsState(emptyList()).value
+    val chosenUsers = remember { ValidableValue<List<User>>(emptyList()) }
+
     val friends = viewModel.userFriends.observeAsState(emptyList()).value
+    val groupNameValue = groupName.value.observeAsState().value!!
+    val chosenUsersValue = chosenUsers.value.observeAsState().value!!
     val addGroupLoading = viewModel.addGroupLoading.observeAsState(false).value
 
     Card(
@@ -77,8 +93,6 @@ fun AddGroupForm(onSave: (name: String) -> Unit, icon: MoneyAppIcon?, onAddImage
             title = "Members",
             groupMembers = friends,
             chosenMembers = chosenUsers,
-            onAddUser = { viewModel.addChosenMember(it) },
-            onRemoveUser = { viewModel.removeChosenMember(it) },
         )
     }
 
@@ -92,7 +106,9 @@ fun AddGroupForm(onSave: (name: String) -> Unit, icon: MoneyAppIcon?, onAddImage
         shape = RoundedCornerShape(10.dp),
         enabled = !addGroupLoading,
         onClick = {
-            onSave(groupName.value)
+            groupName.validate()
+            if(!groupName.isError())
+                onSave(groupNameValue, chosenUsersValue)
         }) {
         Text("Save", style = MaterialTheme.typography.h4)
     }

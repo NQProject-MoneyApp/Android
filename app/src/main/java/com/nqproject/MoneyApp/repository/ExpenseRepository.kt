@@ -2,6 +2,7 @@ package com.nqproject.MoneyApp.repository
 
 import com.nqproject.MoneyApp.network.MoneyAppClient
 import com.nqproject.MoneyApp.network.SimpleResult
+import com.nqproject.MoneyApp.utils.DateUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -11,7 +12,6 @@ object ExpenseRepository {
         val result = withContext(Dispatchers.IO) {
             MoneyAppClient.fetchExpenses(groupId)
         }
-
         return when (result) {
             is SimpleResult.Error -> SimpleResult.Error(result.error)
             is SimpleResult.Success -> SimpleResult.Success(
@@ -22,7 +22,7 @@ object ExpenseRepository {
                         name = it.name,
                         amount = it.amount,
                         author = User(pk = it.author.pk, it.author.username, it.author.email, 0.0),
-                        createDate = it.create_date,
+                        createDate = DateUtils.parseDate(it.createDate),
                         participants = it.participants.map {
                             User(pk = it.pk, it.username, it.email, 0.0)
                         }
@@ -48,7 +48,7 @@ object ExpenseRepository {
                         result.data.author.pk, result.data.author.username,
                         result.data.author.email, 0.0
                     ),
-                    createDate = result.data.create_date,
+                    createDate = DateUtils.parseDate(result.data.createDate),
                     participants = result.data.participants.map {
                         User(
                             pk = it.pk, it.username,
