@@ -46,7 +46,9 @@ fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
                 .padding(24.dp)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
                     painterResource(id = group.icon),
