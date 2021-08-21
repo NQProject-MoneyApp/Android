@@ -120,6 +120,9 @@
             app:popEnterAnim="@anim/fade_scale_in"
             app:popExitAnim="@anim/fade_scale_out"
             />
+        <action
+            android:id="@+id/action_groupDetailsFragment_to_editGroupFragment"
+            app:destination="@id/editGroupFragment" />
     </fragment>
     <fragment
         android:id="@+id/expenseListFragment"
@@ -174,6 +177,14 @@
         <argument
             android:name="expense"
             app:argType="com.nqproject.MoneyApp.repository.Expense" />
+        <argument
+            android:name="group"
+            app:argType="com.nqproject.MoneyApp.repository.Group" />
+    </fragment>
+    <fragment
+        android:id="@+id/editGroupFragment"
+        android:name="com.nqproject.MoneyApp.ui.screens.edit_group.EditGroupFragment"
+        android:label="EditGroupFragment" >
         <argument
             android:name="group"
             app:argType="com.nqproject.MoneyApp.repository.Group" />

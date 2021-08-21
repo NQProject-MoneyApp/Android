@@ -39,7 +39,8 @@ import java.util.*
 fun GroupDetailsScreen(
     onExpensesListNavigate: () -> Unit,
     onBackNavigate: () -> Unit,
-    onAddExpenseNavigate: () -> Unit
+    onAddExpenseNavigate: () -> Unit,
+    onEditGroupNavigate: () -> Unit
 ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -72,6 +73,10 @@ fun GroupDetailsScreen(
                     }
                 }
             }
+        },
+        didPressEditGroup = {
+            Log.d(Config.MAIN_TAG, "didPressEditGroup")
+            onEditGroupNavigate()
         },
         body = {
             if (showCode) {

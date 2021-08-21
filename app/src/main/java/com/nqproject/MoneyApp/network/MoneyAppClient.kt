@@ -155,12 +155,19 @@ object MoneyAppClient {
 
     suspend fun editGroup(
         groupId: Int,
+        name: String,
+        icon: Int,
+        members: List<User>,
         isFavourite: Boolean
     ): SimpleResult<NetworkGroupsResponse> {
         return runRequest {
             val result = client.editGroup(
                 groupId,
-                NetworkAddGroupRequest(isFavourite = isFavourite)
+                NetworkAddGroupRequest(
+                    name = name,
+                    icon = icon,
+                    members = members.map { it.pk },
+                    isFavourite = isFavourite)
             )
             SimpleResult.Success(result)
         }

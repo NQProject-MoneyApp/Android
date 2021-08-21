@@ -77,7 +77,7 @@ fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
                     horizontalAlignment = Alignment.End,
                 ) {
                     IconButton(
-                        onClick = { viewModel.markAsFavourite(group.id, !group.isFavourite) }) {
+                        onClick = { viewModel.markAsFavourite(group, !group.isFavourite) }) {
                         Image(
                             painterResource(id = icon),
                             contentDescription = "",

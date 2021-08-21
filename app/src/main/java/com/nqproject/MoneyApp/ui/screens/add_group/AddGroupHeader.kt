@@ -8,11 +8,14 @@ import androidx.compose.ui.res.painterResource
 import com.nqproject.MoneyApp.R
 
 @Composable
-fun AddGroupHeader(didPressBackButton: () -> Unit, body: @Composable () -> Unit) {
+fun AddGroupHeader(
+    title: String,
+    didPressBackButton: () -> Unit,
+    body: @Composable () -> Unit) {
 
     Column() {
         TopAppBar(
-            title = { Text(text = "New Group", style = MaterialTheme.typography.h4) },
+            title = { Text(text = title, style = MaterialTheme.typography.h4) },
             backgroundColor = MaterialTheme.colors.background,
             navigationIcon = {
                 IconButton(onClick = { didPressBackButton() }) {

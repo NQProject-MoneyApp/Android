@@ -47,6 +47,11 @@ class GroupDetailsFragment : Fragment() {
                                 .actionGroupDetailsFragmentToAddExpenseFragment(args.group)
                             findNavController().navigate(action)
                         },
+                        onEditGroupNavigate = {
+                            val action = GroupDetailsFragmentDirections
+                                .actionGroupDetailsFragmentToEditGroupFragment(viewModel.group.value!!)
+                            findNavController().navigate(action)
+                        }
                     )
                 }
             }

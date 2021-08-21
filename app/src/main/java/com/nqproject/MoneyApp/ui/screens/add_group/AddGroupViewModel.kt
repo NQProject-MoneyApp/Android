@@ -37,6 +37,15 @@ class AddGroupViewModel: ViewModel() {
         return result
     }
 
+    suspend fun editGroup(group: Group, name: String, icon: MoneyAppIcon, members: List<User>):
+            SimpleResult<String> {
+        _addGrouploading.value = true
+        val result = GroupRepository.editGroup(
+            group.id, name=name, icon=icon.id, members = members, group.isFavourite)
+        _addGrouploading.value = false
+        return result
+    }
+
     private suspend fun fetchIcons(): SimpleResult<List<MoneyAppIcon>> {
         val result = IconsRepository.icons()
         if (result is SimpleResult.Success) {

@@ -61,9 +61,9 @@ class GroupsListViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun markAsFavourite(groupId: Int, isFavourite: Boolean) {
+    fun markAsFavourite(group: Group, isFavourite: Boolean) {
         viewModelScope.launch {
-            when (val result = GroupRepository.markGroupAsFavourite(groupId, isFavourite)) {
+            when (val result = GroupRepository.markGroupAsFavourite(group, isFavourite)) {
                 is SimpleResult.Error -> {
                     Toast.makeText(getApplication(), result.error, Toast.LENGTH_SHORT).show()
                     Log.d(Config.MAIN_TAG, "Error toast?")

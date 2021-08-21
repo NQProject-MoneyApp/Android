@@ -26,11 +26,19 @@ import com.nqproject.MoneyApp.repository.MoneyAppIcon
 import com.nqproject.MoneyApp.repository.User
 
 @Composable
-fun AddGroupForm(onSave: (name: String, members: List<User>) -> Unit, icon: MoneyAppIcon?,
-                 onAddImage: ()
--> Unit) {
+fun AddGroupForm(
+    defaultName: String = "",
+    defaultIcon: MoneyAppIcon? = null,
+    defaultMembers: List<User>? = null,
+    onSave: (name: String, members: List<User>) -> Unit,
+    icon: MoneyAppIcon?,
+    onAddImage: () -> Unit) {
+
+    val viewModel = viewModel<AddGroupViewModel>()
+    val groupMembers = viewModel.userFriends.observeAsState().value!!
+
     val groupName = remember {
-        ValidableValue("",
+        ValidableValue(defaultName,
             {
                 when {
                     it.isEmpty() -> "Enter a group name"
@@ -40,13 +48,20 @@ fun AddGroupForm(onSave: (name: String, members: List<User>) -> Unit, icon: Mone
         )
     }
 
-    val viewModel = viewModel<AddGroupViewModel>()
-
-    val chosenUsers = remember { ValidableValue<List<User>>(emptyList()) }
+    val newGroupMembers = remember {
+        ValidableValue(defaultMembers ?: groupMembers,
+            {
+                when {
+                    it.isEmpty() -> "Choose group members"
+                    else -> ""
+                }
+            }
+        )
+    }
 
     val friends = viewModel.userFriends.observeAsState(emptyList()).value
     val groupNameValue = groupName.value.observeAsState().value!!
-    val chosenUsersValue = chosenUsers.value.observeAsState().value!!
+    val groupMembersValue = newGroupMembers.value.observeAsState().value!!
     val addGroupLoading = viewModel.addGroupLoading.observeAsState(false).value
 
     Card(
@@ -92,7 +107,7 @@ fun AddGroupForm(onSave: (name: String, members: List<User>) -> Unit, icon: Mone
         ChooseUsersComponent(
             title = "Members",
             groupMembers = friends,
-            chosenMembers = chosenUsers,
+            chosenMembers = newGroupMembers,
         )
     }
 
@@ -108,7 +123,7 @@ fun AddGroupForm(onSave: (name: String, members: List<User>) -> Unit, icon: Mone
         onClick = {
             groupName.validate()
             if(!groupName.isError())
-                onSave(groupNameValue, chosenUsersValue)
+                onSave(groupNameValue, groupMembersValue)
         }) {
         Text("Save", style = MaterialTheme.typography.h4)
     }
