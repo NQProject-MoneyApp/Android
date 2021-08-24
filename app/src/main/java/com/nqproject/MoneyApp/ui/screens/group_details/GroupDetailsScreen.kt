@@ -93,7 +93,7 @@ fun GroupDetailsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Image(
-                    painterResource(id = group.icon),
+                    painterResource(id = group.icon.icon()),
                     modifier = Modifier
                         .size(132.dp)
                         .padding(8.dp),

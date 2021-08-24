@@ -5,6 +5,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.manager.AuthenticationManager
 import com.nqproject.MoneyApp.network.models.*
+import com.nqproject.MoneyApp.repository.MoneyAppIcon
 import com.nqproject.MoneyApp.repository.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
