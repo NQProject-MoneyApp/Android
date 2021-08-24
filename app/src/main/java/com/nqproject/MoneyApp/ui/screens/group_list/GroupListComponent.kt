@@ -52,7 +52,7 @@ fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
-                    painterResource(id = group.icon),
+                    painterResource(id = group.icon.icon()),
                     modifier = Modifier
                         .size(100.dp)
                         .padding(8.dp),
