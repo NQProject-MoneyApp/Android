@@ -20,6 +20,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
+import org.json.JSONObject
 import java.lang.Exception
 
 sealed class SimpleResult<T> {
@@ -87,8 +88,43 @@ object MoneyAppClient {
         }
     }
 
+    private fun decodeErrorList(errorResponse: String): List<String> {
+        val messages = mutableListOf<String>()
+        val json = Json.parseToJsonElement(errorResponse)
+        json.jsonObject.keys.forEach { key ->
+            val property = json.jsonObject[key]!!
+            if(property is JsonArray) {
+                property.forEach { message ->
+                    if(message is JsonPrimitive && message.isString) {
+                        messages.add(message.content)
+                    }
+                }
+            }
+        }
+        return messages
+    }
+
+    private suspend fun parseFormErrorResponse(error: HttpException): String {
+        val errorContent = error.response()?.errorBody()?.stringSuspending()
+
+        try {
+            val messages = decodeErrorList(errorContent ?: "")
+            if(messages.isNotEmpty()) {
+                return messages.joinToString("\n")
+            }
+        }
+        catch (e: Exception) {
+            Log.e(Config.MAIN_TAG, "Failed to parse error response", e)
+        }
+        return "Unknown error"
+    }
+
     suspend fun login(username: String, password: String): SimpleResult<String> {
-        return runRequest {
+        return runRequest(
+            onError = { e ->
+                return@runRequest SimpleResult.Error(parseFormErrorResponse(e))
+            }
+        ) {
             val result = client.login(NetworkLoginRequest(username = username, password = password))
 
             if (result.key != null) {
@@ -104,7 +140,11 @@ object MoneyAppClient {
         password: String,
         email: String
     ): SimpleResult<String> {
-        return runRequest {
+        return runRequest(
+            onError = { e ->
+                return@runRequest SimpleResult.Error(parseFormErrorResponse(e))
+            }
+        ) {
             val result = client.registration(
                 NetworkRegistrationRequest(
                     username = username, email = email, password1 = password, password2 = password,
