@@ -11,6 +11,7 @@ import com.nqproject.MoneyApp.R
 val PoppinsFont = FontFamily(
     Font(R.font.poppins_regular),
     Font(R.font.poppins_semi_bold, FontWeight.SemiBold),
+    Font(R.font.poppins_light, FontWeight.Light),
 )
 
 // Set of Material typography styles to start with
@@ -23,6 +24,10 @@ val Typography = Typography(
     h2 = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontSize = 30.sp,
+    ),
+    h3 = TextStyle(
+        fontWeight = FontWeight.Light,
+        fontSize = 60.sp,
     ),
     h4 = TextStyle(
         fontWeight = FontWeight.SemiBold,
