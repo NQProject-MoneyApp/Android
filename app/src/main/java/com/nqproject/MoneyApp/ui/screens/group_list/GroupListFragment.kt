@@ -42,6 +42,11 @@ class GroupListFragment : Fragment() {
                             val action = GroupListFragmentDirections
                                 .actionGroupListFragmentToProfile()
                             findNavController().navigate(action)
+                        },
+                        onAboutNavigate = {
+                            val action = GroupListFragmentDirections
+                                .actionGroupListFragmentToAbout()
+                            findNavController().navigate(action)
                         }
                     )
                 }

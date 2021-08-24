@@ -6,6 +6,10 @@
     app:startDestination="@id/splashFragment">
 
     <fragment
+        android:id="@+id/about"
+        android:name="com.nqproject.MoneyApp.ui.screens.about.AboutFragment"
+        android:label="about" />
+    <fragment
         android:id="@+id/profile"
         android:name="com.nqproject.MoneyApp.ui.screens.profile.ProfileFragment"
         android:label="profile"/>
@@ -76,6 +80,9 @@
         <action
             android:id="@+id/action_groupListFragment_to_profile"
             app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_groupListFragment_to_about"
+            app:destination="@id/about" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"

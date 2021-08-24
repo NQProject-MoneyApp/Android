@@ -15,6 +15,7 @@ fun GroupListHeader(
     didPressAddGroup: () -> Unit,
     didPressJoinGroup: () -> Unit,
     onLogout: () -> Unit,
+    didPressAboutButton: () -> Unit,
     body: @Composable () -> Unit) {
 
     var showLeftMenu by remember { mutableStateOf(false) }
@@ -37,6 +38,14 @@ fun GroupListHeader(
                     expanded = showLeftMenu,
                     onDismissRequest = { showLeftMenu = false }
                 ) {
+                    DropdownMenuItem(
+                        onClick = {
+                            didPressAboutButton()
+                            showLeftMenu = false
+                        }
+                    ) {
+                        Text("About", color = MaterialTheme.colors.primary)
+                    }
                     DropdownMenuItem(
                         onClick = {
                             didPressUserButton()

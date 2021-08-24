@@ -34,6 +34,7 @@ fun GroupListScreen(
     onGroupDetailsNavigate: (group: Group) -> Unit,
     onLoginNavigate: () -> Unit,
     onUserProfileNavigate: () -> Unit,
+    onAboutNavigate: () -> Unit,
 ) {
     val viewModel = viewModel<GroupsListViewModel>()
     val coroutineScope = rememberCoroutineScope()
@@ -58,7 +59,10 @@ fun GroupListScreen(
         didPressJoinGroup = {
             Log.d(Config.MAIN_TAG, "didPressJoinGroup")
             showJoinAlert = true
-
+        },
+        didPressAboutButton = {
+            Log.d(Config.MAIN_TAG, "didPressAboutButton")
+            onAboutNavigate()
         },
         body = {
 
