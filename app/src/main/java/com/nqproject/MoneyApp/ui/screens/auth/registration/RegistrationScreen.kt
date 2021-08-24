@@ -109,7 +109,7 @@ private fun RegistrationForm(
 
     val usernameValue = usernameState.value.observeAsState().value!!
     val passwordValue = passwordState.value.observeAsState().value!!
-    val emailValue = passwordState.value.observeAsState().value!!
+    val emailValue = emailState.value.observeAsState().value!!
 
     AuthInputFields(
         usernameState = usernameState,

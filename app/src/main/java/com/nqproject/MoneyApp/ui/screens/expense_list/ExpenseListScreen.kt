@@ -3,6 +3,9 @@ package com.nqproject.MoneyApp.ui.screens.expense_list
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -62,12 +65,29 @@ fun ExpenseListScreen(
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    groupExpenses.forEach { it ->
-                        ExpenseListComponent(it,
-                            didPressComponent = {
-                                onExpenseDetailsNavigate(it)
-                            })
-                        Spacer(modifier = Modifier.height(20.dp))
+
+                    if (groupExpenses.isEmpty()) {
+                        Text("You don't have any expenses", style = MaterialTheme.typography.h4)
+                        Spacer(modifier = Modifier.height(21.dp))
+                        Button(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(49.dp)
+                                .padding(horizontal = 16.dp),
+                            shape = RoundedCornerShape(10.dp),
+                            onClick = {
+                                onAddExpenseNavigate()
+                            }) {
+                            Text("Add", style = MaterialTheme.typography.h4)
+                        }
+                    } else {
+                        groupExpenses.forEach { it ->
+                            ExpenseListComponent(it,
+                                didPressComponent = {
+                                    onExpenseDetailsNavigate(it)
+                                })
+                            Spacer(modifier = Modifier.height(20.dp))
+                        }
                     }
                 }
             }
