@@ -39,11 +39,19 @@ fun GroupListHeader(
                 ) {
                     DropdownMenuItem(
                         onClick = {
+                            didPressUserButton()
+                            showLeftMenu = false
+                        }
+                    ) {
+                            Text("Profile", color = MaterialTheme.colors.primary)
+                    }
+                    DropdownMenuItem(
+                        onClick = {
                             onLogout()
                             showLeftMenu = false
                         }
                     ) {
-                            Text("Log out", color = MaterialTheme.colors.primary)
+                        Text("Log out", color = MaterialTheme.colors.primary)
                     }
                 }
             },

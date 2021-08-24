@@ -36,4 +36,42 @@ object UserRepository {
             is SimpleResult.Success -> RegistrationResult.Success
         }
     }
+
+    suspend fun user(): SimpleResult<User> {
+
+        val result = withContext(Dispatchers.IO) {
+            MoneyAppClient.user()
+        }
+
+        return when (result) {
+            is SimpleResult.Error -> SimpleResult.Error(result.error)
+            is SimpleResult.Success -> SimpleResult.Success(
+                User(
+                    pk = result.data.pk!!,
+                    name = result.data.username,
+                    email = result.data.email,
+                    balance = null,
+                )
+            )
+        }
+    }
+
+    suspend fun editUser(pk: Int, name: String, email: String): SimpleResult<User> {
+
+        val result = withContext(Dispatchers.IO) {
+            MoneyAppClient.editUser(pk, name, email)
+        }
+
+        return when (result) {
+            is SimpleResult.Error -> SimpleResult.Error(result.error)
+            is SimpleResult.Success -> SimpleResult.Success(
+                User(
+                    pk = result.data.pk!!,
+                    name = result.data.username,
+                    email = result.data.email,
+                    balance = null,
+                )
+            )
+        }
+    }
 }

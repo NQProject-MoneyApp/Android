@@ -37,6 +37,11 @@ class GroupListFragment : Fragment() {
                         },
                         onLoginNavigate = {
                             findNavController().navigate(R.id.action_global_loginFragment)
+                        },
+                        onUserProfileNavigate = {
+                            val action = GroupListFragmentDirections
+                                .actionGroupListFragmentToProfile()
+                            findNavController().navigate(action)
                         }
                     )
                 }
