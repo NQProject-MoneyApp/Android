@@ -157,7 +157,6 @@ object MoneyAppClient {
         groupId: Int,
         name: String,
         icon: Int,
-        members: List<User>,
         isFavourite: Boolean
     ): SimpleResult<NetworkGroupsResponse> {
         return runRequest {
@@ -166,7 +165,6 @@ object MoneyAppClient {
                 NetworkAddGroupRequest(
                     name = name,
                     icon = icon,
-                    members = members.map { it.pk },
                     isFavourite = isFavourite)
             )
             SimpleResult.Success(result)

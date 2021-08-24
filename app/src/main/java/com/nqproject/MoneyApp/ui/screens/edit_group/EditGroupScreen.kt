@@ -15,8 +15,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.repository.MoneyAppIcon
-import com.nqproject.MoneyApp.repository.User
-import com.nqproject.MoneyApp.ui.screens.add_group.AddGroupForm
 import com.nqproject.MoneyApp.ui.screens.add_group.AddGroupHeader
 import com.nqproject.MoneyApp.ui.screens.add_group.AddGroupViewModel
 import com.nqproject.MoneyApp.ui.screens.add_group.ImageAlertComponent
@@ -62,21 +60,18 @@ fun EditGroupScreen(
                         CircularProgressIndicator()
                     }
                 } else {
-
-                    AddGroupForm(
+                    EditGroupForm(
                         defaultName = group.name,
-                        defaultMembers = group.members,
                         icon = chosenIcon,
                         onAddImage = {
                             showImageAlert = true
                         },
-                        onSave = { name: String, members: List<User> ->
+                        onSaveChanges = { name: String ->
                             coroutineScope.launch {
                                 val result = viewModel.editGroup(
                                     group = group,
                                     name = name,
-                                    icon = chosenIcon ?: MoneyAppIcon.values().random(),
-                                    members = members
+                                    icon = chosenIcon ?: MoneyAppIcon.values().random()
                                 )
                                 when (result) {
                                     is SimpleResult.Error -> Toast
@@ -87,8 +82,7 @@ fun EditGroupScreen(
                                     }
                                 }
                             }
-
-                        })
+                    })
                 }
             }
         }

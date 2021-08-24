@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 class AddGroupViewModel: ViewModel() {
 
     private val _loading = MutableLiveData(false)
-    private val _addGrouploading = MutableLiveData(false)
+    private val _addGroupLoading = MutableLiveData(false)
     private val _icons = MutableLiveData(emptyList<MoneyAppIcon>())
 
     private val _userFriends = MutableLiveData(emptyList<User>())
@@ -19,7 +19,7 @@ class AddGroupViewModel: ViewModel() {
     val userFriends: LiveData<List<User>> = _userFriends
     val icons: LiveData<List<MoneyAppIcon>> = _icons
     val loading: LiveData<Boolean> = _loading
-    val addGroupLoading: LiveData<Boolean> = _addGrouploading
+    val addGroupLoading: LiveData<Boolean> = _addGroupLoading
 
     init {
         viewModelScope.launch {
@@ -31,18 +31,18 @@ class AddGroupViewModel: ViewModel() {
     }
 
     suspend fun addGroup(name: String, icon: MoneyAppIcon, members: List<User>): SimpleResult<String> {
-        _addGrouploading.value = true
+        _addGroupLoading.value = true
         val result = GroupRepository.addGroup(name=name, icon=icon.id, members = members)
-        _addGrouploading.value = false
+        _addGroupLoading.value = false
         return result
     }
 
-    suspend fun editGroup(group: Group, name: String, icon: MoneyAppIcon, members: List<User>):
+    suspend fun editGroup(group: Group, name: String, icon: MoneyAppIcon):
             SimpleResult<String> {
-        _addGrouploading.value = true
+        _addGroupLoading.value = true
         val result = GroupRepository.editGroup(
-            group.id, name=name, icon=icon.id, members = members, group.isFavourite)
-        _addGrouploading.value = false
+            group.id, name=name, icon=icon.id, group.isFavourite)
+        _addGroupLoading.value = false
         return result
     }
 

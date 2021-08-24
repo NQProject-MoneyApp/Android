@@ -38,7 +38,7 @@ object GroupRepository {
 
     suspend fun markGroupAsFavourite(group: Group, isFavourite: Boolean): SimpleResult<String> {
         val result = withContext(Dispatchers.IO) {
-            MoneyAppClient.editGroup(group.id, group.name, group.icon, group.members, isFavourite = isFavourite)
+            MoneyAppClient.editGroup(group.id, group.name, group.icon, isFavourite = isFavourite)
         }
         return when (result) {
             is SimpleResult.Error -> SimpleResult.Error(result.error)
@@ -85,11 +85,10 @@ object GroupRepository {
     }
 
     suspend fun editGroup(
-        groupId: Int, name: String, icon: Int,
-        members: List<User>, isFavourite: Boolean): SimpleResult<String> {
+        groupId: Int, name: String, icon: Int, isFavourite: Boolean): SimpleResult<String> {
         val result = withContext(Dispatchers.IO) {
             MoneyAppClient.editGroup(
-                groupId = groupId, name = name, icon = icon, members = members,
+                groupId = groupId, name = name, icon = icon,
                 isFavourite = isFavourite)
         }
 

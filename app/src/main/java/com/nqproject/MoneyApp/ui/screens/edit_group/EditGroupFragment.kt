@@ -14,11 +14,6 @@ import com.nqproject.MoneyApp.ui.theme.MoneyAppTheme
 class EditGroupFragment: Fragment() {
 
     private val args: EditGroupFragmentArgs by navArgs()
-    private val viewModel: AddGroupViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
