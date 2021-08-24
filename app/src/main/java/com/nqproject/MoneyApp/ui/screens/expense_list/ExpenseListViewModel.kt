@@ -1,16 +1,15 @@
 package com.nqproject.MoneyApp.ui.screens.expense_list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import android.widget.Toast
+import androidx.lifecycle.*
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.repository.Expense
 import com.nqproject.MoneyApp.repository.ExpenseRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class ExpenseListViewModel: ViewModel() {
+class ExpenseListViewModel(app: Application): AndroidViewModel(app) {
 
     var initialized = false
 
@@ -40,8 +39,14 @@ class ExpenseListViewModel: ViewModel() {
         // TODO
         delay(1000)
         _loading.value = false
-        if(result is SimpleResult.Success) {
-            _groupExpenses.value = result.data
+
+        when(result) {
+            is SimpleResult.Success -> {
+                _groupExpenses.value = result.data
+            }
+            is SimpleResult.Error -> {
+                Toast.makeText(getApplication(), result.error, Toast.LENGTH_SHORT).show()
+            }
         }
 
         return result

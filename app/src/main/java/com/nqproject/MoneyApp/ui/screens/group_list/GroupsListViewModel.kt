@@ -36,8 +36,13 @@ class GroupsListViewModel(app: Application) : AndroidViewModel(app) {
 
         _loading.value = false
 
-        if (result is SimpleResult.Success) {
-            _groupsList.value = result.data
+        when(result) {
+            is SimpleResult.Success -> {
+                _groupsList.value = result.data
+            }
+            is SimpleResult.Error -> {
+                Toast.makeText(getApplication(), result.error, Toast.LENGTH_SHORT).show()
+            }
         }
 
         return result
