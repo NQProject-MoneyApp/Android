@@ -1,16 +1,15 @@
 package com.nqproject.MoneyApp.ui.screens.profile
 
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.*
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -21,7 +20,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.network.SimpleResult
-import com.nqproject.MoneyApp.ui.screens.group_details.GroupBalanceComponent
 import com.nqproject.MoneyApp.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
@@ -46,11 +44,12 @@ fun ProfileScreen(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Card(
-                    backgroundColor = MaterialTheme.colors.secondary,
+                Surface(
+                    color = MaterialTheme.colors.secondary,
+                    shape = CircleShape,
+                    border = BorderStroke(2.dp, MaterialTheme.colors.primary),
                     modifier = Modifier
                         .size(150.dp)
-                        .clip(CircleShape)
                 ) {
                     Column(
                         verticalArrangement = Arrangement.Center,
