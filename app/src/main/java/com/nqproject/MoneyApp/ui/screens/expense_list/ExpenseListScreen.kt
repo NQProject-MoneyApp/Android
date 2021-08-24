@@ -39,6 +39,7 @@ fun ExpenseListScreen(
     val scrollState = rememberScrollState()
     val groupExpenses = viewModel.groupExpenses.observeAsState(emptyList()).value
     val isRefreshing by viewModel.loading.observeAsState(false)
+    val isFirstLoad by viewModel.firstLoad.observeAsState(true)
 
     ExpenseListHeader(
         didPressBackButton = {
@@ -72,28 +73,31 @@ fun ExpenseListScreen(
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-
-                    if (groupExpenses.isEmpty()) {
-                        Text("You don't have any expenses", style = MaterialTheme.typography.h4)
-                        Spacer(modifier = Modifier.height(21.dp))
-                        Button(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(49.dp)
-                                .padding(horizontal = 16.dp),
-                            shape = RoundedCornerShape(10.dp),
-                            onClick = {
-                                onAddExpenseNavigate()
-                            }) {
-                            Text("Add", style = MaterialTheme.typography.h4)
+                    when {
+                        isFirstLoad -> {}
+                        groupExpenses.isEmpty() -> {
+                            Text("You don't have any expenses", style = MaterialTheme.typography.h4)
+                            Spacer(modifier = Modifier.height(21.dp))
+                            Button(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(49.dp)
+                                    .padding(horizontal = 16.dp),
+                                shape = RoundedCornerShape(10.dp),
+                                onClick = {
+                                    onAddExpenseNavigate()
+                                }) {
+                                Text("Add", style = MaterialTheme.typography.h4)
+                            }
                         }
-                    } else {
-                        groupExpenses.forEach { it ->
-                            ExpenseListComponent(it,
-                                didPressComponent = {
-                                    onExpenseDetailsNavigate(it)
-                                })
-                            Spacer(modifier = Modifier.height(20.dp))
+                        else -> {
+                            groupExpenses.forEach { it ->
+                                ExpenseListComponent(it,
+                                    didPressComponent = {
+                                        onExpenseDetailsNavigate(it)
+                                    })
+                                Spacer(modifier = Modifier.height(20.dp))
+                            }
                         }
                     }
 

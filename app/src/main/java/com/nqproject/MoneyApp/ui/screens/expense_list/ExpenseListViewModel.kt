@@ -14,9 +14,12 @@ class ExpenseListViewModel(app: Application): AndroidViewModel(app) {
     var initialized = false
 
     private var groupId: Int = 0
+    private val _firstLoad = MutableLiveData(true)
     private val _loading = MutableLiveData(false)
     private val _groupExpenses = MutableLiveData(emptyList<Expense>())
 
+
+    val firstLoad: LiveData<Boolean> = _firstLoad
     val loading: LiveData<Boolean> = _loading
     val groupExpenses: LiveData<List<Expense>> = _groupExpenses
 
@@ -27,18 +30,22 @@ class ExpenseListViewModel(app: Application): AndroidViewModel(app) {
         this.groupId = groupId
     }
 
-    fun updateExpenses() {
+    fun updateExpenses(withLoader: Boolean = true) {
         viewModelScope.launch {
-            fetchExpenses(groupId)
+            fetchExpenses(groupId, withLoader)
         }
     }
 
-    suspend fun fetchExpenses(groupId: Int): SimpleResult<List<Expense>> {
-        _loading.value = true
+    private suspend fun fetchExpenses(groupId: Int, withLoader: Boolean): SimpleResult<List<Expense>> {
+
+        if (withLoader || _firstLoad.value == true)
+            _loading.value = true
         val result = ExpenseRepository.fetchExpenses(groupId)
-        // TODO
-        delay(1000)
-        _loading.value = false
+
+        if (withLoader || _firstLoad.value == true) {
+            delay(1000)
+            _loading.value = false
+        }
 
         when(result) {
             is SimpleResult.Success -> {
@@ -49,7 +56,8 @@ class ExpenseListViewModel(app: Application): AndroidViewModel(app) {
             }
         }
 
+        _firstLoad.value = false
+
         return result
     }
-
 }
