@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.nqproject.MoneyApp.ui.theme.AppTheme
 
 @Composable
 fun AlertComponent(onClose: () -> Unit, body: @Composable () -> Unit) {
@@ -22,7 +23,7 @@ fun AlertComponent(onClose: () -> Unit, body: @Composable () -> Unit) {
         confirmButton = {},
         // below line is use to add background color to our alert dialog
         backgroundColor = MaterialTheme.colors.secondary,
-        contentColor = Color.White,
+        contentColor = AppTheme.colors.primaryText,
         modifier = Modifier.animateContentSize().wrapContentSize()
     )
 }

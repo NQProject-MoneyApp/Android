@@ -27,5 +27,5 @@ data class NetworkGroupsResponse(
     @SerialName("is_favourite")
     val isFavourite: Boolean,
     val members: List<NetworkGroupUsersResponse>,
-    @SerialName("non_field_errors") val error: String? = null,
+    @SerialName("non_field_errors") val error: String? = null
 )

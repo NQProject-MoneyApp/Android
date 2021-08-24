@@ -27,6 +27,7 @@ object AppTheme {
             onSurface = Color.White,
             onError = Color.Black,
             hintText = AppColors.MiddleGray,
+            primaryText = AppColors.LightGray
         )
 
 }
@@ -46,6 +47,7 @@ class AppThemeColors(
     val onError: Color,
 
     val hintText: Color,
+    val primaryText: Color,
 ) {
     fun toMaterialColors(darkTheme: Boolean): Colors {
         return Colors(

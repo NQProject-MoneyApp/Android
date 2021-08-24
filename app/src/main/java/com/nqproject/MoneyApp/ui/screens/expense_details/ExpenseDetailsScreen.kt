@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.repository.Expense
+import com.nqproject.MoneyApp.ui.theme.AppTheme
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -66,14 +67,14 @@ fun ExpenseDetailsScreen(
                                 Text(
                                     modifier = Modifier.weight(1f),
                                     text = "Amount",
-                                    color = Color.White,
+                                    color = AppTheme.colors.primaryText,
                                     style = MaterialTheme.typography.h4
                                 )
                                 Text(
                                     text = String.format(
                                         Locale.US, "%.2f", expense!!.amount
                                     ),
-                                    color = Color.White,
+                                    color = AppTheme.colors.primaryText,
                                     style = MaterialTheme.typography.h4
                                 )
                             }
@@ -81,12 +82,12 @@ fun ExpenseDetailsScreen(
                                 Text(
                                     modifier = Modifier.weight(1f),
                                     text = "Paid by",
-                                    color = Color.White,
+                                    color = AppTheme.colors.primaryText,
                                     style = MaterialTheme.typography.h4
                                 )
                                 Text(
                                     text = expense!!.author.name,
-                                    color = Color.White,
+                                    color = AppTheme.colors.primaryText,
                                     style = MaterialTheme.typography.h4
                                 )
                             }
@@ -106,7 +107,7 @@ fun ExpenseDetailsScreen(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            Text("Participants", color = Color.White)
+                            Text("Participants", color = AppTheme.colors.primaryText)
                             Spacer(modifier = Modifier.height(16.dp))
 
 
@@ -116,7 +117,7 @@ fun ExpenseDetailsScreen(
                                     modifier = Modifier.padding(horizontal = 24.dp),
                                 ) {
                                     Text(
-                                        it.name, color = Color.White, modifier = Modifier
+                                        it.name, color = AppTheme.colors.primaryText, modifier = Modifier
                                             .weight(1f)
                                     )
                                 }
@@ -131,7 +132,7 @@ fun ExpenseDetailsScreen(
                                 expense!!.createDate
                             )
                         }",
-                        color = Color.White,
+                        color = AppTheme.colors.primaryText,
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.h4,
                         modifier = Modifier.fillMaxWidth()

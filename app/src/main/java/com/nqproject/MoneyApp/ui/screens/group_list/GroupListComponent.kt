@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.repository.Group
+import com.nqproject.MoneyApp.ui.theme.AppTheme
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -64,12 +65,12 @@ fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
                         .padding(8.dp)
                 ) {
                     Text(
-                        text = group.name, style = MaterialTheme.typography.h4, color = Color.White
+                        text = group.name, style = MaterialTheme.typography.h4, color = AppTheme.colors.primaryText
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "$ ${String.format(Locale.US, "%.2f", group.userBalance)}",
-                        style = MaterialTheme.typography.subtitle2, color = Color.White
+                        style = MaterialTheme.typography.subtitle2, color = AppTheme.colors.primaryText
                     )
                 }
                 Column(
@@ -86,7 +87,7 @@ fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
                     Spacer(modifier = Modifier.height(65.dp))
                     Text(
                         text = dateFormat.format(group.createDate),
-                        style = MaterialTheme.typography.subtitle2, color = Color.White
+                        style = MaterialTheme.typography.subtitle2, color = AppTheme.colors.primaryText
                     )
                 }
             }

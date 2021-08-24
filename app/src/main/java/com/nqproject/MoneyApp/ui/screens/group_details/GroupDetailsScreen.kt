@@ -32,6 +32,7 @@ import com.nqproject.MoneyApp.ui.screens.group_details.CodeAlertComponent
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupUsersListComponent
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupDetailsHeader
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupDetailsViewModel
+import com.nqproject.MoneyApp.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -109,12 +110,12 @@ fun GroupDetailsScreen(
                         modifier = Modifier.weight(1f),
                         text = "Total cost",
                         style = MaterialTheme.typography.h4,
-                        color = Color.White
+                        color = AppTheme.colors.primaryText
                     )
                     Text(
                         text = "\$${String.format(Locale.US, "%.2f", group.totalCost)}",
                         style = MaterialTheme.typography.h4,
-                        color = Color.White
+                        color = AppTheme.colors.primaryText
                     )
                 }
                 Row(
@@ -125,7 +126,7 @@ fun GroupDetailsScreen(
                         modifier = Modifier.weight(1f),
                         text = "Balance",
                         style = MaterialTheme.typography.h4,
-                        color = Color.White
+                        color = AppTheme.colors.primaryText
                     )
                     Text(
                         text = "\$${String.format(Locale.US, "%.2f", group.userBalance)}",

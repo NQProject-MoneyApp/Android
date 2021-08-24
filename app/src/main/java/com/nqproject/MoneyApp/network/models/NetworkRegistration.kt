@@ -8,7 +8,7 @@ data class NetworkRegistrationRequest(
     val username: String,
     val password1: String,
     val password2: String,
-    val email: String,
+    val email: String
 )
 
 @Serializable
@@ -16,5 +16,5 @@ data class NetworkRegistrationResponse(
     val key: String? = null,
     //TODO: change on backend!
     @SerialName("non_field_errors")
-    val error: String? = null,
+    val error: String? = null
 )

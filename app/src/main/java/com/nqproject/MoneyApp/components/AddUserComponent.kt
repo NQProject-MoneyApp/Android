@@ -13,6 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.repository.User
+import com.nqproject.MoneyApp.ui.theme.AppTheme
 
 
 @Composable
@@ -22,7 +23,7 @@ fun AddUserComponent(user: User, didPressComponent: () -> Unit, check: Boolean) 
         modifier = Modifier.padding(horizontal = 24.dp),
 
         ) {
-        Text(user.name, color= Color.White, modifier = Modifier.weight(1f))
+        Text(user.name, color= AppTheme.colors.primaryText, modifier = Modifier.weight(1f))
         if (check) {
             Image(
                 painterResource(id = R.drawable.ic_cross),

@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.repository.Expense
+import com.nqproject.MoneyApp.ui.theme.AppTheme
 import java.util.*
 
 @Composable
@@ -42,12 +43,12 @@ fun ExpenseListComponent(expense: Expense, didPressComponent: (Expense) -> Unit)
                     modifier = Modifier.weight(1f),
                     text = expense.author.name,
                     style = MaterialTheme.typography.h5,
-                    color = Color.White
+                    color = AppTheme.colors.primaryText
                 )
                 Text(
                     text = "\$${String.format(Locale.US, "%.2f", expense.amount)}",
                     style = MaterialTheme.typography.h5,
-                    color = Color.White
+                    color = AppTheme.colors.primaryText
                 )
             }
         }

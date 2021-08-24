@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.repository.User
 import com.nqproject.MoneyApp.ui.screens.add_group.AddUserComponent
+import com.nqproject.MoneyApp.ui.theme.AppTheme
 
 
 @Composable
@@ -49,7 +50,7 @@ fun ChooseUsersComponent(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(title, color = Color.White)
+            Text(title, color = AppTheme.colors.primaryText)
             Spacer(modifier = Modifier.height(16.dp))
 
 

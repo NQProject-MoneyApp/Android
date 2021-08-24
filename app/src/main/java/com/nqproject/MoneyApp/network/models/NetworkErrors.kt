@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ErrorResponse(
-    val details : String? = null
+    val details: String? = null
 )

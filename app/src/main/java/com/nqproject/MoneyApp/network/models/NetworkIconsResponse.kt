@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NetworkIconsResponse (
-    val icons: List<Int>,
+    val icons: List<Int>
 )

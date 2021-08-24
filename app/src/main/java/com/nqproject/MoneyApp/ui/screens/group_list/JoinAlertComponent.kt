@@ -28,7 +28,7 @@ fun JoinAlertComponent(onClose: () -> Unit, onJoinPress: (code: String) -> Unit)
         ) {
             Text(
                 "Join",
-                color = Color.White,
+                color = AppTheme.colors.primaryText,
                 style = MaterialTheme.typography.h4,
             )
 
@@ -60,7 +60,7 @@ fun JoinAlertComponent(onClose: () -> Unit, onJoinPress: (code: String) -> Unit)
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent,
-                        textColor = Color.White,
+                        textColor = AppTheme.colors.primaryText,
                     )
                 )
             }
