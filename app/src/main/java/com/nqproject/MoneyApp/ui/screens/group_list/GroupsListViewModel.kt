@@ -16,25 +16,32 @@ class GroupsListViewModel(app: Application) : AndroidViewModel(app) {
 
     private val _loading = MutableLiveData(false)
     private val _groupsList = MutableLiveData(emptyList<Group>())
+    private val _firstLoad = MutableLiveData(true)
 
     val loading: LiveData<Boolean> = _loading
     val groupsList: LiveData<List<Group>> = _groupsList
+    val firstLoad: LiveData<Boolean> = _firstLoad
 
-    fun updateGroups() {
+    fun updateGroups(withLoader: Boolean = true) {
         viewModelScope.launch {
-            fetchGroups()
+            fetchGroups(withLoader)
         }
     }
 
-    suspend fun fetchGroups(): SimpleResult<List<Group>> {
+    private suspend fun fetchGroups(withLoader: Boolean): SimpleResult<List<Group>> {
         val date = Date()
-        _loading.value = true
-        val result = GroupRepository.fetchGroups()
-        // UI FIX
-        // request must take at least one second for the activity indicator to load
-        delay(1000 - (Date().time - date.time))
 
-        _loading.value = false
+        if (withLoader || _firstLoad.value == true)
+            _loading.value = true
+        val result = GroupRepository.fetchGroups()
+
+        if (withLoader || _firstLoad.value == true) {
+            // UI FIX
+            // request must take at least one second for the activity indicator to load
+            delay(1000 - (Date().time - date.time))
+            _loading.value = false
+        }
+
 
         when(result) {
             is SimpleResult.Success -> {
@@ -44,6 +51,8 @@ class GroupsListViewModel(app: Application) : AndroidViewModel(app) {
                 Toast.makeText(getApplication(), result.error, Toast.LENGTH_SHORT).show()
             }
         }
+
+        _firstLoad.value = false
 
         return result
     }

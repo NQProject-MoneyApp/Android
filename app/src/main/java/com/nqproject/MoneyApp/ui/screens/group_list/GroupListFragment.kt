@@ -46,6 +46,6 @@ class GroupListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.updateGroups()
+        viewModel.updateGroups(withLoader = false)
     }
 }

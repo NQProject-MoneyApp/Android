@@ -8,6 +8,7 @@ import com.nqproject.MoneyApp.repository.Expense
 import com.nqproject.MoneyApp.repository.ExpenseRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
 
 class ExpenseListViewModel(app: Application): AndroidViewModel(app) {
 
@@ -38,12 +39,16 @@ class ExpenseListViewModel(app: Application): AndroidViewModel(app) {
 
     private suspend fun fetchExpenses(groupId: Int, withLoader: Boolean): SimpleResult<List<Expense>> {
 
+        val date = Date()
+
         if (withLoader || _firstLoad.value == true)
             _loading.value = true
         val result = ExpenseRepository.fetchExpenses(groupId)
 
         if (withLoader || _firstLoad.value == true) {
-            delay(1000)
+            // UI FIX
+            // request must take at least one second for the activity indicator to load
+            delay(1000 - (Date().time - date.time))
             _loading.value = false
         }
 

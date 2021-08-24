@@ -26,6 +26,7 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 import com.nqproject.MoneyApp.network.SimpleResult
+import com.nqproject.MoneyApp.ui.screens.expense_list.ExpenseListComponent
 import com.nqproject.MoneyApp.ui.screens.group_list.JoinAlertComponent
 
 @Composable
@@ -41,6 +42,7 @@ fun GroupListScreen(
     val context = LocalContext.current
     var showJoinAlert by remember { mutableStateOf(false) }
     val isRefreshing by viewModel.loading.observeAsState(false)
+    val isFirstLoad by viewModel.firstLoad.observeAsState(true)
 
     GroupListHeader(
         onLogout = {
@@ -98,27 +100,31 @@ fun GroupListScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                if (groupsList.isNotEmpty()) {
-                    groupsList.forEach {
-                        GroupListComponent(it,
-                            didPressComponent = {
-                                onGroupDetailsNavigate(it)
-                            })
+                when {
+                    isFirstLoad -> {}
+                    groupsList.isEmpty() -> {
+                        Text("You don't have any groups", style = MaterialTheme.typography.h4)
                         Spacer(modifier = Modifier.height(21.dp))
+                        Button(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(49.dp)
+                                .padding(horizontal = 16.dp),
+                            shape = RoundedCornerShape(10.dp),
+                            onClick = {
+                                onAddGroupNavigate()
+                            }) {
+                            Text("Add", style = MaterialTheme.typography.h4)
+                        }
                     }
-                } else {
-                    Text("You don't have any groups", style = MaterialTheme.typography.h4)
-                    Spacer(modifier = Modifier.height(21.dp))
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(49.dp)
-                            .padding(horizontal = 16.dp),
-                        shape = RoundedCornerShape(10.dp),
-                        onClick = {
-                            onAddGroupNavigate()
-                        }) {
-                        Text("Add", style = MaterialTheme.typography.h4)
+                    else -> {
+                        groupsList.forEach {
+                            GroupListComponent(it,
+                                didPressComponent = {
+                                    onGroupDetailsNavigate(it)
+                                })
+                            Spacer(modifier = Modifier.height(21.dp))
+                        }
                     }
                 }
             }
