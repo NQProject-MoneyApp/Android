@@ -19,7 +19,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.R
-import com.nqproject.MoneyApp.components.ChooseUsersComponent
 import com.nqproject.MoneyApp.components.InputField
 import com.nqproject.MoneyApp.components.ValidableValue
 import com.nqproject.MoneyApp.repository.MoneyAppIcon
@@ -33,7 +32,6 @@ fun EditGroupForm(
     onSaveChanges: (name: String) -> Unit)
 {
     val viewModel = viewModel<AddGroupViewModel>()
-    val groupMembers = viewModel.userFriends.observeAsState().value!!
 
     val groupName = remember {
         ValidableValue(defaultName,

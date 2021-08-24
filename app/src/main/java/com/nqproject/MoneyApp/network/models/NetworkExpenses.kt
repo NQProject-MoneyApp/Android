@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import java.util.*
 
 @Serializable
-data class NetworkAddExpenseRequest(
+data class NetworkExpensesRequest(
     val name: String,
     val amount: Float,
     val participants: List<Int>,

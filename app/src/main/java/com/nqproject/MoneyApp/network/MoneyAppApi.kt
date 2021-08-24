@@ -16,23 +16,23 @@ interface MoneyAppApi {
     suspend fun groups(): List<NetworkGroupsResponse>
 
     @POST("api/groups/")
-    suspend fun addGroup(@Body request: NetworkAddGroupRequest): NetworkGroupsResponse
+    suspend fun addGroup(@Body request: NetworkGroupsRequest): NetworkGroupsResponse
 
     @PATCH("api/groups/{groupId}/")
-    suspend fun editGroup(@Path("groupId") groupId: Int, @Body request: NetworkAddGroupRequest):
+    suspend fun editGroup(@Path("groupId") groupId: Int, @Body request: NetworkGroupsRequest):
             NetworkGroupsResponse
 
     @POST("/api/{id}/expenses/")
     suspend fun addExpense(
         @Path("id") id: Int,
-        @Body request: NetworkAddExpenseRequest
+        @Body request: NetworkExpensesRequest
     ): NetworkExpensesResponse
 
     @PUT("/api/{groupId}/expenses/{expenseId}/")
     suspend fun editExpense(
         @Path("groupId") groupId: Int,
         @Path("expenseId") expenseId: Int,
-        @Body request: NetworkAddExpenseRequest
+        @Body request: NetworkExpensesRequest
     ): NetworkExpensesResponse
 
     @DELETE("/api/{groupId}/expenses/{expenseId}/")

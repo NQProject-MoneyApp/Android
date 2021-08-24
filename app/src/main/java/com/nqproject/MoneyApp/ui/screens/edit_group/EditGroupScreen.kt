@@ -32,7 +32,8 @@ fun EditGroupScreen(
 
     val icons = viewModel.icons.observeAsState().value
     var showImageAlert by remember { mutableStateOf(false) }
-    var chosenIcon by remember { mutableStateOf<MoneyAppIcon?>(MoneyAppIcon.from(group.icon))}
+//    var chosenIcon by remember { mutableStateOf<MoneyAppIcon?>(MoneyAppIcon.from(group.icon))}
+    var chosenIcon = MoneyAppIcon.from(group.icon)
 
     AddGroupHeader(
         title = group.name,
@@ -62,7 +63,7 @@ fun EditGroupScreen(
                 } else {
                     EditGroupForm(
                         defaultName = group.name,
-                        icon = chosenIcon,
+                        icon = MoneyAppIcon.from(group.icon),
                         onAddImage = {
                             showImageAlert = true
                         },
@@ -71,7 +72,7 @@ fun EditGroupScreen(
                                 val result = viewModel.editGroup(
                                     group = group,
                                     name = name,
-                                    icon = chosenIcon ?: MoneyAppIcon.values().random()
+                                    icon = chosenIcon ?: MoneyAppIcon.from(group.icon)
                                 )
                                 when (result) {
                                     is SimpleResult.Error -> Toast

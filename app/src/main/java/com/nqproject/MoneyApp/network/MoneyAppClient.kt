@@ -144,7 +144,7 @@ object MoneyAppClient {
     ): SimpleResult<NetworkGroupsResponse> {
         return runRequest {
             val result = client.addGroup(
-                NetworkAddGroupRequest(
+                NetworkGroupsRequest(
                     name = name,
                     icon = icon,
                     members = members.map { it.pk })
@@ -162,7 +162,7 @@ object MoneyAppClient {
         return runRequest {
             val result = client.editGroup(
                 groupId,
-                NetworkAddGroupRequest(
+                NetworkGroupsRequest(
                     name = name,
                     icon = icon,
                     isFavourite = isFavourite)
@@ -180,7 +180,7 @@ object MoneyAppClient {
         return runRequest {
             val result =
                 client.addExpense(
-                    groupId, NetworkAddExpenseRequest(
+                    groupId, NetworkExpensesRequest(
                         name = name, amount = amount, participants = participants.map { it.pk })
                 )
 
@@ -198,7 +198,7 @@ object MoneyAppClient {
         return runRequest {
             val result =
                 client.editExpense(
-                    groupId, expenseId, NetworkAddExpenseRequest(name = name, amount = amount,
+                    groupId, expenseId, NetworkExpensesRequest(name = name, amount = amount,
                         participants = participants.map { it.pk })
                 )
 

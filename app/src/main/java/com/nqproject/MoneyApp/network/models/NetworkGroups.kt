@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import java.util.*
 
 @Serializable
-data class NetworkAddGroupRequest(
+data class NetworkGroupsRequest(
     val name: String? = null,
     val icon: Int? = null,
     val members: List<Int>? = null,
