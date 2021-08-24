@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.nqproject.MoneyApp.components.BasicHeader
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.ui.theme.AppTheme
 import kotlinx.coroutines.launch
@@ -34,7 +35,7 @@ fun ProfileScreen(
     val scrollState = rememberScrollState()
     val user = viewModel.user.observeAsState().value
 
-    ProfileHeader(didPressBackButton = onBackNavigate) {
+    BasicHeader(title="Profile", didPressBackButton = onBackNavigate) {
         if (user != null) {
             Column(
                 modifier = Modifier
