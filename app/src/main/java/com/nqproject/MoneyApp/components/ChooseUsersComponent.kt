@@ -66,7 +66,6 @@ fun ChooseUsersComponent(
                             chosenMembers.updateValue(chosenMembersValue.plus(user))
                         }
                     })
-                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
