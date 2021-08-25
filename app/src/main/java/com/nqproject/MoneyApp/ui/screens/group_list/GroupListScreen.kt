@@ -90,12 +90,11 @@ fun GroupListScreen(
                 )
             }
         ) {
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .padding(24.dp),
+                    .padding(Config.MEDIUM_PADDING),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -104,13 +103,13 @@ fun GroupListScreen(
                     isFirstLoad -> {}
                     groupsList.isEmpty() -> {
                         Text("You don't have any groups", style = MaterialTheme.typography.h4)
-                        Spacer(modifier = Modifier.height(21.dp))
+                        Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
                         Button(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(49.dp)
-                                .padding(horizontal = 16.dp),
-                            shape = RoundedCornerShape(10.dp),
+                                .height(Config.XLARGE_PADDING)
+                                .padding(horizontal = Config.SMALL_PADDING),
+                            shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
                             onClick = {
                                 onAddGroupNavigate()
                             }) {
@@ -123,7 +122,7 @@ fun GroupListScreen(
                                 didPressComponent = {
                                     onGroupDetailsNavigate(it)
                                 })
-                            Spacer(modifier = Modifier.height(21.dp))
+                            Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
                         }
                     }
                 }

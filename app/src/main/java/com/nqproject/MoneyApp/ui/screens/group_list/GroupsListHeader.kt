@@ -7,6 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
 
 @Composable
@@ -29,7 +30,7 @@ fun GroupListHeader(
                     Image(
                         painterResource(id = R.drawable.ic_user),
                         contentDescription = "",
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier.padding(Config.XSMALL_PADDING)
                     )
                 }
 

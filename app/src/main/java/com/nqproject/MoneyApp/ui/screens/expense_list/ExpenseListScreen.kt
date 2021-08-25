@@ -69,7 +69,7 @@ fun ExpenseListScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(scrollState)
-                        .padding(32.dp),
+                        .padding(Config.LARGE_PADDING),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
@@ -77,13 +77,13 @@ fun ExpenseListScreen(
                         isFirstLoad -> {}
                         groupExpenses.isEmpty() -> {
                             Text("You don't have any expenses", style = MaterialTheme.typography.h4)
-                            Spacer(modifier = Modifier.height(21.dp))
+                            Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
                             Button(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(49.dp)
-                                    .padding(horizontal = 16.dp),
-                                shape = RoundedCornerShape(10.dp),
+                                    .height(Config.XLARGE_PADDING)
+                                    .padding(horizontal = Config.SMALL_PADDING),
+                                shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
                                 onClick = {
                                     onAddExpenseNavigate()
                                 }) {
@@ -96,7 +96,7 @@ fun ExpenseListScreen(
                                     didPressComponent = {
                                         onExpenseDetailsNavigate(it)
                                     })
-                                Spacer(modifier = Modifier.height(20.dp))
+                                Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
                             }
                         }
                     }

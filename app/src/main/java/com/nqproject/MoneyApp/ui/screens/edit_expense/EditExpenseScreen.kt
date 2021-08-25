@@ -40,7 +40,7 @@ fun EditExpenseScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 24.dp),
+                    .padding(horizontal = Config.MEDIUM_PADDING),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -70,12 +70,12 @@ fun EditExpenseScreen(
                     }
                 )
 
-                Spacer(modifier = Modifier.height(21.dp))
+                Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
 
                 Button(
                     modifier = Modifier
-                        .height(49.dp),
-                    shape = RoundedCornerShape(10.dp),
+                        .height(Config.XLARGE_PADDING),
+                    shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = MaterialTheme.colors.error,
                     ),

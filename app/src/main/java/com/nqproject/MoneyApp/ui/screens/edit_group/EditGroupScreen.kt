@@ -32,7 +32,6 @@ fun EditGroupScreen(
 
     val icons = viewModel.icons.observeAsState().value
     var showImageAlert by remember { mutableStateOf(false) }
-//    var chosenIcon by remember { mutableStateOf<MoneyAppIcon?>(MoneyAppIcon.from(group.icon))}
     var chosenIcon = group.icon
 
     AddGroupHeader(

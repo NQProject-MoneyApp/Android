@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.repository.User
 
@@ -19,7 +20,7 @@ fun GroupUsersListComponent(userBalanceList: List<User>, group: Group, didPressA
 
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
-        shape = RoundedCornerShape(15),
+        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
         modifier = Modifier
             .fillMaxWidth()
     ) {
@@ -27,7 +28,7 @@ fun GroupUsersListComponent(userBalanceList: List<User>, group: Group, didPressA
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(32.dp)
+                .padding(Config.LARGE_PADDING)
         ) {
             Row {
                 Text(
@@ -43,7 +44,7 @@ fun GroupUsersListComponent(userBalanceList: List<User>, group: Group, didPressA
             userBalanceList.forEach {
                 GroupBalanceComponent(it)
             }
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
             TextButton(onClick = {
                 didPressAllExpenses(group)
             }) {

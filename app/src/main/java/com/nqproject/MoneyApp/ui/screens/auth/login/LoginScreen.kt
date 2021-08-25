@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.livedata.observeAsState
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.components.ValidableValue
 import com.nqproject.MoneyApp.ui.screens.auth.*
 
@@ -31,7 +32,7 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 34.dp)
+            .padding(horizontal = Config.LARGE_PADDING)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -45,9 +46,6 @@ fun LoginScreen(
 
                 when(result) {
                     is LoginResult.Success -> {
-//                        navController.navigate(MainNavigationScreen.Groups.route) {
-//                            popUpTo(MainNavigationScreen.LoginScreen.route) { inclusive = true }
-//                        }
                         onLoggedInNavigate()
                     }
                     is LoginResult.Failed -> {
@@ -57,7 +55,7 @@ fun LoginScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(21.dp))
+        Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
         BottomOption(text = "Forgot password?", buttonText = "Reset") {
             // Action
         }
@@ -106,13 +104,13 @@ private fun LoginForm(
         },
     )
 
-    Spacer(modifier = Modifier.height(5.dp))
+    Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
 
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .height(49.dp),
-        shape = RoundedCornerShape(10.dp),
+            .height(Config.XLARGE_PADDING),
+        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
         enabled = !loading,
         onClick = {
             usernameState.validate()

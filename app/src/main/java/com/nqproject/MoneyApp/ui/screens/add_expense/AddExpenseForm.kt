@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.components.ChooseUsersComponent
 import com.nqproject.MoneyApp.components.InputField
 import com.nqproject.MoneyApp.components.ValidableValue
@@ -76,7 +77,7 @@ fun AddExpenseForm(
     val expenseAmountValue = expenseAmount.value.observeAsState().value!!
     val expenseParticipantsValue = expenseParticipants.value.observeAsState().value!!
 
-    Spacer(modifier = Modifier.height(21.dp))
+    Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
 
     InputField(
         focusRequester = expenseNameRequester,
@@ -88,7 +89,7 @@ fun AddExpenseForm(
         },
     )
 
-    Spacer(modifier = Modifier.height(5.dp))
+    Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
 
     InputField(
         focusRequester = expenseAmountRequester,
@@ -100,7 +101,7 @@ fun AddExpenseForm(
         },
     )
 
-    Spacer(modifier = Modifier.height(5.dp))
+    Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
 
     ChooseUsersComponent(
         title = "Participants",
@@ -109,13 +110,13 @@ fun AddExpenseForm(
     )
 
 
-    Spacer(modifier = Modifier.height(5.dp))
+    Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
 
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .height(49.dp),
-        shape = RoundedCornerShape(10.dp),
+            .height(Config.XLARGE_PADDING),
+        shape = RoundedCornerShape(Config.XSMALL_PADDING),
         enabled = !loading,
         onClick = {
             expenseName.validate()

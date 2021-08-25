@@ -50,18 +50,18 @@ fun ExpenseDetailsScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(scrollState)
-                        .padding(32.dp),
+                        .padding(Config.LARGE_PADDING),
                 ) {
                     Card(
                         backgroundColor = MaterialTheme.colors.secondary,
-                        shape = RoundedCornerShape(10),
+                        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
                         Column(
                             verticalArrangement = Arrangement.SpaceBetween,
                             modifier = Modifier
-                                .padding(24.dp)
+                                .padding(Config.MEDIUM_PADDING)
                         ) {
                             Row {
                                 Text(
@@ -94,38 +94,38 @@ fun ExpenseDetailsScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(Config.LARGE_PADDING))
 
                     Card(
                         backgroundColor = MaterialTheme.colors.secondary,
-                        shape = RoundedCornerShape(10),
+                        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
                         Column(
                             verticalArrangement = Arrangement.SpaceBetween,
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.padding(16.dp)
+                            modifier = Modifier.padding(Config.SMALL_PADDING)
                         ) {
                             Text("Participants", color = AppTheme.colors.primaryText)
-                            Spacer(modifier = Modifier.height(16.dp))
+                            Spacer(modifier = Modifier.height(Config.SMALL_PADDING))
 
 
                             expense!!.participants.forEach {
                                 Row(
                                     horizontalArrangement = Arrangement.Start,
-                                    modifier = Modifier.padding(horizontal = 24.dp),
+                                    modifier = Modifier.padding(horizontal = Config.MEDIUM_PADDING),
                                 ) {
                                     Text(
                                         it.name, color = AppTheme.colors.primaryText, modifier = Modifier
                                             .weight(1f)
                                     )
                                 }
-                                Spacer(modifier = Modifier.height(8.dp))
+                                Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
                             }
                         }
                     }
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(Config.LARGE_PADDING))
                     Text(
                         text = "Created on\n ${
                             dateFormat.format(

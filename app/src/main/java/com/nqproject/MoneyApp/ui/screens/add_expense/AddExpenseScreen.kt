@@ -28,13 +28,13 @@ fun AddExpenseScreen(
     val context = LocalContext.current
 
     AddExpenseHeader(
-        title="New expense",
+        title = "New expense",
         didPressBackButton = onBackNavigate,
         body = {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 24.dp),
+                    .padding(horizontal = Config.MEDIUM_PADDING),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {

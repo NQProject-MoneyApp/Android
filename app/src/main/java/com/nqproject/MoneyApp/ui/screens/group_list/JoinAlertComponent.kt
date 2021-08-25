@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.ui.AlertComponent
 import com.nqproject.MoneyApp.ui.theme.AppTheme
 
@@ -32,14 +33,14 @@ fun JoinAlertComponent(onClose: () -> Unit, onJoinPress: (code: String) -> Unit)
                 style = MaterialTheme.typography.h4,
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
             Card(
                 backgroundColor = MaterialTheme.colors.secondary,
-                shape = RoundedCornerShape(25),
-                border = BorderStroke(3.dp, MaterialTheme.colors.primary),
+                shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
+                border = BorderStroke(Config.BORDER_STROKE, MaterialTheme.colors.primary),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(Config.SMALL_PADDING)
                     .clickable {
                         //copy it
                     }
@@ -53,7 +54,7 @@ fun JoinAlertComponent(onClose: () -> Unit, onJoinPress: (code: String) -> Unit)
                         codeState.value = newValue.uppercase()
                     },
                     label = { Text("Code", color = AppTheme.colors.hintText) },
-                    shape = RoundedCornerShape(10.dp),
+                    shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
                     singleLine = true,
                     colors = TextFieldDefaults.textFieldColors(
                         backgroundColor = MaterialTheme.colors.surface,
@@ -64,7 +65,7 @@ fun JoinAlertComponent(onClose: () -> Unit, onJoinPress: (code: String) -> Unit)
                     )
                 )
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
 
             TextButton(onClick = { onJoinPress(codeState.value) }) {
                 Text("Join",

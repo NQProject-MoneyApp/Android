@@ -35,7 +35,7 @@ fun RegistrationScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 34.dp)
+            .padding(horizontal = Config.LARGE_PADDING)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -59,7 +59,7 @@ fun RegistrationScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(21.dp))
+        Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
         BottomOption(text = "Already have account?", buttonText = "Login") {
             // TODO
             // block back button?
@@ -122,13 +122,13 @@ private fun RegistrationForm(
         },
     )
 
-    Spacer(modifier = Modifier.height(21.dp))
+    Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
 
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .height(49.dp),
-        shape = RoundedCornerShape(10.dp),
+            .height(Config.XLARGE_PADDING),
+        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
         enabled = !loading,
         onClick = {
             usernameState.validate()

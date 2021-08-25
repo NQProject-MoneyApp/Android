@@ -47,7 +47,6 @@ fun GroupDetailsScreen(
     val coroutineScope = rememberCoroutineScope()
     val viewModel = viewModel<GroupDetailsViewModel>()
     val scrollState = rememberScrollState()
-    // TODO move to view model
     var showCode by remember { mutableStateOf(false) }
     var code = ""
     val context = LocalContext.current
@@ -88,22 +87,22 @@ fun GroupDetailsScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .padding(32.dp),
+                    .padding(Config.LARGE_PADDING),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Image(
                     painterResource(id = group.icon.icon()),
                     modifier = Modifier
-                        .size(132.dp)
-                        .padding(8.dp),
+                        .size(Config.LARGE_ICON_SIZE)
+                        .padding(Config.XSMALL_PADDING),
                     contentDescription = "",
                     colorFilter = ColorFilter.tint(MaterialTheme.colors.primary)
                 )
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(Config.LARGE_PADDING))
                 Row(
                     modifier = Modifier
-                        .padding(horizontal = 16.dp)
+                        .padding(horizontal = Config.SMALL_PADDING)
                 )
                 {
                     Text(
@@ -120,7 +119,7 @@ fun GroupDetailsScreen(
                 }
                 Row(
                     modifier = Modifier
-                        .padding(horizontal = 16.dp)
+                        .padding(horizontal = Config.SMALL_PADDING)
                 ) {
                     Text(
                         modifier = Modifier.weight(1f),
@@ -134,7 +133,7 @@ fun GroupDetailsScreen(
                         color = Color.Green
                     )
                 }
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
                 TextButton(onClick = { /*TODO*/ }) {
                     Text(
                         text = "Settle up",
@@ -142,19 +141,19 @@ fun GroupDetailsScreen(
                         color = MaterialTheme.colors.primary
                     )
                 }
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
                 Button(onClick = {
                     Log.d(Config.MAIN_TAG, "new expense")
                     onAddExpenseNavigate()
                 },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = AbsoluteRoundedCornerShape(15)
+                    shape = AbsoluteRoundedCornerShape(Config.ROUNDED_CORNERS)
                 )
                 { Text(
                     text = "New expense",
                     style = MaterialTheme.typography.h4
                 )}
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
                 GroupUsersListComponent(
                     userBalanceList = group.members,
                     group = group,

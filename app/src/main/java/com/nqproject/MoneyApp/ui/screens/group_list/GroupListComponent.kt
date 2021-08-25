@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.ui.theme.AppTheme
@@ -28,7 +29,7 @@ import java.util.*
 fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
     val icon = if (group.isFavourite) R.drawable.ic_star_select else R.drawable.ic_star
     val dateFormat = SimpleDateFormat("dd-MM-yyy")
-    val cardShape = RoundedCornerShape(15)
+    val cardShape = RoundedCornerShape(Config.ROUNDED_CORNERS)
     val viewModel = viewModel<GroupsListViewModel>()
 
     Card(
@@ -44,7 +45,7 @@ fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(24.dp)
+                .padding(Config.MEDIUM_PADDING)
         ) {
             Row(
                 modifier = Modifier
@@ -54,20 +55,20 @@ fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
                 Image(
                     painterResource(id = group.icon.icon()),
                     modifier = Modifier
-                        .size(100.dp)
-                        .padding(8.dp),
+                        .size(Config.MEDIUM_ICON_SIZE)
+                        .padding(Config.XSMALL_PADDING),
                     contentDescription = "",
                     colorFilter = ColorFilter.tint(MaterialTheme.colors.primary)
                 )
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(8.dp)
+                        .padding(Config.XSMALL_PADDING)
                 ) {
                     Text(
                         text = group.name, style = MaterialTheme.typography.h4, color = AppTheme.colors.primaryText
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
                     Text(
                         text = "$ ${String.format(Locale.US, "%.2f", group.userBalance)}",
                         style = MaterialTheme.typography.subtitle2, color = AppTheme.colors.primaryText
@@ -84,7 +85,7 @@ fun GroupListComponent(group: Group, didPressComponent: (Group) -> Unit) {
                             contentDescription = "",
                         )
                     }
-                    Spacer(modifier = Modifier.height(65.dp))
+                    Spacer(modifier = Modifier.height(Config.LARGE_PADDING+Config.LARGE_PADDING))
                     Text(
                         text = dateFormat.format(group.createDate),
                         style = MaterialTheme.typography.subtitle2, color = AppTheme.colors.primaryText
