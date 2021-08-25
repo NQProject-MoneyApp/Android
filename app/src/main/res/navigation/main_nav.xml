@@ -14,6 +14,15 @@
         app:popUpTo="@id/main_nav"
         app:popUpToInclusive="true" />
 
+    <action
+        android:id="@+id/action_global_no_internet"
+        app:destination="@id/noInternetFragment"
+        app:enterAnim="@anim/fade_scale_in"
+        app:exitAnim="@anim/fade_scale_out"
+        app:popEnterAnim="@anim/fade_scale_in"
+        app:popExitAnim="@anim/fade_scale_out"
+        />
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.nqproject.MoneyApp.ui.screens.auth.login.LoginFragment"
@@ -189,4 +198,8 @@
             android:name="group"
             app:argType="com.nqproject.MoneyApp.repository.Group" />
     </fragment>
+    <fragment
+        android:id="@+id/noInternetFragment"
+        android:name="com.nqproject.MoneyApp.ui.screens.group_details.NoInternetFragment"
+        android:label="NoInternetFragment" />
 </navigation>

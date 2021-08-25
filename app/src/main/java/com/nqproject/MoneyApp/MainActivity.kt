@@ -30,10 +30,17 @@ class MainActivity : FragmentActivity() {
                     .show()
             }
         }
+
+        MoneyAppClient.noInternetCallback = {
+            runOnUiThread {
+                findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_no_internet)
+            }
+        }
     }
 
     override fun onStop() {
         super.onStop()
         MoneyAppClient.logoutCallback = null
+        MoneyAppClient.noInternetCallback = null
     }
 }

@@ -37,6 +37,7 @@ suspend fun ResponseBody.stringSuspending() =
 object MoneyAppClient {
 
     var logoutCallback: (() -> Unit)? = null
+    var noInternetCallback: (() -> Unit)? = null
 
     private val client = Retrofit.Builder()
         .baseUrl("https://money-app-nqproject-staging.herokuapp.com")
@@ -74,12 +75,16 @@ object MoneyAppClient {
         onError: (suspend (e: HttpException) -> SimpleResult<T>)? = null,
         request: suspend () -> SimpleResult<T>,
     ): SimpleResult<T> {
+
+        //noInternetCallback?.invoke()
+
         return try {
             return request()
         } catch (e: HttpException) {
             Log.e(Config.MAIN_TAG, "Failed to run request", e)
             onError?.invoke(e) ?: SimpleResult.Error("Unknown error")
         } catch (e: IOException) {
+
             Log.e(Config.MAIN_TAG, "Failed to run request", e)
             SimpleResult.Error("Something failed, check your internet connection.")
         } catch(e: Exception) {
