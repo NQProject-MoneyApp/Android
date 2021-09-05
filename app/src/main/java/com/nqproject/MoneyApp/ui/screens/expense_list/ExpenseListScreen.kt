@@ -64,7 +64,7 @@ fun ExpenseListScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(scrollState)
-                        .padding(Config.LARGE_PADDING),
+                        .padding(Config.MEDIUM_PADDING),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
@@ -91,7 +91,7 @@ fun ExpenseListScreen(
                                     didPressComponent = {
                                         onExpenseDetailsNavigate(it)
                                     })
-                                Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
+                                Spacer(modifier = Modifier.height(Config.SMALL_PADDING))
                             }
                         }
                     }

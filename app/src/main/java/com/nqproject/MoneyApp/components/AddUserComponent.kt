@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.repository.User
 import com.nqproject.MoneyApp.ui.theme.AppTheme
@@ -23,7 +24,7 @@ fun AddUserComponent(user: User, didPressComponent: () -> Unit, check: Boolean) 
     Row(
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(horizontal = 24.dp),
+        modifier = Modifier.padding(horizontal = Config.MEDIUM_PADDING),
 
         ) {
         Text(user.name, color= AppTheme.colors.primaryText, modifier = Modifier.weight(1f))

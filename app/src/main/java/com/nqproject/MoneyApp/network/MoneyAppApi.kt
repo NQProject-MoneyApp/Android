@@ -59,13 +59,13 @@ interface MoneyAppApi {
     @PUT("/api/join/{code}/")
     suspend fun joinToGroup(@Path("code") code: String)
 
-    @GET("/api/icons")
+    @GET("/api/icons/")
     suspend fun icons(): NetworkIconsResponse
 
-    @GET("/api/friends")
+    @GET("/api/friends/")
     suspend fun friends(): List<NetworkUser>
 
-    @GET("/api/user")
+    @GET("/api/user/")
     suspend fun user(): NetworkUser
 
     @PATCH("/api/user/")

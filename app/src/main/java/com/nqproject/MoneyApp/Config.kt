@@ -10,7 +10,8 @@ object Config {
     val MEDIUM_PADDING = 24.dp
     val LARGE_PADDING = 32.dp
     val XLARGE_PADDING = 48.dp
-    val MEDIUM_ICON_SIZE = 100.dp
+    val XXLARGE_PADDING = 96.dp
+    val MEDIUM_ICON_SIZE = 80.dp
     val LARGE_ICON_SIZE = 132.dp
     val ROUNDED_CORNERS = 15.dp
 }

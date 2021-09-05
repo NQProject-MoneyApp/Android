@@ -90,7 +90,7 @@ private fun RegistrationForm(
         ValidableValue("",
             {
                 when {
-                    it.isEmpty() -> "Enter a username"
+                    it.isEmpty() -> "Enter a password"
                     else -> ""
                 }
             }

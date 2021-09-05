@@ -3,7 +3,6 @@ package com.nqproject.MoneyApp.ui.screens.profile
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,8 +11,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.components.InputField
 import com.nqproject.MoneyApp.components.ValidableValue
 import com.nqproject.MoneyApp.ui.screens.add_group.AddGroupViewModel
@@ -70,10 +69,8 @@ fun ProfileForm(
 
     Button(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(49.dp)
-            .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(10.dp),
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
         enabled = !addGroupLoading,
         onClick = {
             userName.validate()

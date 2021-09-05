@@ -2,23 +2,20 @@ package com.nqproject.MoneyApp.ui.screens.profile
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.components.BasicHeader
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.ui.theme.AppTheme
@@ -35,13 +32,13 @@ fun ProfileScreen(
     val scrollState = rememberScrollState()
     val user = viewModel.user.observeAsState().value
 
-    BasicHeader(title="Profile", didPressBackButton = onBackNavigate) {
+    BasicHeader(title = "Profile", didPressBackButton = onBackNavigate) {
         if (user != null) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .padding(24.dp),
+                    .padding(Config.SMALL_PADDING),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -50,22 +47,24 @@ fun ProfileScreen(
                     shape = CircleShape,
                     border = BorderStroke(2.dp, MaterialTheme.colors.primary),
                     modifier = Modifier
-                        .size(150.dp)
+                        .size(160.dp)
                 ) {
                     Column(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
-                            .padding(32.dp)
+                            .padding(top = Config.SMALL_PADDING)
 
                     ) {
-                        Text(user.name.substring(0, 2).uppercase(),
+                        Text(
+                            user.name.substring(0, 2).uppercase(),
                             color = AppTheme.colors.hintText,
-                            style = MaterialTheme.typography.h3)
+                            style = MaterialTheme.typography.h3
+                        )
                     }
                 }
 
-                Spacer(modifier = Modifier.height(21.dp))
+                Spacer(modifier = Modifier.height(Config.SMALL_PADDING))
 
                 ProfileForm(
                     name = user.name,

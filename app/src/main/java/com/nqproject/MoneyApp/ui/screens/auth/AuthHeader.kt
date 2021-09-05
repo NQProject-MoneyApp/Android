@@ -10,18 +10,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
 
 
 @Composable
 fun AuthHeader() {
-    Spacer(modifier = Modifier.height(39.dp))
+    Spacer(modifier = Modifier.height(Config.XXLARGE_PADDING))
     Image(
         painterResource(id = R.drawable.ic_icon),
-        modifier = Modifier.size(132.dp),
+        modifier = Modifier.size(Config.LARGE_ICON_SIZE),
         contentDescription = ""
     )
-    Spacer(modifier = Modifier.height(39.dp))
+    Spacer(modifier = Modifier.height(Config.XLARGE_PADDING))
 
     Text(
         modifier = Modifier.height(83.dp),
@@ -29,5 +30,5 @@ fun AuthHeader() {
         style = MaterialTheme.typography.h2,
         color = MaterialTheme.colors.primary,
     )
-    Spacer(modifier = Modifier.height(39.dp))
+    Spacer(modifier = Modifier.height(Config.LARGE_PADDING))
 }

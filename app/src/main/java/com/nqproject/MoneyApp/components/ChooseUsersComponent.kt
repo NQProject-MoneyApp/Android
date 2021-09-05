@@ -9,13 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.repository.User
 import com.nqproject.MoneyApp.ui.screens.add_group.AddUserComponent
 import com.nqproject.MoneyApp.ui.theme.AppTheme
@@ -30,7 +26,7 @@ fun ChooseUsersComponent(
     val errorMessage = chosenMembers.errorMessage.observeAsState().value!!
     val chosenMembersValue = chosenMembers.value.observeAsState().value!!
 
-    val cardShape = RoundedCornerShape(10.dp)
+    val cardShape = RoundedCornerShape(Config.ROUNDED_CORNERS)
     var cardModifier = Modifier
         .fillMaxWidth()
 
@@ -48,10 +44,10 @@ fun ChooseUsersComponent(
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(Config.SMALL_PADDING)
         ) {
             Text(title, color = AppTheme.colors.primaryText)
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(Config.SMALL_PADDING))
 
 
             groupMembers.forEach { user ->

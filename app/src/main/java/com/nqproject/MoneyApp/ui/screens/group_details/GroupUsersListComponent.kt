@@ -33,19 +33,23 @@ fun GroupUsersListComponent(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .padding(
-                    start = Config.MEDIUM_PADDING, top = Config.LARGE_PADDING,
+                    start = Config.MEDIUM_PADDING, top = Config.MEDIUM_PADDING,
                     end = Config.MEDIUM_PADDING, bottom = Config.SMALL_PADDING
                 )
         ) {
-            Row {
+            Row(
+                modifier = Modifier.padding(bottom = Config.XSMALL_PADDING)
+            ) {
                 Text(
                     modifier = Modifier.weight(1f),
                     text = "Member",
-                    color = MaterialTheme.colors.primary
+                    color = MaterialTheme.colors.primary,
+                    style = MaterialTheme.typography.body2
                 )
                 Text(
                     text = "Balance",
-                    color = MaterialTheme.colors.primary
+                    color = MaterialTheme.colors.primary,
+                    style = MaterialTheme.typography.body2
                 )
             }
             userBalanceList.forEach {

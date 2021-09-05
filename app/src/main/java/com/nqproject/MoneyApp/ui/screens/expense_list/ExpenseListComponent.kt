@@ -32,7 +32,7 @@ fun ExpenseListComponent(expense: Expense, didPressComponent: (Expense) -> Unit)
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .padding(Config.MEDIUM_PADDING)
+                .padding(Config.SMALL_PADDING + Config.XSMALL_PADDING)
         ) {
             Text(
                 text = expense.name,

@@ -86,7 +86,7 @@ private fun LoginForm(
         ValidableValue("",
             {
                 when {
-                    it.isEmpty() -> "Enter a username"
+                    it.isEmpty() -> "Enter a password"
                     else -> ""
                 }
             }
@@ -103,8 +103,6 @@ private fun LoginForm(
             onLoginPressed(usernameValue, passwordValue)
         },
     )
-
-    Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
 
     Button(
         modifier = Modifier

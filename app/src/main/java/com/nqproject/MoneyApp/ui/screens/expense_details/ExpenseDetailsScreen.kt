@@ -50,7 +50,7 @@ fun ExpenseDetailsScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(scrollState)
-                        .padding(Config.LARGE_PADDING),
+                        .padding(Config.MEDIUM_PADDING),
                 ) {
                     Card(
                         backgroundColor = MaterialTheme.colors.secondary,

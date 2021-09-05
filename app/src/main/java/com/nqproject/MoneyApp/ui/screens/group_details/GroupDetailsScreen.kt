@@ -87,7 +87,7 @@ fun GroupDetailsScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .padding(Config.LARGE_PADDING),
+                    .padding(Config.MEDIUM_PADDING),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
