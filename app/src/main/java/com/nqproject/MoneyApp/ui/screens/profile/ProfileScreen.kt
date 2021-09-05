@@ -45,7 +45,7 @@ fun ProfileScreen(
                 Surface(
                     color = MaterialTheme.colors.secondary,
                     shape = CircleShape,
-                    border = BorderStroke(2.dp, MaterialTheme.colors.primary),
+                    border = BorderStroke(Config.BORDER_STROKE, MaterialTheme.colors.primary),
                     modifier = Modifier
                         .size(160.dp)
                 ) {

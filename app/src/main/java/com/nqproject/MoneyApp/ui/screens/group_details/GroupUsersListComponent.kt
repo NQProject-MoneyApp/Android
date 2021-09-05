@@ -10,7 +10,6 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.repository.User

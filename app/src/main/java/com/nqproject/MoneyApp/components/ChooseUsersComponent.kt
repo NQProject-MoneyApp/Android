@@ -33,7 +33,7 @@ fun ChooseUsersComponent(
     if (errorMessage.isNotEmpty())
         cardModifier = cardModifier
             .clip(cardShape)
-            .bottomRectBorder(3.dp, MaterialTheme.colors.error)
+            .bottomRectBorder(Config.BORDER_STROKE, MaterialTheme.colors.error)
 
 
     Card(
@@ -44,9 +44,9 @@ fun ChooseUsersComponent(
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(Config.SMALL_PADDING)
+            modifier = Modifier.padding(Config.MEDIUM_PADDING)
         ) {
-            Text(title, color = AppTheme.colors.primaryText)
+            Text(title, color = AppTheme.colors.primaryText, style = MaterialTheme.typography.body2)
             Spacer(modifier = Modifier.height(Config.SMALL_PADDING))
 
 

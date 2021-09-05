@@ -12,10 +12,8 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.ui.AlertComponent
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -41,17 +39,17 @@ fun CodeAlertComponent(onClose: () -> Unit, code: String) {
                 color = AppTheme.colors.primaryText,
                 style = MaterialTheme.typography.h4,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(horizontal = 10.dp),
+                modifier = Modifier.padding(Config.XSMALL_PADDING),
             )
 
             Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
             Card(
                 backgroundColor = MaterialTheme.colors.secondary,
                 shape = shape,
-                border = BorderStroke(3.dp, MaterialTheme.colors.primary),
+                border = BorderStroke(Config.BORDER_STROKE, MaterialTheme.colors.primary),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(Config.SMALL_PADDING)
                     .clip(shape)
                     .clickable {
                         val clipboard =
@@ -67,7 +65,7 @@ fun CodeAlertComponent(onClose: () -> Unit, code: String) {
                     code,
                     color = AppTheme.colors.primaryText,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(Config.SMALL_PADDING),
                     style = MaterialTheme.typography.h4,
                 )
             }

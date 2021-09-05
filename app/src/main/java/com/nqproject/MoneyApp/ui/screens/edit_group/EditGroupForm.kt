@@ -16,7 +16,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
@@ -52,7 +51,7 @@ fun EditGroupForm(
         backgroundColor = MaterialTheme.colors.secondary,
         modifier = Modifier
             .size(Config.LARGE_ICON_SIZE),
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
 
         ) {
 

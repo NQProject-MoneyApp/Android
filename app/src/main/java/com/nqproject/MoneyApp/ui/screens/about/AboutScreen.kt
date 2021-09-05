@@ -13,7 +13,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.components.BasicHeader
 import com.nqproject.MoneyApp.ui.theme.AppTheme

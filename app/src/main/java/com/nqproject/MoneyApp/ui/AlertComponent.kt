@@ -7,15 +7,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.ui.theme.AppTheme
 
 @Composable
 fun AlertComponent(onClose: () -> Unit, body: @Composable () -> Unit) {
 
     AlertDialog(
-        shape = RoundedCornerShape(32.dp),
+        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
         onDismissRequest = { onClose() },
         text = {
             body()

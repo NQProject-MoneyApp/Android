@@ -22,11 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.Config
-import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.ui.screens.group_details.CodeAlertComponent
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupUsersListComponent

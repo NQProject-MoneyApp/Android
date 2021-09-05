@@ -10,7 +10,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.ui.AlertComponent
 import com.nqproject.MoneyApp.ui.theme.AppTheme

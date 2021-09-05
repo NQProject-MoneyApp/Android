@@ -88,8 +88,6 @@ fun AddExpenseForm(
         },
     )
 
-    Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
-
     InputField(
         focusRequester = expenseAmountRequester,
         fieldState = expenseAmount,
@@ -100,16 +98,11 @@ fun AddExpenseForm(
         },
     )
 
-    Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
-
     ChooseUsersComponent(
         title = "Participants",
         groupMembers = groupMembers,
         chosenMembers = expenseParticipants,
     )
-
-
-    Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
 
     Button(
         modifier = Modifier
