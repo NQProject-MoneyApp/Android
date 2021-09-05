@@ -16,7 +16,11 @@ import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.repository.User
 
 @Composable
-fun GroupUsersListComponent(userBalanceList: List<User>, group: Group, didPressAllExpenses: (Group) -> Unit) {
+fun GroupUsersListComponent(
+    userBalanceList: List<User>,
+    group: Group,
+    didPressAllExpenses: (Group) -> Unit
+) {
 
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
@@ -28,7 +32,10 @@ fun GroupUsersListComponent(userBalanceList: List<User>, group: Group, didPressA
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(Config.LARGE_PADDING)
+                .padding(
+                    start = Config.MEDIUM_PADDING, top = Config.LARGE_PADDING,
+                    end = Config.MEDIUM_PADDING, bottom = Config.SMALL_PADDING
+                )
         ) {
             Row {
                 Text(
@@ -48,7 +55,8 @@ fun GroupUsersListComponent(userBalanceList: List<User>, group: Group, didPressA
             TextButton(onClick = {
                 didPressAllExpenses(group)
             }) {
-                Text("All expenses",
+                Text(
+                    "All expenses",
                     color = MaterialTheme.colors.primary,
                     style = MaterialTheme.typography.h4
                 )

@@ -11,7 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.manager.AuthenticationManager
@@ -26,7 +25,6 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 import com.nqproject.MoneyApp.network.SimpleResult
-import com.nqproject.MoneyApp.ui.screens.expense_list.ExpenseListComponent
 import com.nqproject.MoneyApp.ui.screens.group_list.JoinAlertComponent
 
 @Composable
@@ -128,7 +126,7 @@ fun GroupListScreen(
                                 didPressComponent = {
                                     onGroupDetailsNavigate(it)
                                 })
-                            Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
+                            Spacer(modifier = Modifier.height(Config.SMALL_PADDING))
                         }
                     }
                 }
