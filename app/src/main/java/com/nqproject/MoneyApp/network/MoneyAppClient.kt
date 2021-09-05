@@ -313,4 +313,16 @@ object MoneyAppClient {
             SimpleResult.Success(client.friends())
         }
     }
+
+    suspend fun user(): SimpleResult<NetworkUser> {
+        return runRequest {
+            SimpleResult.Success(client.user())
+        }
+    }
+
+    suspend fun editUser(pk: Int, name: String, email: String): SimpleResult<NetworkUser> {
+        return runRequest {
+            SimpleResult.Success(client.editUser(NetworkUser(pk, name, email)))
+        }
+    }
 }

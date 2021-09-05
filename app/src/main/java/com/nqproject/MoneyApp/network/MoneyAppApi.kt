@@ -64,4 +64,10 @@ interface MoneyAppApi {
 
     @GET("/api/friends")
     suspend fun friends(): List<NetworkUser>
+
+    @GET("/api/user")
+    suspend fun user(): NetworkUser
+
+    @PATCH("/api/user/")
+    suspend fun editUser(@Body request: NetworkUser): NetworkUser
 }

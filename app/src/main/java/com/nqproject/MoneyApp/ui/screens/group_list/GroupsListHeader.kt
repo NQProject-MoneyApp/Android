@@ -16,6 +16,7 @@ fun GroupListHeader(
     didPressAddGroup: () -> Unit,
     didPressJoinGroup: () -> Unit,
     onLogout: () -> Unit,
+    didPressAboutButton: () -> Unit,
     body: @Composable () -> Unit) {
 
     var showLeftMenu by remember { mutableStateOf(false) }
@@ -40,11 +41,27 @@ fun GroupListHeader(
                 ) {
                     DropdownMenuItem(
                         onClick = {
+                            didPressAboutButton()
+                            showLeftMenu = false
+                        }
+                    ) {
+                        Text("About", color = MaterialTheme.colors.primary)
+                    }
+                    DropdownMenuItem(
+                        onClick = {
+                            didPressUserButton()
+                            showLeftMenu = false
+                        }
+                    ) {
+                            Text("Profile", color = MaterialTheme.colors.primary)
+                    }
+                    DropdownMenuItem(
+                        onClick = {
                             onLogout()
                             showLeftMenu = false
                         }
                     ) {
-                            Text("Log out", color = MaterialTheme.colors.primary)
+                        Text("Log out", color = MaterialTheme.colors.primary)
                     }
                 }
             },
