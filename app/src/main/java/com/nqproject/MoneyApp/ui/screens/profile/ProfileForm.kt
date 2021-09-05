@@ -71,7 +71,7 @@ fun ProfileForm(
         modifier = Modifier
             .fillMaxWidth(),
         shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
-        enabled = !addGroupLoading,
+        enabled = !addGroupLoading && (userName.value.value != name || userEmail.value.value != email),
         onClick = {
             userName.validate()
             userEmail.validate()
