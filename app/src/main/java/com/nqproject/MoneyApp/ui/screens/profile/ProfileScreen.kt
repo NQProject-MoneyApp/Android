@@ -59,7 +59,7 @@ fun ProfileScreen(
                             .padding(32.dp)
 
                     ) {
-                        Text("JG",
+                        Text(user.name.substring(0, 2).uppercase(),
                             color = AppTheme.colors.hintText,
                             style = MaterialTheme.typography.h3)
                     }
