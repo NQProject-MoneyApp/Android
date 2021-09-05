@@ -16,23 +16,23 @@ interface MoneyAppApi {
     suspend fun groups(): List<NetworkGroupsResponse>
 
     @POST("api/groups/")
-    suspend fun addGroup(@Body request: NetworkAddGroupRequest): NetworkGroupsResponse
+    suspend fun addGroup(@Body request: NetworkGroupsRequest): NetworkGroupsResponse
 
     @PATCH("api/groups/{groupId}/")
-    suspend fun editGroup(@Path("groupId") groupId: Int, @Body request: NetworkAddGroupRequest):
+    suspend fun editGroup(@Path("groupId") groupId: Int, @Body request: NetworkGroupsRequest):
             NetworkGroupsResponse
 
     @POST("/api/{id}/expenses/")
     suspend fun addExpense(
         @Path("id") id: Int,
-        @Body request: NetworkAddExpenseRequest
+        @Body request: NetworkExpensesRequest
     ): NetworkExpensesResponse
 
     @PUT("/api/{groupId}/expenses/{expenseId}/")
     suspend fun editExpense(
         @Path("groupId") groupId: Int,
         @Path("expenseId") expenseId: Int,
-        @Body request: NetworkAddExpenseRequest
+        @Body request: NetworkExpensesRequest
     ): NetworkExpensesResponse
 
     @DELETE("/api/{groupId}/expenses/{expenseId}/")
@@ -59,9 +59,15 @@ interface MoneyAppApi {
     @PUT("/api/join/{code}/")
     suspend fun joinToGroup(@Path("code") code: String)
 
-    @GET("/api/icons")
+    @GET("/api/icons/")
     suspend fun icons(): NetworkIconsResponse
 
-    @GET("/api/friends")
+    @GET("/api/friends/")
     suspend fun friends(): List<NetworkUser>
+
+    @GET("/api/user/")
+    suspend fun user(): NetworkUser
+
+    @PATCH("/api/user/")
+    suspend fun editUser(@Body request: NetworkUser): NetworkUser
 }

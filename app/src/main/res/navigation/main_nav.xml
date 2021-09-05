@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
     app:startDestination="@id/splashFragment">
 
+    <fragment
+        android:id="@+id/about"
+        android:name="com.nqproject.MoneyApp.ui.screens.about.AboutFragment"
+        android:label="about" />
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.nqproject.MoneyApp.ui.screens.profile.ProfileFragment"
+        android:label="profile"/>
     <action
         android:id="@+id/action_global_loginFragment"
         app:destination="@id/loginFragment"
@@ -68,6 +77,12 @@
             app:exitAnim="@anim/fade_scale_out"
             app:popEnterAnim="@anim/fade_scale_in"
             app:popExitAnim="@anim/fade_scale_out" />
+        <action
+            android:id="@+id/action_groupListFragment_to_profile"
+            app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_groupListFragment_to_about"
+            app:destination="@id/about" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -120,6 +135,9 @@
             app:popEnterAnim="@anim/fade_scale_in"
             app:popExitAnim="@anim/fade_scale_out"
             />
+        <action
+            android:id="@+id/action_groupDetailsFragment_to_editGroupFragment"
+            app:destination="@id/editGroupFragment" />
     </fragment>
     <fragment
         android:id="@+id/expenseListFragment"
@@ -174,6 +192,14 @@
         <argument
             android:name="expense"
             app:argType="com.nqproject.MoneyApp.repository.Expense" />
+        <argument
+            android:name="group"
+            app:argType="com.nqproject.MoneyApp.repository.Group" />
+    </fragment>
+    <fragment
+        android:id="@+id/editGroupFragment"
+        android:name="com.nqproject.MoneyApp.ui.screens.edit_group.EditGroupFragment"
+        android:label="EditGroupFragment" >
         <argument
             android:name="group"
             app:argType="com.nqproject.MoneyApp.repository.Group" />

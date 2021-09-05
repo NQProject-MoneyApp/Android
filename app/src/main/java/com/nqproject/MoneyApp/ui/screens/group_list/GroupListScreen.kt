@@ -11,7 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.manager.AuthenticationManager
@@ -33,6 +32,8 @@ fun GroupListScreen(
     onAddGroupNavigate: () -> Unit,
     onGroupDetailsNavigate: (group: Group) -> Unit,
     onLoginNavigate: () -> Unit,
+    onUserProfileNavigate: () -> Unit,
+    onAboutNavigate: () -> Unit,
 ) {
     val viewModel = viewModel<GroupsListViewModel>()
     val coroutineScope = rememberCoroutineScope()
@@ -41,6 +42,7 @@ fun GroupListScreen(
     val context = LocalContext.current
     var showJoinAlert by remember { mutableStateOf(false) }
     val isRefreshing by viewModel.loading.observeAsState(false)
+    val isFirstLoad by viewModel.firstLoad.observeAsState(true)
 
     GroupListHeader(
         onLogout = {
@@ -49,6 +51,7 @@ fun GroupListScreen(
         },
         didPressUserButton = {
             Log.d(Config.MAIN_TAG, "didPressUserButton")
+            onUserProfileNavigate()
         },
         didPressAddGroup = {
             onAddGroupNavigate()
@@ -56,7 +59,10 @@ fun GroupListScreen(
         didPressJoinGroup = {
             Log.d(Config.MAIN_TAG, "didPressJoinGroup")
             showJoinAlert = true
-
+        },
+        didPressAboutButton = {
+            Log.d(Config.MAIN_TAG, "didPressAboutButton")
+            onAboutNavigate()
         },
         body = {
 
@@ -88,37 +94,40 @@ fun GroupListScreen(
                 )
             }
         ) {
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .padding(24.dp),
+                    .padding(Config.MEDIUM_PADDING),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                if (groupsList.isNotEmpty()) {
-                    groupsList.forEach {
-                        GroupListComponent(it,
-                            didPressComponent = {
-                                onGroupDetailsNavigate(it)
-                            })
-                        Spacer(modifier = Modifier.height(21.dp))
+                when {
+                    isFirstLoad -> {}
+                    groupsList.isEmpty() -> {
+                        Text("You don't have any groups", style = MaterialTheme.typography.h4)
+                        Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
+                        Button(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(Config.XLARGE_PADDING)
+                                .padding(horizontal = Config.SMALL_PADDING),
+                            shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
+                            onClick = {
+                                onAddGroupNavigate()
+                            }) {
+                            Text("Add", style = MaterialTheme.typography.h4)
+                        }
                     }
-                } else {
-                    Text("You don't have any groups", style = MaterialTheme.typography.h4)
-                    Spacer(modifier = Modifier.height(21.dp))
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(49.dp)
-                            .padding(horizontal = 16.dp),
-                        shape = RoundedCornerShape(10.dp),
-                        onClick = {
-                            onAddGroupNavigate()
-                        }) {
-                        Text("Add", style = MaterialTheme.typography.h4)
+                    else -> {
+                        groupsList.forEach {
+                            GroupListComponent(it,
+                                didPressComponent = {
+                                    onGroupDetailsNavigate(it)
+                                })
+                            Spacer(modifier = Modifier.height(Config.SMALL_PADDING))
+                        }
                     }
                 }
             }

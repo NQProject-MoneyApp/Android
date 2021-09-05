@@ -1,4 +1,4 @@
-package com.nqproject.MoneyApp.ui.screens.add_group
+package com.nqproject.MoneyApp.ui.screens.edit_group
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -16,25 +16,23 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
-import com.nqproject.MoneyApp.components.ChooseUsersComponent
 import com.nqproject.MoneyApp.components.InputField
 import com.nqproject.MoneyApp.components.ValidableValue
 import com.nqproject.MoneyApp.repository.MoneyAppIcon
-import com.nqproject.MoneyApp.repository.User
+import com.nqproject.MoneyApp.ui.screens.add_group.AddGroupViewModel
 
 @Composable
-fun AddGroupForm(
+fun EditGroupForm(
     defaultName: String = "",
-    defaultMembers: List<User>? = null,
     icon: MoneyAppIcon?,
     onAddImage: () -> Unit,
-    onSave: (name: String, members: List<User>) -> Unit) {
-
+    onSaveChanges: (name: String) -> Unit)
+{
     val viewModel = viewModel<AddGroupViewModel>()
-    val groupMembers = viewModel.userFriends.observeAsState().value!!
 
     val groupName = remember {
         ValidableValue(defaultName,
@@ -47,27 +45,14 @@ fun AddGroupForm(
         )
     }
 
-    val newGroupMembers = remember {
-        ValidableValue(defaultMembers ?: groupMembers,
-            {
-                when {
-                    it.isEmpty() -> "Choose group members"
-                    else -> ""
-                }
-            }
-        )
-    }
-
-    val friends = viewModel.userFriends.observeAsState(emptyList()).value
     val groupNameValue = groupName.value.observeAsState().value!!
-    val groupMembersValue = newGroupMembers.value.observeAsState().value!!
     val addGroupLoading = viewModel.addGroupLoading.observeAsState(false).value
 
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
         modifier = Modifier
             .size(Config.LARGE_ICON_SIZE),
-        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
+        shape = RoundedCornerShape(20.dp),
 
         ) {
 
@@ -101,16 +86,6 @@ fun AddGroupForm(
         keyboardType = KeyboardType.Text,
     )
 
-    if (friends.isNotEmpty()) {
-        ChooseUsersComponent(
-            title = "Members",
-            groupMembers = friends,
-            chosenMembers = newGroupMembers,
-        )
-    }
-
-    Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
-
     Button(
         modifier = Modifier
             .fillMaxWidth()
@@ -121,7 +96,7 @@ fun AddGroupForm(
         onClick = {
             groupName.validate()
             if(!groupName.isError())
-                onSave(groupNameValue, groupMembersValue)
+                onSaveChanges(groupNameValue)
         }) {
         Text("Save", style = MaterialTheme.typography.h4)
     }

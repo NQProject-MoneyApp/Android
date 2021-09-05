@@ -1,17 +1,21 @@
-package com.nqproject.MoneyApp.ui.screens.add_group
+package com.nqproject.MoneyApp.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.*
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import com.nqproject.MoneyApp.R
 
 @Composable
-fun AddGroupHeader(
+fun BasicHeader(
     title: String,
     didPressBackButton: () -> Unit,
-    body: @Composable () -> Unit) {
+    body: @Composable () -> Unit
+) {
 
     Column() {
         TopAppBar(
@@ -24,7 +28,7 @@ fun AddGroupHeader(
                         contentDescription = "",
                     )
                 }
-            },
+            }
         )
         body()
     }

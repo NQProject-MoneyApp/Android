@@ -5,6 +5,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.manager.AuthenticationManager
 import com.nqproject.MoneyApp.network.models.*
+import com.nqproject.MoneyApp.repository.MoneyAppIcon
 import com.nqproject.MoneyApp.repository.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -19,6 +20,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
+import org.json.JSONObject
 import java.lang.Exception
 
 sealed class SimpleResult<T> {
@@ -86,8 +88,43 @@ object MoneyAppClient {
         }
     }
 
+    private fun decodeErrorList(errorResponse: String): List<String> {
+        val messages = mutableListOf<String>()
+        val json = Json.parseToJsonElement(errorResponse)
+        json.jsonObject.keys.forEach { key ->
+            val property = json.jsonObject[key]!!
+            if(property is JsonArray) {
+                property.forEach { message ->
+                    if(message is JsonPrimitive && message.isString) {
+                        messages.add(message.content)
+                    }
+                }
+            }
+        }
+        return messages
+    }
+
+    private suspend fun parseFormErrorResponse(error: HttpException): String {
+        val errorContent = error.response()?.errorBody()?.stringSuspending()
+
+        try {
+            val messages = decodeErrorList(errorContent ?: "")
+            if(messages.isNotEmpty()) {
+                return messages.joinToString("\n")
+            }
+        }
+        catch (e: Exception) {
+            Log.e(Config.MAIN_TAG, "Failed to parse error response", e)
+        }
+        return "Unknown error"
+    }
+
     suspend fun login(username: String, password: String): SimpleResult<String> {
-        return runRequest {
+        return runRequest(
+            onError = { e ->
+                return@runRequest SimpleResult.Error(parseFormErrorResponse(e))
+            }
+        ) {
             val result = client.login(NetworkLoginRequest(username = username, password = password))
 
             if (result.key != null) {
@@ -103,7 +140,11 @@ object MoneyAppClient {
         password: String,
         email: String
     ): SimpleResult<String> {
-        return runRequest {
+        return runRequest(
+            onError = { e ->
+                return@runRequest SimpleResult.Error(parseFormErrorResponse(e))
+            }
+        ) {
             val result = client.registration(
                 NetworkRegistrationRequest(
                     username = username, email = email, password1 = password, password2 = password,
@@ -144,7 +185,7 @@ object MoneyAppClient {
     ): SimpleResult<NetworkGroupsResponse> {
         return runRequest {
             val result = client.addGroup(
-                NetworkAddGroupRequest(
+                NetworkGroupsRequest(
                     name = name,
                     icon = icon,
                     members = members.map { it.pk })
@@ -155,12 +196,17 @@ object MoneyAppClient {
 
     suspend fun editGroup(
         groupId: Int,
+        name: String,
+        icon: Int,
         isFavourite: Boolean
     ): SimpleResult<NetworkGroupsResponse> {
         return runRequest {
             val result = client.editGroup(
                 groupId,
-                NetworkAddGroupRequest(isFavourite = isFavourite)
+                NetworkGroupsRequest(
+                    name = name,
+                    icon = icon,
+                    isFavourite = isFavourite)
             )
             SimpleResult.Success(result)
         }
@@ -175,7 +221,7 @@ object MoneyAppClient {
         return runRequest {
             val result =
                 client.addExpense(
-                    groupId, NetworkAddExpenseRequest(
+                    groupId, NetworkExpensesRequest(
                         name = name, amount = amount, participants = participants.map { it.pk })
                 )
 
@@ -193,7 +239,7 @@ object MoneyAppClient {
         return runRequest {
             val result =
                 client.editExpense(
-                    groupId, expenseId, NetworkAddExpenseRequest(name = name, amount = amount,
+                    groupId, expenseId, NetworkExpensesRequest(name = name, amount = amount,
                         participants = participants.map { it.pk })
                 )
 
@@ -265,6 +311,18 @@ object MoneyAppClient {
     suspend fun friends(): SimpleResult<List<NetworkUser>> {
         return runRequest {
             SimpleResult.Success(client.friends())
+        }
+    }
+
+    suspend fun user(): SimpleResult<NetworkUser> {
+        return runRequest {
+            SimpleResult.Success(client.user())
+        }
+    }
+
+    suspend fun editUser(pk: Int, name: String, email: String): SimpleResult<NetworkUser> {
+        return runRequest {
+            SimpleResult.Success(client.editUser(NetworkUser(pk, name, email)))
         }
     }
 }

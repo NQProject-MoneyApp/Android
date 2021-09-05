@@ -7,6 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.R
 
 @Composable
@@ -15,6 +16,7 @@ fun GroupListHeader(
     didPressAddGroup: () -> Unit,
     didPressJoinGroup: () -> Unit,
     onLogout: () -> Unit,
+    didPressAboutButton: () -> Unit,
     body: @Composable () -> Unit) {
 
     var showLeftMenu by remember { mutableStateOf(false) }
@@ -29,7 +31,7 @@ fun GroupListHeader(
                     Image(
                         painterResource(id = R.drawable.ic_user),
                         contentDescription = "",
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier.padding(Config.XSMALL_PADDING)
                     )
                 }
 
@@ -39,11 +41,27 @@ fun GroupListHeader(
                 ) {
                     DropdownMenuItem(
                         onClick = {
+                            didPressAboutButton()
+                            showLeftMenu = false
+                        }
+                    ) {
+                        Text("About", color = MaterialTheme.colors.primary)
+                    }
+                    DropdownMenuItem(
+                        onClick = {
+                            didPressUserButton()
+                            showLeftMenu = false
+                        }
+                    ) {
+                            Text("Profile", color = MaterialTheme.colors.primary)
+                    }
+                    DropdownMenuItem(
+                        onClick = {
                             onLogout()
                             showLeftMenu = false
                         }
                     ) {
-                            Text("Log out", color = MaterialTheme.colors.primary)
+                        Text("Log out", color = MaterialTheme.colors.primary)
                     }
                 }
             },

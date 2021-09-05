@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import java.util.*
 
 @Serializable
-data class NetworkAddGroupRequest(
+data class NetworkGroupsRequest(
     val name: String? = null,
     val icon: Int? = null,
     val members: List<Int>? = null,
@@ -27,5 +27,5 @@ data class NetworkGroupsResponse(
     @SerialName("is_favourite")
     val isFavourite: Boolean,
     val members: List<NetworkGroupUsersResponse>,
-    @SerialName("non_field_errors") val error: String? = null,
+    @SerialName("non_field_errors") val error: String? = null
 )

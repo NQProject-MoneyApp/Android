@@ -37,8 +37,6 @@ fun AuthInputFields(
         },
     )
 
-    Spacer(modifier = Modifier.height(5.dp))
-
     if (emailState != null) {
         InputField(
             focusRequester = emailFocusRequester,
@@ -49,7 +47,6 @@ fun AuthInputFields(
                 passwordFocusRequester.requestFocus()
             },
         )
-        Spacer(modifier = Modifier.height(5.dp))
     }
 
     InputField(

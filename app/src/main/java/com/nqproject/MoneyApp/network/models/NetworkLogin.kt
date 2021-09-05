@@ -5,7 +5,7 @@ import kotlinx.serialization.*
 @Serializable
 data class NetworkLoginRequest(
     val username: String,
-    val password: String,
+    val password: String
 )
 
 @Serializable
@@ -13,6 +13,6 @@ data class NetworkLoginResponse(
     val key: String? = null,
     //TODO: change on backend!
     @SerialName("non_field_errors")
-    val error: String? = null,
+    val error: String? = null
 )
 

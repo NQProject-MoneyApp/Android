@@ -21,7 +21,7 @@ object GroupRepository {
                         id = it.pk,
                         name = it.name,
                         totalCost = it.totalCost,
-                        icon = MoneyAppIcon.from(it.icon).icon(),
+                        icon = MoneyAppIcon.from(it.icon),
                         userBalance = it.userBalance,
                         createDate = DateUtils.parseDate(it.createDate),
                         isFavourite = it.isFavourite,
@@ -36,9 +36,9 @@ object GroupRepository {
         }
     }
 
-    suspend fun markGroupAsFavourite(groupId: Int, isFavourite: Boolean): SimpleResult<String> {
+    suspend fun markGroupAsFavourite(group: Group, isFavourite: Boolean): SimpleResult<String> {
         val result = withContext(Dispatchers.IO) {
-            MoneyAppClient.editGroup(groupId = groupId, isFavourite = isFavourite)
+            MoneyAppClient.editGroup(group.id, group.name, group.icon.id, isFavourite = isFavourite)
         }
         return when (result) {
             is SimpleResult.Error -> SimpleResult.Error(result.error)
@@ -58,7 +58,7 @@ object GroupRepository {
                     id = result.data.pk,
                     name = result.data.name,
                     totalCost = result.data.totalCost,
-                    icon = MoneyAppIcon.from(result.data.icon).icon(),
+                    icon = MoneyAppIcon.from(result.data.icon),
                     userBalance = result.data.userBalance,
                     createDate = DateUtils.parseDate(result.data.createDate),
                     members = result.data.members.map { member ->
@@ -76,6 +76,20 @@ object GroupRepository {
     suspend fun addGroup(name: String, icon: Int, members: List<User>): SimpleResult<String> {
         val result = withContext(Dispatchers.IO) {
             MoneyAppClient.addGroup(name = name, icon = icon, members = members)
+        }
+
+        return when (result) {
+            is SimpleResult.Error -> SimpleResult.Error(result.error)
+            is SimpleResult.Success -> SimpleResult.Success("Success")
+        }
+    }
+
+    suspend fun editGroup(
+        groupId: Int, name: String, icon: Int, isFavourite: Boolean): SimpleResult<String> {
+        val result = withContext(Dispatchers.IO) {
+            MoneyAppClient.editGroup(
+                groupId = groupId, name = name, icon = icon,
+                isFavourite = isFavourite)
         }
 
         return when (result) {

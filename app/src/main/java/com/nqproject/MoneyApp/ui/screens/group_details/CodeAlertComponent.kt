@@ -21,6 +21,8 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import androidx.compose.ui.draw.clip
+import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.ui.theme.AppTheme
 
 
 @Composable
@@ -36,13 +38,13 @@ fun CodeAlertComponent(onClose: () -> Unit, code: String) {
         ) {
             Text(
                 "Share the code with friends!",
-                color = Color.White,
+                color = AppTheme.colors.primaryText,
                 style = MaterialTheme.typography.h4,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(horizontal = 10.dp),
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
             Card(
                 backgroundColor = MaterialTheme.colors.secondary,
                 shape = shape,
@@ -63,13 +65,13 @@ fun CodeAlertComponent(onClose: () -> Unit, code: String) {
             ) {
                 Text(
                     code,
-                    color = Color.White,
+                    color = AppTheme.colors.primaryText,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(16.dp),
                     style = MaterialTheme.typography.h4,
                 )
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
             TextButton(onClick = { onClose() }) {
                 Text(
                     "Back",

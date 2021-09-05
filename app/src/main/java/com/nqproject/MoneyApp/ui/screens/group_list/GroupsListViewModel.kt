@@ -16,29 +16,43 @@ class GroupsListViewModel(app: Application) : AndroidViewModel(app) {
 
     private val _loading = MutableLiveData(false)
     private val _groupsList = MutableLiveData(emptyList<Group>())
+    private val _firstLoad = MutableLiveData(true)
 
     val loading: LiveData<Boolean> = _loading
     val groupsList: LiveData<List<Group>> = _groupsList
+    val firstLoad: LiveData<Boolean> = _firstLoad
 
-    fun updateGroups() {
+    fun updateGroups(withLoader: Boolean = true) {
         viewModelScope.launch {
-            fetchGroups()
+            fetchGroups(withLoader)
         }
     }
 
-    suspend fun fetchGroups(): SimpleResult<List<Group>> {
+    private suspend fun fetchGroups(withLoader: Boolean): SimpleResult<List<Group>> {
         val date = Date()
-        _loading.value = true
+
+        if (withLoader || _firstLoad.value == true)
+            _loading.value = true
         val result = GroupRepository.fetchGroups()
-        // UI FIX
-        // request must take at least one second for the activity indicator to load
-        delay(1000 - (Date().time - date.time))
 
-        _loading.value = false
-
-        if (result is SimpleResult.Success) {
-            _groupsList.value = result.data
+        if (withLoader || _firstLoad.value == true) {
+            // UI FIX
+            // request must take at least one second for the activity indicator to load
+            delay(1000 - (Date().time - date.time))
+            _loading.value = false
         }
+
+
+        when(result) {
+            is SimpleResult.Success -> {
+                _groupsList.value = result.data
+            }
+            is SimpleResult.Error -> {
+                Toast.makeText(getApplication(), result.error, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        _firstLoad.value = false
 
         return result
     }
@@ -61,9 +75,9 @@ class GroupsListViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun markAsFavourite(groupId: Int, isFavourite: Boolean) {
+    fun markAsFavourite(group: Group, isFavourite: Boolean) {
         viewModelScope.launch {
-            when (val result = GroupRepository.markGroupAsFavourite(groupId, isFavourite)) {
+            when (val result = GroupRepository.markGroupAsFavourite(group, isFavourite)) {
                 is SimpleResult.Error -> {
                     Toast.makeText(getApplication(), result.error, Toast.LENGTH_SHORT).show()
                     Log.d(Config.MAIN_TAG, "Error toast?")

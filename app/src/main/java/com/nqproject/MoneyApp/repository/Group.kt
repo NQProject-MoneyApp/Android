@@ -10,7 +10,7 @@ data class Group(
     val name: String,
     val totalCost: Double,
     val userBalance: Double,
-    val icon: Int,
+    val icon: MoneyAppIcon,
     val createDate: Date,
     val isFavourite: Boolean,
     val members: List<User>,

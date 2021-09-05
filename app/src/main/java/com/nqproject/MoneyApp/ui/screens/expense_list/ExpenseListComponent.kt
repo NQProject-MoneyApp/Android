@@ -14,7 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.repository.Expense
+import com.nqproject.MoneyApp.ui.theme.AppTheme
 import java.util.*
 
 @Composable
@@ -22,7 +24,7 @@ fun ExpenseListComponent(expense: Expense, didPressComponent: (Expense) -> Unit)
 
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
-        shape = RoundedCornerShape(15),
+        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
         modifier = Modifier
             .fillMaxWidth()
             .clickable { didPressComponent(expense) }
@@ -30,7 +32,7 @@ fun ExpenseListComponent(expense: Expense, didPressComponent: (Expense) -> Unit)
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .padding(24.dp)
+                .padding(Config.SMALL_PADDING + Config.XSMALL_PADDING)
         ) {
             Text(
                 text = expense.name,
@@ -42,12 +44,12 @@ fun ExpenseListComponent(expense: Expense, didPressComponent: (Expense) -> Unit)
                     modifier = Modifier.weight(1f),
                     text = expense.author.name,
                     style = MaterialTheme.typography.h5,
-                    color = Color.White
+                    color = AppTheme.colors.primaryText
                 )
                 Text(
                     text = "\$${String.format(Locale.US, "%.2f", expense.amount)}",
                     style = MaterialTheme.typography.h5,
-                    color = Color.White
+                    color = AppTheme.colors.primaryText
                 )
             }
         }

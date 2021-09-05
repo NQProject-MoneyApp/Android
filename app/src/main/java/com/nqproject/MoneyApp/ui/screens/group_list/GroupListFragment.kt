@@ -37,6 +37,16 @@ class GroupListFragment : Fragment() {
                         },
                         onLoginNavigate = {
                             findNavController().navigate(R.id.action_global_loginFragment)
+                        },
+                        onUserProfileNavigate = {
+                            val action = GroupListFragmentDirections
+                                .actionGroupListFragmentToProfile()
+                            findNavController().navigate(action)
+                        },
+                        onAboutNavigate = {
+                            val action = GroupListFragmentDirections
+                                .actionGroupListFragmentToAbout()
+                            findNavController().navigate(action)
                         }
                     )
                 }
@@ -46,6 +56,6 @@ class GroupListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.updateGroups()
+        viewModel.updateGroups(withLoader = false)
     }
 }

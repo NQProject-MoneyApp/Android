@@ -8,7 +8,12 @@ import androidx.compose.ui.res.painterResource
 import com.nqproject.MoneyApp.R
 
 @Composable
-fun GroupDetailsHeader(didPressBackButton: () -> Unit, didPressGenerateCode: () -> Unit, body: @Composable () -> Unit, title: String) {
+fun GroupDetailsHeader(
+    didPressBackButton: () -> Unit,
+    didPressGenerateCode: () -> Unit,
+    didPressEditGroup: () -> Unit,
+    body: @Composable () -> Unit,
+    title: String) {
 
     var showMenu by remember { mutableStateOf(false) }
 
@@ -41,6 +46,12 @@ fun GroupDetailsHeader(didPressBackButton: () -> Unit, didPressGenerateCode: () 
                             showMenu = false
                         }) {
                             Text("Code", color = MaterialTheme.colors.primary)
+                        }
+                        DropdownMenuItem(onClick = {
+                            didPressEditGroup()
+                            showMenu = false
+                        }) {
+                            Text("Edit group", color = MaterialTheme.colors.primary)
                         }
                     }
                 }

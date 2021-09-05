@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class NetworkUser (
     val pk: Int,
     val username: String,
-    val email: String,
+    val email: String
 )

@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.Config
 import com.nqproject.MoneyApp.repository.Expense
+import com.nqproject.MoneyApp.ui.theme.AppTheme
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,31 +50,31 @@ fun ExpenseDetailsScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(scrollState)
-                        .padding(32.dp),
+                        .padding(Config.MEDIUM_PADDING),
                 ) {
                     Card(
                         backgroundColor = MaterialTheme.colors.secondary,
-                        shape = RoundedCornerShape(10),
+                        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
                         Column(
                             verticalArrangement = Arrangement.SpaceBetween,
                             modifier = Modifier
-                                .padding(24.dp)
+                                .padding(Config.MEDIUM_PADDING)
                         ) {
                             Row {
                                 Text(
                                     modifier = Modifier.weight(1f),
                                     text = "Amount",
-                                    color = Color.White,
+                                    color = AppTheme.colors.primaryText,
                                     style = MaterialTheme.typography.h4
                                 )
                                 Text(
                                     text = String.format(
                                         Locale.US, "%.2f", expense!!.amount
                                     ),
-                                    color = Color.White,
+                                    color = AppTheme.colors.primaryText,
                                     style = MaterialTheme.typography.h4
                                 )
                             }
@@ -81,57 +82,57 @@ fun ExpenseDetailsScreen(
                                 Text(
                                     modifier = Modifier.weight(1f),
                                     text = "Paid by",
-                                    color = Color.White,
+                                    color = AppTheme.colors.primaryText,
                                     style = MaterialTheme.typography.h4
                                 )
                                 Text(
                                     text = expense!!.author.name,
-                                    color = Color.White,
+                                    color = AppTheme.colors.primaryText,
                                     style = MaterialTheme.typography.h4
                                 )
                             }
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(Config.LARGE_PADDING))
 
                     Card(
                         backgroundColor = MaterialTheme.colors.secondary,
-                        shape = RoundedCornerShape(10),
+                        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
                         Column(
                             verticalArrangement = Arrangement.SpaceBetween,
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.padding(16.dp)
+                            modifier = Modifier.padding(Config.SMALL_PADDING)
                         ) {
-                            Text("Participants", color = Color.White)
-                            Spacer(modifier = Modifier.height(16.dp))
+                            Text("Participants", color = AppTheme.colors.primaryText)
+                            Spacer(modifier = Modifier.height(Config.SMALL_PADDING))
 
 
                             expense!!.participants.forEach {
                                 Row(
                                     horizontalArrangement = Arrangement.Start,
-                                    modifier = Modifier.padding(horizontal = 24.dp),
+                                    modifier = Modifier.padding(horizontal = Config.MEDIUM_PADDING),
                                 ) {
                                     Text(
-                                        it.name, color = Color.White, modifier = Modifier
+                                        it.name, color = AppTheme.colors.primaryText, modifier = Modifier
                                             .weight(1f)
                                     )
                                 }
-                                Spacer(modifier = Modifier.height(8.dp))
+                                Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
                             }
                         }
                     }
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(Config.LARGE_PADDING))
                     Text(
                         text = "Created on\n ${
                             dateFormat.format(
                                 expense!!.createDate
                             )
                         }",
-                        color = Color.White,
+                        color = AppTheme.colors.primaryText,
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.h4,
                         modifier = Modifier.fillMaxWidth()

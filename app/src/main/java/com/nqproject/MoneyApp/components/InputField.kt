@@ -20,11 +20,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.dp
 import com.nqproject.MoneyApp.ui.theme.AppTheme
 import androidx.compose.ui.draw.clip
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.nqproject.MoneyApp.Config
 
 
 class ValidableValue<T>(
@@ -60,7 +60,7 @@ fun InputField(
     placeholder: String,
     keyboardType: KeyboardType,
 ) {
-    val fieldShape = RoundedCornerShape(10.dp)
+    val fieldShape = RoundedCornerShape(Config.ROUNDED_CORNERS)
     val value = fieldState.value.observeAsState().value!!
     val errorMessage = fieldState.errorMessage.observeAsState().value!!
 
