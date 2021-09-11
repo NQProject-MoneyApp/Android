@@ -31,7 +31,8 @@ fun AddGroupForm(
     defaultMembers: List<User>? = null,
     icon: MoneyAppIcon?,
     onAddImage: () -> Unit,
-    onSave: (name: String, members: List<User>) -> Unit) {
+    onSave: (name: String, members: List<User>) -> Unit
+) {
 
     val viewModel = viewModel<AddGroupViewModel>()
     val groupMembers = viewModel.userFriends.observeAsState().value!!
@@ -50,10 +51,7 @@ fun AddGroupForm(
     val newGroupMembers = remember {
         ValidableValue(defaultMembers ?: groupMembers,
             {
-                when {
-                    it.isEmpty() -> "Choose group members"
-                    else -> ""
-                }
+                ""
             }
         )
     }
@@ -120,7 +118,7 @@ fun AddGroupForm(
         enabled = !addGroupLoading,
         onClick = {
             groupName.validate()
-            if(!groupName.isError())
+            if (!groupName.isError())
                 onSave(groupNameValue, groupMembersValue)
         }) {
         Text("Save", style = MaterialTheme.typography.h4)
