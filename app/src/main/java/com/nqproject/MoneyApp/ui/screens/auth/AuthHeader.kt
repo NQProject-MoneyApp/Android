@@ -22,13 +22,12 @@ fun AuthHeader() {
         modifier = Modifier.size(StyleConfig.LARGE_ICON_SIZE),
         contentDescription = ""
     )
-    Spacer(modifier = Modifier.height(StyleConfig.XLARGE_PADDING))
+    Spacer(modifier = Modifier.height(StyleConfig.LARGE_PADDING))
 
     Text(
-        modifier = Modifier.height(83.dp),
         text = "Hello",
         style = MaterialTheme.typography.h2,
         color = MaterialTheme.colors.primary,
     )
-    Spacer(modifier = Modifier.height(StyleConfig.LARGE_PADDING))
+    Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
 }

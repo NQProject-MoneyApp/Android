@@ -55,9 +55,6 @@ fun LoginScreen(
         }
 
         Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
-        BottomOption(text = "Forgot password?", buttonText = "Reset") {
-            // Action
-        }
         BottomOption(text = "No account yet?", buttonText = "Register") {
             onRegisterNavigate()
         }

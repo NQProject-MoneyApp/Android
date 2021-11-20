@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.components.BasicHeader
@@ -73,7 +74,7 @@ fun AboutScreen(
 
             ClickableText(
                 text = annotatedString,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.body1.copy(textAlign = TextAlign.Center),
                 onClick = { position ->
                     val annotations = annotatedString.getStringAnnotations(
                         uriTag, start = position, end = position
