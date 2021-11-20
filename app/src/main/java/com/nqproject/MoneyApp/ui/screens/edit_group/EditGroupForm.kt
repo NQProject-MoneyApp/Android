@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.R
 import com.nqproject.MoneyApp.components.InputField
 import com.nqproject.MoneyApp.components.ValidableValue
@@ -50,8 +50,8 @@ fun EditGroupForm(
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
         modifier = Modifier
-            .size(Config.LARGE_ICON_SIZE),
-        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
+            .size(StyleConfig.LARGE_ICON_SIZE),
+        shape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS),
 
         ) {
 
@@ -60,7 +60,7 @@ fun EditGroupForm(
                 painterResource(id = icon.icon()),
                 modifier = Modifier
                     .clickable { onAddImage() }
-                    .padding(Config.MEDIUM_PADDING),
+                    .padding(StyleConfig.MEDIUM_PADDING),
                 contentDescription = "",
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.primary)
             )
@@ -69,13 +69,13 @@ fun EditGroupForm(
                 painterResource(id = R.drawable.ic_add),
                 modifier = Modifier
                     .clickable { onAddImage() }
-                    .padding(Config.XLARGE_PADDING),
+                    .padding(StyleConfig.XLARGE_PADDING),
                 contentDescription = "",
             )
         }
     }
 
-    Spacer(modifier = Modifier.height(Config.SMALL_PADDING))
+    Spacer(modifier = Modifier.height(StyleConfig.SMALL_PADDING))
 
     InputField(
         focusRequester = FocusRequester(),
@@ -88,9 +88,9 @@ fun EditGroupForm(
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .height(Config.XLARGE_PADDING)
-            .padding(horizontal = Config.SMALL_PADDING),
-        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
+            .height(StyleConfig.XLARGE_PADDING)
+            .padding(horizontal = StyleConfig.SMALL_PADDING),
+        shape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS),
         enabled = !addGroupLoading,
         onClick = {
             groupName.validate()

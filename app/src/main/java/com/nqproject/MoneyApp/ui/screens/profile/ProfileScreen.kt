@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.components.BasicHeader
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.ui.theme.AppTheme
@@ -38,14 +38,14 @@ fun ProfileScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .padding(Config.SMALL_PADDING),
+                    .padding(StyleConfig.SMALL_PADDING),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Surface(
                     color = MaterialTheme.colors.secondary,
                     shape = CircleShape,
-                    border = BorderStroke(Config.BORDER_STROKE, MaterialTheme.colors.primary),
+                    border = BorderStroke(StyleConfig.BORDER_STROKE, MaterialTheme.colors.primary),
                     modifier = Modifier
                         .size(160.dp)
                 ) {
@@ -53,7 +53,7 @@ fun ProfileScreen(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
-                            .padding(top = Config.SMALL_PADDING)
+                            .padding(top = StyleConfig.SMALL_PADDING)
 
                     ) {
                         Text(
@@ -64,7 +64,7 @@ fun ProfileScreen(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(Config.SMALL_PADDING))
+                Spacer(modifier = Modifier.height(StyleConfig.SMALL_PADDING))
 
                 ProfileForm(
                     name = user.name,

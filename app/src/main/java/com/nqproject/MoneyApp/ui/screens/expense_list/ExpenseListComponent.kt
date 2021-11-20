@@ -12,7 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.repository.Expense
 import com.nqproject.MoneyApp.ui.theme.AppTheme
 import java.util.*
@@ -22,7 +22,7 @@ fun ExpenseListComponent(expense: Expense, didPressComponent: (Expense) -> Unit)
 
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
-        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
+        shape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS),
         modifier = Modifier
             .fillMaxWidth()
             .clickable { didPressComponent(expense) }
@@ -30,7 +30,7 @@ fun ExpenseListComponent(expense: Expense, didPressComponent: (Expense) -> Unit)
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .padding(Config.SMALL_PADDING + Config.XSMALL_PADDING)
+                .padding(StyleConfig.SMALL_PADDING + StyleConfig.XSMALL_PADDING)
         ) {
             Text(
                 text = expense.name,

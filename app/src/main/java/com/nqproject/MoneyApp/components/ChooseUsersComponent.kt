@@ -10,8 +10,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.repository.User
 import com.nqproject.MoneyApp.ui.screens.add_group.AddUserComponent
 import com.nqproject.MoneyApp.ui.theme.AppTheme
@@ -26,14 +25,14 @@ fun ChooseUsersComponent(
     val errorMessage = chosenMembers.errorMessage.observeAsState().value!!
     val chosenMembersValue = chosenMembers.value.observeAsState().value!!
 
-    val cardShape = RoundedCornerShape(Config.ROUNDED_CORNERS)
+    val cardShape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS)
     var cardModifier = Modifier
         .fillMaxWidth()
 
     if (errorMessage.isNotEmpty())
         cardModifier = cardModifier
             .clip(cardShape)
-            .bottomRectBorder(Config.BORDER_STROKE, MaterialTheme.colors.error)
+            .bottomRectBorder(StyleConfig.BORDER_STROKE, MaterialTheme.colors.error)
 
 
     Card(
@@ -44,10 +43,10 @@ fun ChooseUsersComponent(
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(Config.MEDIUM_PADDING)
+            modifier = Modifier.padding(StyleConfig.MEDIUM_PADDING)
         ) {
             Text(title, color = AppTheme.colors.primaryText, style = MaterialTheme.typography.body2)
-            Spacer(modifier = Modifier.height(Config.SMALL_PADDING))
+            Spacer(modifier = Modifier.height(StyleConfig.SMALL_PADDING))
 
 
             groupMembers.forEach { user ->

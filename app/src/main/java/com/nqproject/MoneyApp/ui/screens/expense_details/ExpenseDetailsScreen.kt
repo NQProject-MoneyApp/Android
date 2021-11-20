@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.ui.theme.AppTheme
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,11 +34,11 @@ fun ExpenseDetailsScreen(
 
     ExpenseDetailsHeader(
         didPressBackButton = {
-            Log.d(Config.MAIN_TAG, "didPressBackButton")
+            Log.d(StyleConfig.MAIN_TAG, "didPressBackButton")
             onBackNavigate()
         },
         didPressEditExpense = {
-            Log.d(Config.MAIN_TAG, "didPressEditExpense")
+            Log.d(StyleConfig.MAIN_TAG, "didPressEditExpense")
             onEditExpenseNavigate()
         },
         body = {
@@ -47,18 +47,18 @@ fun ExpenseDetailsScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(scrollState)
-                        .padding(Config.MEDIUM_PADDING),
+                        .padding(StyleConfig.MEDIUM_PADDING),
                 ) {
                     Card(
                         backgroundColor = MaterialTheme.colors.secondary,
-                        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
+                        shape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS),
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
                         Column(
                             verticalArrangement = Arrangement.SpaceBetween,
                             modifier = Modifier
-                                .padding(Config.MEDIUM_PADDING)
+                                .padding(StyleConfig.MEDIUM_PADDING)
                         ) {
                             Row {
                                 Text(
@@ -91,38 +91,38 @@ fun ExpenseDetailsScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(Config.LARGE_PADDING))
+                    Spacer(modifier = Modifier.height(StyleConfig.LARGE_PADDING))
 
                     Card(
                         backgroundColor = MaterialTheme.colors.secondary,
-                        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
+                        shape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS),
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
                         Column(
                             verticalArrangement = Arrangement.SpaceBetween,
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.padding(Config.SMALL_PADDING)
+                            modifier = Modifier.padding(StyleConfig.SMALL_PADDING)
                         ) {
                             Text("Participants", color = AppTheme.colors.primaryText)
-                            Spacer(modifier = Modifier.height(Config.SMALL_PADDING))
+                            Spacer(modifier = Modifier.height(StyleConfig.SMALL_PADDING))
 
 
                             expense!!.participants.forEach {
                                 Row(
                                     horizontalArrangement = Arrangement.Start,
-                                    modifier = Modifier.padding(horizontal = Config.MEDIUM_PADDING),
+                                    modifier = Modifier.padding(horizontal = StyleConfig.MEDIUM_PADDING),
                                 ) {
                                     Text(
                                         it.name, color = AppTheme.colors.primaryText, modifier = Modifier
                                             .weight(1f)
                                     )
                                 }
-                                Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
+                                Spacer(modifier = Modifier.height(StyleConfig.XSMALL_PADDING))
                             }
                         }
                     }
-                    Spacer(modifier = Modifier.height(Config.LARGE_PADDING))
+                    Spacer(modifier = Modifier.height(StyleConfig.LARGE_PADDING))
                     Text(
                         text = "Created on\n ${
                             dateFormat.format(

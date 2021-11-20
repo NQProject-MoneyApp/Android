@@ -6,12 +6,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.ui.theme.AppTheme
 
 @Composable
 fun CreatorComponent(name: String, email: String) {
     Text(name, color = MaterialTheme.colors.onSurface, style = MaterialTheme.typography.body1)
     Text(email, color = AppTheme.colors.hintText, style = MaterialTheme.typography.body1)
-    Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
+    Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
 }

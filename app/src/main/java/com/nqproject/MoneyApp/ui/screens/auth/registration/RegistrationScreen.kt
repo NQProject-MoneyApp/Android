@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.components.ValidableValue
 import com.nqproject.MoneyApp.ui.screens.auth.*
 import kotlinx.coroutines.launch
@@ -34,7 +34,7 @@ fun RegistrationScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = Config.LARGE_PADDING)
+            .padding(horizontal = StyleConfig.LARGE_PADDING)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -44,7 +44,7 @@ fun RegistrationScreen(
 
         RegistrationForm(loading = loading) { username, password, email ->
             coroutineScope.launch {
-                Log.d(Config.MAIN_TAG, "On register $username $email $password")
+                Log.d(StyleConfig.MAIN_TAG, "On register $username $email $password")
                 val result = viewModel.register(username, password, email)
 
                 when (result) {
@@ -58,12 +58,8 @@ fun RegistrationScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
-        BottomOption(text = "Already have account?", buttonText = "Login") {
-            // TODO
-            // block back button?
-            // replace all screens?
-//            navController.navigate(MainNavigationScreen.LoginScreen.route)
+        Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
+        BottomOption(text = "Already have account?", buttonText = "Log in") {
             onLoginNavigate()
         }
     }
@@ -121,13 +117,13 @@ private fun RegistrationForm(
         },
     )
 
-    Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
+    Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
 
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .height(Config.XLARGE_PADDING),
-        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
+            .height(StyleConfig.XLARGE_PADDING),
+        shape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS),
         enabled = !loading,
         onClick = {
             usernameState.validate()

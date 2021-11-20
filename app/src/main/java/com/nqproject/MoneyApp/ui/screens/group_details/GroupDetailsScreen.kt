@@ -4,8 +4,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
@@ -23,7 +21,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.ui.screens.group_details.CodeAlertComponent
 import com.nqproject.MoneyApp.ui.screens.group_details.GroupUsersListComponent
@@ -51,11 +49,11 @@ fun GroupDetailsScreen(
 
     GroupDetailsHeader(
         didPressBackButton = {
-            Log.d(Config.MAIN_TAG, "didPressBackButton")
+            Log.d(StyleConfig.MAIN_TAG, "didPressBackButton")
             onBackNavigate()
         },
         didPressGenerateCode = {
-            Log.d(Config.MAIN_TAG, "didPressGenerateCode")
+            Log.d(StyleConfig.MAIN_TAG, "didPressGenerateCode")
 
             coroutineScope.launch {
                 val result = viewModel.fetchGroupCode(group.id)
@@ -72,7 +70,7 @@ fun GroupDetailsScreen(
             }
         },
         didPressEditGroup = {
-            Log.d(Config.MAIN_TAG, "didPressEditGroup")
+            Log.d(StyleConfig.MAIN_TAG, "didPressEditGroup")
             onEditGroupNavigate()
         },
         body = {
@@ -84,22 +82,22 @@ fun GroupDetailsScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .padding(Config.MEDIUM_PADDING),
+                    .padding(StyleConfig.MEDIUM_PADDING),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Image(
                     painterResource(id = group.icon.icon()),
                     modifier = Modifier
-                        .size(Config.LARGE_ICON_SIZE)
-                        .padding(Config.XSMALL_PADDING),
+                        .size(StyleConfig.LARGE_ICON_SIZE)
+                        .padding(StyleConfig.XSMALL_PADDING),
                     contentDescription = "",
                     colorFilter = ColorFilter.tint(MaterialTheme.colors.primary)
                 )
-                Spacer(modifier = Modifier.height(Config.LARGE_PADDING))
+                Spacer(modifier = Modifier.height(StyleConfig.LARGE_PADDING))
                 Row(
                     modifier = Modifier
-                        .padding(horizontal = Config.SMALL_PADDING)
+                        .padding(horizontal = StyleConfig.SMALL_PADDING)
                 )
                 {
                     Text(
@@ -116,7 +114,7 @@ fun GroupDetailsScreen(
                 }
                 Row(
                     modifier = Modifier
-                        .padding(horizontal = Config.SMALL_PADDING)
+                        .padding(horizontal = StyleConfig.SMALL_PADDING)
                 ) {
                     Text(
                         modifier = Modifier.weight(1f),
@@ -130,7 +128,7 @@ fun GroupDetailsScreen(
                         color = Color.Green
                     )
                 }
-                Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
+                Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
                 TextButton(onClick = { /*TODO*/ }) {
                     Text(
                         text = "Settle up",
@@ -138,19 +136,19 @@ fun GroupDetailsScreen(
                         color = MaterialTheme.colors.primary
                     )
                 }
-                Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
+                Spacer(modifier = Modifier.height(StyleConfig.XSMALL_PADDING))
                 Button(onClick = {
-                    Log.d(Config.MAIN_TAG, "new expense")
+                    Log.d(StyleConfig.MAIN_TAG, "new expense")
                     onAddExpenseNavigate()
                 },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = AbsoluteRoundedCornerShape(Config.ROUNDED_CORNERS)
+                    shape = AbsoluteRoundedCornerShape(StyleConfig.ROUNDED_CORNERS)
                 )
                 { Text(
                     text = "New expense",
                     style = MaterialTheme.typography.h4
                 )}
-                Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
+                Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
                 GroupUsersListComponent(
                     userBalanceList = group.members,
                     group = group,

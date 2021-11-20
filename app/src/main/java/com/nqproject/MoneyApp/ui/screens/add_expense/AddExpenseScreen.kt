@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.network.SimpleResult
 import kotlinx.coroutines.launch
 
@@ -33,7 +33,7 @@ fun AddExpenseScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = Config.MEDIUM_PADDING),
+                    .padding(horizontal = StyleConfig.MEDIUM_PADDING),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -41,7 +41,7 @@ fun AddExpenseScreen(
                 AddExpenseForm(
                     loading = loading,
                     onSave = { name, amount, participants ->
-                        Log.d(Config.MAIN_TAG, "on save expense: $name")
+                        Log.d(StyleConfig.MAIN_TAG, "on save expense: $name")
                         coroutineScope.launch {
                             when (val result =
                                 viewModel.addExpense(groupId, name = name, amount = amount,

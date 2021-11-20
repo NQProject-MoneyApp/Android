@@ -2,10 +2,9 @@ package com.nqproject.MoneyApp.network
 
 import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.manager.AuthenticationManager
 import com.nqproject.MoneyApp.network.models.*
-import com.nqproject.MoneyApp.repository.MoneyAppIcon
 import com.nqproject.MoneyApp.repository.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -20,7 +19,6 @@ import retrofit2.HttpException
 import java.io.IOException
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
-import org.json.JSONObject
 import java.lang.Exception
 
 sealed class SimpleResult<T> {
@@ -77,13 +75,13 @@ object MoneyAppClient {
         return try {
             return request()
         } catch (e: HttpException) {
-            Log.e(Config.MAIN_TAG, "Failed to run request", e)
+            Log.e(StyleConfig.MAIN_TAG, "Failed to run request", e)
             onError?.invoke(e) ?: SimpleResult.Error("Unknown error")
         } catch (e: IOException) {
-            Log.e(Config.MAIN_TAG, "Failed to run request", e)
+            Log.e(StyleConfig.MAIN_TAG, "Failed to run request", e)
             SimpleResult.Error("Something failed, check your internet connection.")
         } catch(e: Exception) {
-            Log.e(Config.MAIN_TAG, "Failed to run request", e)
+            Log.e(StyleConfig.MAIN_TAG, "Failed to run request", e)
             SimpleResult.Error("Unknown error")
         }
     }
@@ -114,7 +112,7 @@ object MoneyAppClient {
             }
         }
         catch (e: Exception) {
-            Log.e(Config.MAIN_TAG, "Failed to parse error response", e)
+            Log.e(StyleConfig.MAIN_TAG, "Failed to parse error response", e)
         }
         return "Unknown error"
     }
@@ -252,7 +250,7 @@ object MoneyAppClient {
             val result = client.deleteExpense(groupId, expenseId)
 
             if (result.code() != 204) {
-                Log.e(Config.MAIN_TAG, "Failed to delete expense, response code ${result.code()}")
+                Log.e(StyleConfig.MAIN_TAG, "Failed to delete expense, response code ${result.code()}")
                 return@runRequest SimpleResult.Error("Unknown error")
             }
             SimpleResult.Success(true)
@@ -289,7 +287,7 @@ object MoneyAppClient {
                 SimpleResult.Success(true)
             },
             onError = { e ->
-                Log.e(Config.MAIN_TAG, "Failed to join to group", e)
+                Log.e(StyleConfig.MAIN_TAG, "Failed to join to group", e)
                 val errorContent = e.response()?.errorBody()?.stringSuspending()
                 try {
                     val message = Json.decodeFromString<ErrorResponse>(errorContent ?: "").details

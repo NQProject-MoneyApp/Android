@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.repository.Expense
 import com.nqproject.MoneyApp.ui.screens.add_expense.AddExpenseForm
@@ -39,7 +39,7 @@ fun EditExpenseScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = Config.MEDIUM_PADDING),
+                    .padding(horizontal = StyleConfig.MEDIUM_PADDING),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -50,7 +50,7 @@ fun EditExpenseScreen(
                     defaultParticipants = expense.participants,
                     loading = loading,
                     onSave = { name, amount, participants ->
-                        Log.d(Config.MAIN_TAG, "on save edited expense: $name")
+                        Log.d(StyleConfig.MAIN_TAG, "on save edited expense: $name")
                         coroutineScope.launch {
                             when (val result =
                                 viewModel.editExpense(
@@ -69,18 +69,18 @@ fun EditExpenseScreen(
                     }
                 )
 
-                Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
+                Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
 
                 Button(
                     modifier = Modifier
-                        .height(Config.XLARGE_PADDING),
-                    shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
+                        .height(StyleConfig.XLARGE_PADDING),
+                    shape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS),
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = MaterialTheme.colors.error,
                     ),
                     enabled = !loading,
                     onClick = {
-                        Log.d(Config.MAIN_TAG, "on delete expense: ${expense.name}")
+                        Log.d(StyleConfig.MAIN_TAG, "on delete expense: ${expense.name}")
                         coroutineScope.launch {
                             when (val result =
                                 viewModel.deleteExpense(expense)) {

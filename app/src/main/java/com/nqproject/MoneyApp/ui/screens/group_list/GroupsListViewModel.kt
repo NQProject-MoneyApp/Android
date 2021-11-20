@@ -4,7 +4,7 @@ import android.app.Application
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.repository.GroupRepository
@@ -63,7 +63,7 @@ class GroupsListViewModel(app: Application) : AndroidViewModel(app) {
 
         return when (result) {
             is SimpleResult.Error -> {
-                Log.d(Config.MAIN_TAG, "Error toast?")
+                Log.d(StyleConfig.MAIN_TAG, "Error toast?")
                 SimpleResult.Error(result.error)
             }
             is SimpleResult.Success -> {
@@ -80,7 +80,7 @@ class GroupsListViewModel(app: Application) : AndroidViewModel(app) {
             when (val result = GroupRepository.markGroupAsFavourite(group, isFavourite)) {
                 is SimpleResult.Error -> {
                     Toast.makeText(getApplication(), result.error, Toast.LENGTH_SHORT).show()
-                    Log.d(Config.MAIN_TAG, "Error toast?")
+                    Log.d(StyleConfig.MAIN_TAG, "Error toast?")
                     SimpleResult.Error(result.error)
                 }
                 is SimpleResult.Success -> {

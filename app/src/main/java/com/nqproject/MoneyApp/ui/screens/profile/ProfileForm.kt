@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.components.InputField
 import com.nqproject.MoneyApp.components.ValidableValue
 import com.nqproject.MoneyApp.ui.screens.add_group.AddGroupViewModel
@@ -70,7 +70,7 @@ fun ProfileForm(
     Button(
         modifier = Modifier
             .fillMaxWidth(),
-        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
+        shape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS),
         enabled = !addGroupLoading && (userName.value.value != name || userEmail.value.value != email),
         onClick = {
             userName.validate()

@@ -24,7 +24,7 @@ import com.nqproject.MoneyApp.ui.theme.AppTheme
 import androidx.compose.ui.draw.clip
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 
 
 class ValidableValue<T>(
@@ -60,7 +60,7 @@ fun InputField(
     placeholder: String,
     keyboardType: KeyboardType,
 ) {
-    val fieldShape = RoundedCornerShape(Config.ROUNDED_CORNERS)
+    val fieldShape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS)
     val value = fieldState.value.observeAsState().value!!
     val errorMessage = fieldState.errorMessage.observeAsState().value!!
 

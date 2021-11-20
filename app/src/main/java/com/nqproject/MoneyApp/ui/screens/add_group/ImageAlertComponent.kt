@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.repository.MoneyAppIcon
 import com.nqproject.MoneyApp.ui.AlertComponent
 
@@ -24,8 +24,8 @@ fun ImageAlertComponent(icons: List<MoneyAppIcon>, onClose: () -> Unit, onIconCh
                 Image(
                     painterResource(id = it.icon()),
                     modifier = Modifier
-                        .size(Config.MEDIUM_ICON_SIZE)
-                        .padding(Config.XSMALL_PADDING)
+                        .size(StyleConfig.MEDIUM_ICON_SIZE)
+                        .padding(StyleConfig.XSMALL_PADDING)
                         .clickable{
                             onIconChoose(it)
                         },

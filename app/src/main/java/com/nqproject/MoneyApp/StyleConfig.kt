@@ -1,8 +1,10 @@
 package com.nqproject.MoneyApp
 
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 
-object Config {
+object StyleConfig {
     val MAIN_TAG = "MONEY_APP"
     val BORDER_STROKE = 3.dp
     val XSMALL_PADDING = 8.dp
@@ -14,4 +16,8 @@ object Config {
     val MEDIUM_ICON_SIZE = 80.dp
     val LARGE_ICON_SIZE = 132.dp
     val ROUNDED_CORNERS = 15.dp
+
+    val CARD_SHAPE
+        @Composable
+        get() = RoundedCornerShape(ROUNDED_CORNERS)
 }

@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.components.BasicHeader
 import com.nqproject.MoneyApp.ui.theme.AppTheme
 
@@ -45,7 +45,7 @@ fun AboutScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(Config.MEDIUM_PADDING),
+                .padding(StyleConfig.MEDIUM_PADDING),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -55,21 +55,21 @@ fun AboutScreen(
                 style = MaterialTheme.typography.h2
             )
 
-            Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
+            Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
 
             CreatorComponent("Danielle Saldanha", "danielle.saldanha98@gmail.com")
             CreatorComponent("Szymon Gęsicki", "szym.gesicki@gmail.com")
             CreatorComponent("Jędrzej Głowaczewski", "x.speerit@gmail.com")
             CreatorComponent("Miłosz Głowaczwski", "milosz.glowaczewski@gmail.com")
 
-            Spacer(modifier = Modifier.height(Config.LARGE_PADDING))
+            Spacer(modifier = Modifier.height(StyleConfig.LARGE_PADDING))
 
             Text(
                 "Source Code",
                 color = MaterialTheme.colors.primary,
                 style = MaterialTheme.typography.h2
             )
-            Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
+            Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
 
             ClickableText(
                 text = annotatedString,

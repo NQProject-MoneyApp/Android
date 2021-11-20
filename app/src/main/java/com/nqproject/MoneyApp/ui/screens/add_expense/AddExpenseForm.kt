@@ -15,7 +15,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.components.ChooseUsersComponent
 import com.nqproject.MoneyApp.components.InputField
 import com.nqproject.MoneyApp.components.ValidableValue
@@ -76,7 +76,7 @@ fun AddExpenseForm(
     val expenseAmountValue = expenseAmount.value.observeAsState().value!!
     val expenseParticipantsValue = expenseParticipants.value.observeAsState().value!!
 
-    Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
+    Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
 
     InputField(
         focusRequester = expenseNameRequester,
@@ -107,8 +107,8 @@ fun AddExpenseForm(
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .height(Config.XLARGE_PADDING),
-        shape = RoundedCornerShape(Config.XSMALL_PADDING),
+            .height(StyleConfig.XLARGE_PADDING),
+        shape = RoundedCornerShape(StyleConfig.XSMALL_PADDING),
         enabled = !loading,
         onClick = {
             expenseName.validate()

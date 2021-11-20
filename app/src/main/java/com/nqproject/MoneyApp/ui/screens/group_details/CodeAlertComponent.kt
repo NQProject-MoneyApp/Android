@@ -19,7 +19,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import androidx.compose.ui.draw.clip
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.ui.theme.AppTheme
 
 
@@ -39,17 +39,17 @@ fun CodeAlertComponent(onClose: () -> Unit, code: String) {
                 color = AppTheme.colors.primaryText,
                 style = MaterialTheme.typography.h4,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(Config.XSMALL_PADDING),
+                modifier = Modifier.padding(StyleConfig.XSMALL_PADDING),
             )
 
-            Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
+            Spacer(modifier = Modifier.height(StyleConfig.XSMALL_PADDING))
             Card(
                 backgroundColor = MaterialTheme.colors.secondary,
                 shape = shape,
-                border = BorderStroke(Config.BORDER_STROKE, MaterialTheme.colors.primary),
+                border = BorderStroke(StyleConfig.BORDER_STROKE, MaterialTheme.colors.primary),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(Config.SMALL_PADDING)
+                    .padding(StyleConfig.SMALL_PADDING)
                     .clip(shape)
                     .clickable {
                         val clipboard =
@@ -65,11 +65,11 @@ fun CodeAlertComponent(onClose: () -> Unit, code: String) {
                     code,
                     color = AppTheme.colors.primaryText,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(Config.SMALL_PADDING),
+                    modifier = Modifier.padding(StyleConfig.SMALL_PADDING),
                     style = MaterialTheme.typography.h4,
                 )
             }
-            Spacer(modifier = Modifier.height(Config.XSMALL_PADDING))
+            Spacer(modifier = Modifier.height(StyleConfig.XSMALL_PADDING))
             TextButton(onClick = { onClose() }) {
                 Text(
                     "Back",

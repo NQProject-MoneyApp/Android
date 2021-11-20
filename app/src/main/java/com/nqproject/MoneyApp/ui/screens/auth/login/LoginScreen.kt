@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.livedata.observeAsState
-import com.nqproject.MoneyApp.Config
+import com.nqproject.MoneyApp.StyleConfig
 import com.nqproject.MoneyApp.components.ValidableValue
 import com.nqproject.MoneyApp.ui.screens.auth.*
 
@@ -31,7 +31,7 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = Config.LARGE_PADDING)
+            .padding(horizontal = StyleConfig.LARGE_PADDING)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -54,7 +54,7 @@ fun LoginScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(Config.MEDIUM_PADDING))
+        Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
         BottomOption(text = "Forgot password?", buttonText = "Reset") {
             // Action
         }
@@ -106,8 +106,8 @@ private fun LoginForm(
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .height(Config.XLARGE_PADDING),
-        shape = RoundedCornerShape(Config.ROUNDED_CORNERS),
+            .height(StyleConfig.XLARGE_PADDING),
+        shape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS),
         enabled = !loading,
         onClick = {
             usernameState.validate()
