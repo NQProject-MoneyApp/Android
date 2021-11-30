@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.StyleConfig
+import com.nqproject.MoneyApp.network.models.ExpenseType
 import com.nqproject.MoneyApp.ui.theme.AppTheme
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,12 +38,13 @@ fun ExpenseDetailsScreen(
             Log.d(StyleConfig.MAIN_TAG, "didPressBackButton")
             onBackNavigate()
         },
-        didPressEditExpense = {
+        didPressEditExpense = if (expense!!.type == ExpenseType.Expense) ({
             Log.d(StyleConfig.MAIN_TAG, "didPressEditExpense")
             onEditExpenseNavigate()
-        },
+        }
+                ) else null,
         body = {
-            if(expense != null) {
+            if (expense != null) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -57,9 +59,17 @@ fun ExpenseDetailsScreen(
                     ) {
                         Column(
                             verticalArrangement = Arrangement.SpaceBetween,
+                            horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier
                                 .padding(StyleConfig.MEDIUM_PADDING)
                         ) {
+                            Text(
+                                expense!!.type.toString(),
+                                color = AppTheme.colors.primaryText,
+                                style = MaterialTheme.typography.h4
+                            )
+
+                            Spacer(modifier = Modifier.height(StyleConfig.SMALL_PADDING))
                             Row {
                                 Text(
                                     modifier = Modifier.weight(1f),
@@ -83,46 +93,67 @@ fun ExpenseDetailsScreen(
                                     style = MaterialTheme.typography.h4
                                 )
                                 Text(
-                                    text = expense!!.author.name,
+                                    text = expense!!.paidBy,
                                     color = AppTheme.colors.primaryText,
                                     style = MaterialTheme.typography.h4
                                 )
                             }
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(StyleConfig.LARGE_PADDING))
-
-                    Card(
-                        backgroundColor = MaterialTheme.colors.secondary,
-                        shape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Column(
-                            verticalArrangement = Arrangement.SpaceBetween,
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.padding(StyleConfig.SMALL_PADDING)
-                        ) {
-                            Text("Participants", color = AppTheme.colors.primaryText)
-                            Spacer(modifier = Modifier.height(StyleConfig.SMALL_PADDING))
-
-
-                            expense!!.participants.forEach {
-                                Row(
-                                    horizontalArrangement = Arrangement.Start,
-                                    modifier = Modifier.padding(horizontal = StyleConfig.MEDIUM_PADDING),
-                                ) {
+                            if (expense!!.type == ExpenseType.Payment) {
+                                Row {
                                     Text(
-                                        it.name, color = AppTheme.colors.primaryText, modifier = Modifier
-                                            .weight(1f)
+                                        modifier = Modifier.weight(1f),
+                                        text = "Paid to",
+                                        color = AppTheme.colors.primaryText,
+                                        style = MaterialTheme.typography.h4
+                                    )
+                                    Text(
+                                        text = expense!!.paymentTo!!,
+                                        color = AppTheme.colors.primaryText,
+                                        style = MaterialTheme.typography.h4
                                     )
                                 }
-                                Spacer(modifier = Modifier.height(StyleConfig.XSMALL_PADDING))
                             }
                         }
                     }
+
                     Spacer(modifier = Modifier.height(StyleConfig.LARGE_PADDING))
+
+                    if (expense!!.type == ExpenseType.Expense) {
+
+                        Card(
+                            backgroundColor = MaterialTheme.colors.secondary,
+                            shape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Column(
+                                verticalArrangement = Arrangement.SpaceBetween,
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.padding(StyleConfig.SMALL_PADDING)
+                            ) {
+                                Text("Participants", color = AppTheme.colors.primaryText)
+                                Spacer(modifier = Modifier.height(StyleConfig.SMALL_PADDING))
+
+
+                                expense!!.participants.forEach {
+                                    Row(
+                                        horizontalArrangement = Arrangement.Start,
+                                        modifier = Modifier.padding(
+                                            horizontal = StyleConfig.MEDIUM_PADDING
+                                        ),
+                                    ) {
+                                        Text(
+                                            it.name, color = AppTheme.colors.primaryText,
+                                            modifier = Modifier
+                                                .weight(1f)
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.height(StyleConfig.XSMALL_PADDING))
+                                }
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(StyleConfig.LARGE_PADDING))
+                    }
                     Text(
                         text = "Created on\n ${
                             dateFormat.format(
@@ -134,7 +165,14 @@ fun ExpenseDetailsScreen(
                         style = MaterialTheme.typography.h4,
                         modifier = Modifier.fillMaxWidth()
                     )
-
+                    Spacer(modifier = Modifier.height(StyleConfig.SMALL_PADDING))
+                    Text(
+                        text = "Created by\n ${expense!!.author.name}",
+                        color = AppTheme.colors.primaryText,
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.h4,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
             }
         },

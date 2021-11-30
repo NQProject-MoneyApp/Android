@@ -10,7 +10,7 @@ import com.nqproject.MoneyApp.R
 @Composable
 fun ExpenseDetailsHeader(
     didPressBackButton: () -> Unit,
-    didPressEditExpense: () -> Unit, body:
+    didPressEditExpense: (() -> Unit)?, body:
     @Composable () -> Unit, title: String) {
 
     var showMenu by remember { mutableStateOf(false) }
@@ -28,7 +28,7 @@ fun ExpenseDetailsHeader(
                     )
                 }
             },
-            actions = {
+            actions = if (didPressEditExpense != null) ({
                 IconButton(
                     onClick = { showMenu = true }) {
                     Image(
@@ -48,7 +48,7 @@ fun ExpenseDetailsHeader(
                         }
                     }
                 }
-            }
+            }) else ({})
         )
         body()
     }
