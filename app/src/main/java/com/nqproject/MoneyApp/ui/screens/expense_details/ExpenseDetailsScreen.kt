@@ -38,10 +38,11 @@ fun ExpenseDetailsScreen(
             Log.d(StyleConfig.MAIN_TAG, "didPressBackButton")
             onBackNavigate()
         },
-        didPressEditExpense = {
+        didPressEditExpense = if (expense!!.type == ExpenseType.Expense) ({
             Log.d(StyleConfig.MAIN_TAG, "didPressEditExpense")
             onEditExpenseNavigate()
-        },
+        }
+                ) else null,
         body = {
             if (expense != null) {
                 Column(

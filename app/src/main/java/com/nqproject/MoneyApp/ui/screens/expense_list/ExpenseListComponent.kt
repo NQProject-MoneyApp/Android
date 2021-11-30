@@ -40,7 +40,7 @@ fun ExpenseListComponent(expense: Expense, didPressComponent: (Expense) -> Unit)
             Row {
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = expense.author.name,
+                    text = expense.paidBy,
                     style = MaterialTheme.typography.h5,
                     color = AppTheme.colors.primaryText
                 )
