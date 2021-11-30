@@ -143,7 +143,7 @@ fun AddExpenseForm(
             if (!expenseName.isError() && !expenseAmount.isError() && !expenseParticipants.isError() && !expensePaidBy.isError())
                 onSave(
                     expenseNameValue, expenseAmountValue.toFloatOrNull() ?: 0f,
-                    expensePaidByValue!!,
+                    groupMembers[expensePaidByValue!!].pk,
                     expenseParticipantsValue
                 )
         }) {

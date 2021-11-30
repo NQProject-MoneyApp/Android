@@ -67,11 +67,25 @@ object ExpenseRepository {
         }
     }
 
-    suspend fun addExpense(groupId: Int, name: String, amount: Float, participants: List<User>):
+    suspend fun addExpense(
+        groupId: Int,
+        name: String,
+        amount: Float,
+        participants: List<User>? = null,
+        paidById: Int,
+        paidToId: Int? = null,
+        type: ExpenseType = ExpenseType.Expense
+    ):
             SimpleResult<String> {
         val result = withContext(Dispatchers.IO) {
             MoneyAppClient.addExpense(
-                groupId, name = name, amount = amount, participants = participants
+                groupId,
+                name = name,
+                amount = amount,
+                participants = participants,
+                paidById = paidById,
+                paidToId = paidToId,
+                type = type
             )
         }
 
@@ -86,12 +100,20 @@ object ExpenseRepository {
         expenseId: Int,
         name: String,
         amount: Float,
-        participants: List<User>
+        participants: List<User>,
+        paidById: Int,
+        type: ExpenseType = ExpenseType.Expense
     ):
             SimpleResult<String> {
         val result = withContext(Dispatchers.IO) {
             MoneyAppClient.editExpense(
-                groupId, expenseId, name = name, amount = amount, participants = participants
+                groupId,
+                expenseId,
+                name = name,
+                amount = amount,
+                participants = participants,
+                paidById = paidById,
+                type = type
             )
         }
         return when (result) {

@@ -24,11 +24,16 @@ class AddExpenseViewModel : ViewModel() {
             group.members.map { User(pk = it.pk, name = it.name, email = it.email, balance = 0.0) }
     }
 
-    suspend fun addExpense(groupId: Int, name: String, amount: Float, participants: List<User>):
+    suspend fun addExpense(groupId: Int, name: String, amount: Float, participants: List<User>,
+                           paidById: Int):
             SimpleResult<String> {
         _loading.value = true
         val result = ExpenseRepository.addExpense(
-            groupId, name = name, amount = amount, participants = participants
+            groupId,
+            name = name,
+            amount = amount,
+            participants = participants,
+            paidById = paidById
         )
         _loading.value = false
         return result
@@ -38,13 +43,18 @@ class AddExpenseViewModel : ViewModel() {
         expense: Expense,
         name: String,
         amount: Float,
-        participants: List<User>
+        participants: List<User>,
+        paidById: Int,
     ): SimpleResult<String> {
         _loading.value = true
         val result =
             ExpenseRepository.editExpense(
-                expense.groupId, expense.pk, name = name, amount = amount,
-                participants = participants
+                expense.groupId,
+                expense.pk,
+                name = name,
+                amount = amount,
+                participants = participants,
+                paidById = paidById,
             )
         _loading.value = false
         return result

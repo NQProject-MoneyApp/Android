@@ -55,7 +55,7 @@ fun EditExpenseScreen(
                             when (val result =
                                 viewModel.editExpense(
                                     expense, name = name, amount = amount,
-                                    participants = participants
+                                    participants = participants, paidById = paidBy
                                 )) {
                                 is SimpleResult.Error -> Toast
                                     .makeText(context, result.error, Toast.LENGTH_SHORT).show()

@@ -9,7 +9,10 @@ import java.util.*
 data class NetworkExpensesRequest(
     val name: String,
     val amount: Float,
-    val participants: List<Int>
+    val paid_by: Int,
+    val payment_to: Int? = null,
+    val type: String,
+    val participants: List<Int>?
 )
 
 @Serializable
@@ -34,7 +37,7 @@ enum class ExpenseType(val type: String) {
 
     companion object {
         fun from(type: String): ExpenseType {
-            return ExpenseType.values().firstOrNull { it.type == type} ?: ExpenseType.Expense
+            return values().firstOrNull { it.type == type} ?: Expense
         }
     }
 }

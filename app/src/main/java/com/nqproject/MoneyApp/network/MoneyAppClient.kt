@@ -214,13 +214,22 @@ object MoneyAppClient {
         groupId: Int,
         name: String,
         amount: Float,
-        participants: List<User>,
+        participants: List<User>?,
+        paidById: Int,
+        paidToId: Int?,
+        type: ExpenseType
     ): SimpleResult<NetworkExpensesResponse> {
         return runRequest {
             val result =
                 client.addExpense(
                     groupId, NetworkExpensesRequest(
-                        name = name, amount = amount, participants = participants.map { it.pk })
+                        name = name,
+                        amount = amount,
+                        participants = participants?.map { it.pk },
+                        paid_by = paidById,
+                        payment_to = paidToId,
+                        type = type.type
+                    )
                 )
 
             SimpleResult.Success(result)
@@ -233,12 +242,21 @@ object MoneyAppClient {
         name: String,
         amount: Float,
         participants: List<User>,
+        paidById: Int,
+        type: ExpenseType
     ): SimpleResult<NetworkExpensesResponse> {
         return runRequest {
             val result =
                 client.editExpense(
-                    groupId, expenseId, NetworkExpensesRequest(name = name, amount = amount,
-                        participants = participants.map { it.pk })
+                    groupId,
+                    expenseId,
+                    NetworkExpensesRequest(
+                        name = name,
+                        amount = amount,
+                        participants = participants.map { it.pk },
+                        paid_by = paidById,
+                        type = type.type
+                    )
                 )
 
             SimpleResult.Success(result)

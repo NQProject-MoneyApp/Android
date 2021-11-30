@@ -45,7 +45,7 @@ fun AddExpenseScreen(
                         coroutineScope.launch {
                             when (val result =
                                 viewModel.addExpense(groupId, name = name, amount = amount,
-                                    participants = participants)) {
+                                    participants = participants, paidById = paidBy)) {
                                 is SimpleResult.Error -> Toast.makeText(
                                     context,
                                     result.error,

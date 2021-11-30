@@ -2,6 +2,8 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.nqproject.MoneyApp.network.SimpleResult
+import com.nqproject.MoneyApp.network.models.ExpenseType
+import com.nqproject.MoneyApp.repository.ExpenseRepository
 import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.repository.GroupRepository
 import com.nqproject.MoneyApp.repository.SuggestedPayment
@@ -50,8 +52,14 @@ class SuggestedPaymentViewModel(app: Application) : AndroidViewModel(app) {
     fun savePayments(payment: SuggestedPayment) {
 
         viewModelScope.launch {
-            // todo save
-            // reload
+            val result = ExpenseRepository.addExpense(
+                _group.id,
+                name = "${payment.paidBy.name} -> ${payment.paidTo.name}",
+                paidById = payment.paidBy.pk,
+                paidToId = payment.paidTo.pk,
+                amount = payment.amount.toFloat(),
+                type= ExpenseType.Payment
+            )
             _loading.value = true
             fetchSuggestedPayment(_group.id)
             _loading.value = false

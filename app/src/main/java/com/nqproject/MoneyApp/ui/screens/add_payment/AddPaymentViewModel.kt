@@ -26,31 +26,15 @@ class AddPaymentViewModel : ViewModel() {
             group.members.map { User(pk = it.pk, name = it.name, email = it.email, balance = 0.0) }
     }
 
-    suspend fun addExpense(groupId: Int, name: String, amount: Float, participants: List<User>):
-            SimpleResult<String> {
-        _loading.value = true
-        val result = ExpenseRepository.addExpense(
-            groupId, name = name, amount = amount, participants = participants
-        )
-        _loading.value = false
-        return result
-    }
-
-    suspend fun editExpense(
-        expense: Expense,
-        name: String,
-        amount: Float,
-        participants: List<User>
-    ): SimpleResult<String> {
-        _loading.value = true
-        val result =
-            ExpenseRepository.editExpense(
-                expense.groupId, expense.pk, name = name, amount = amount,
-                participants = participants
-            )
-        _loading.value = false
-        return result
-    }
+//    suspend fun addExpense(groupId: Int, name: String, amount: Float, participants: List<User>):
+//            SimpleResult<String> {
+//        _loading.value = true
+//        val result = ExpenseRepository.addExpense(
+//            groupId, name = name, amount = amount, participants = participants
+//        )
+//        _loading.value = false
+//        return result
+//    }
 
     suspend fun deleteExpense(expense: Expense): SimpleResult<String> {
         _loading.value = true
