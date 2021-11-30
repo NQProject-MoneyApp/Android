@@ -323,4 +323,10 @@ object MoneyAppClient {
             SimpleResult.Success(client.editUser(NetworkUser(pk, name, email)))
         }
     }
+
+    suspend fun suggestedPayments(groupId: Int): SimpleResult<List<NetworkSuggestedPayment>> {
+        return runRequest {
+            SimpleResult.Success(client.suggestedPayments(groupId))
+        }
+    }
 }

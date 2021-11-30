@@ -51,6 +51,11 @@ class GroupDetailsFragment : Fragment() {
                             val action = GroupDetailsFragmentDirections
                                 .actionGroupDetailsFragmentToEditGroupFragment(viewModel.group.value!!)
                             findNavController().navigate(action)
+                        },
+                        onSuggestedPaymentNavigate = {
+                            val action = GroupDetailsFragmentDirections
+                                .actionGroupDetailsFragmentToSuggestedPayment(args.group)
+                            findNavController().navigate(action)
                         }
                     )
                 }

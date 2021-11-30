@@ -136,6 +136,14 @@
             app:popExitAnim="@anim/fade_scale_out"
             />
         <action
+            android:id="@+id/action_groupDetailsFragment_to_suggestedPayment"
+            app:destination="@id/suggestedPayment"
+            app:enterAnim="@anim/fade_scale_in"
+            app:exitAnim="@anim/fade_scale_out"
+            app:popEnterAnim="@anim/fade_scale_in"
+            app:popExitAnim="@anim/fade_scale_out"
+            />
+        <action
             android:id="@+id/action_groupDetailsFragment_to_editGroupFragment"
             app:destination="@id/editGroupFragment" />
     </fragment>
@@ -181,6 +189,14 @@
         android:id="@+id/addExpenseFragment"
         android:name="com.nqproject.MoneyApp.ui.screens.add_expense.AddExpenseFragment"
         android:label="AddExpenseFragment" >
+        <argument
+            android:name="group"
+            app:argType="com.nqproject.MoneyApp.repository.Group" />
+    </fragment>
+    <fragment
+        android:id="@+id/suggestedPayment"
+        android:name="com.nqproject.MoneyApp.ui.screens.suggested_payment.SuggestedPaymentFragment"
+        android:label="SuggestedPaymentFragment" >
         <argument
             android:name="group"
             app:argType="com.nqproject.MoneyApp.repository.Group" />

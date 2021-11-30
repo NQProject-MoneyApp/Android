@@ -46,6 +46,30 @@ object GroupRepository {
         }
     }
 
+    suspend fun suggestedPayment(id: Int): SimpleResult<List<SuggestedPayment>> {
+        val result = withContext(Dispatchers.IO) {
+            MoneyAppClient.suggestedPayments(id)
+        }
+        return when (result) {
+            is SimpleResult.Error -> SimpleResult.Error(result.error)
+            is SimpleResult.Success -> SimpleResult.Success(
+                result.data.map {
+                    SuggestedPayment(
+                        paidBy = User(
+                            pk = it.paidBy.pk, name = it.paidBy.username,
+                            email = it.paidBy.email, balance = 0.0
+                        ),
+                        paidTo = User(
+                            pk = it.paidTo.pk, name = it.paidTo.username,
+                            email = it.paidBy.email, balance = 0.0
+                        ),
+                        amount = it.amount,
+                    )
+                }
+            )
+        }
+    }
+
     suspend fun fetchGroupDetails(groupId: Int): SimpleResult<Group> {
         val result = withContext(Dispatchers.IO) {
             MoneyAppClient.fetchGroupDetails(groupId)

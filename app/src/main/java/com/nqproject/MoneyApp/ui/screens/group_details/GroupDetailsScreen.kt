@@ -36,7 +36,8 @@ fun GroupDetailsScreen(
     onExpensesListNavigate: () -> Unit,
     onBackNavigate: () -> Unit,
     onAddExpenseNavigate: () -> Unit,
-    onEditGroupNavigate: () -> Unit
+    onEditGroupNavigate: () -> Unit,
+    onSuggestedPaymentNavigate: () -> Unit
 ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -129,7 +130,9 @@ fun GroupDetailsScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
-                TextButton(onClick = { /*TODO*/ }) {
+                TextButton(onClick = {
+                    onSuggestedPaymentNavigate()
+                }) {
                     Text(
                         text = "Settle up",
                         style = MaterialTheme.typography.h4,

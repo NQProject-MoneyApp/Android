@@ -70,4 +70,7 @@ interface MoneyAppApi {
 
     @PATCH("/api/user/")
     suspend fun editUser(@Body request: NetworkUser): NetworkUser
+
+    @GET("/api/groups/{id}/suggested-payments/")
+    suspend fun suggestedPayments(@Path("id") id: Int): List<NetworkSuggestedPayment>
 }
