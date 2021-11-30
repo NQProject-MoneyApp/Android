@@ -114,7 +114,7 @@ fun AddExpenseForm(
     DropdownInput(
         label = "Paid by",
         selectedIndex = expensePaidByValue,
-        options = expenseParticipantsValue.map { it.name },
+        options = groupMembers.map { it.name },
         onChanged = { expensePaidBy.updateValue(it) }
     )
 

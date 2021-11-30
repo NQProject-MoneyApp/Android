@@ -43,25 +43,6 @@ fun AddPaymentScreen (
 
             AddPaymentForm(
                 loading = loading,
-                onSave = { name, amount, participants ->
-                    Log.d(StyleConfig.MAIN_TAG, "on save payment: $name")
-                    coroutineScope.launch {
-                        when (val result =
-                            viewModel.addExpense(groupId, name = name, amount = amount,
-                                participants = participants)) {
-                            is SimpleResult.Error -> Toast.makeText(
-                                context,
-                                result.error,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            is SimpleResult.Success -> {
-                                SimpleResult.Success("Success")
-                                onBackNavigate()
-                            }
-                        }
-                    }
-
-                }
             )
         }
     })

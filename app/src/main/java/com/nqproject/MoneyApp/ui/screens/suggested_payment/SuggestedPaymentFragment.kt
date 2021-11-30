@@ -8,12 +8,9 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.nqproject.MoneyApp.R
-import com.nqproject.MoneyApp.ui.screens.GroupListScreen
 import com.nqproject.MoneyApp.ui.theme.MoneyAppTheme
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.nqproject.MoneyApp.ui.screens.add_expense.AddExpenseFragmentArgs
 
 class SuggestedPaymentFragment : Fragment() {
 
@@ -38,6 +35,11 @@ class SuggestedPaymentFragment : Fragment() {
                     SuggestedPaymentScreen(
                         onBackNavigate = {
                             requireActivity().onBackPressed()
+                        },
+                        onNewPaymentNavigate = {
+                            val action = SuggestedPaymentFragmentDirections
+                                .actionSuggestedPaymentToAddPaymentFragment(args.group)
+                            findNavController().navigate(action)
                         }
                     )
                 }

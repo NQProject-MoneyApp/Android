@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.StyleConfig
+import com.nqproject.MoneyApp.components.DropdownInput
 import com.nqproject.MoneyApp.components.InputField
 import com.nqproject.MoneyApp.components.ValidableValue
 import com.nqproject.MoneyApp.repository.User
@@ -24,7 +25,6 @@ import java.util.*
 fun AddPaymentForm(
     defaultAmount: Float? = null,
     defaultParticipants: List<User>? = null,
-    onSave: (name: String, amount: Float, participants: List<User>) -> Unit,
     loading: Boolean
 ) {
     val viewModel = viewModel<AddPaymentViewModel>()
@@ -36,7 +36,7 @@ fun AddPaymentForm(
     val expenseAmount = remember {
         ValidableValue(
             if (defaultAmount != null) String.format(Locale.US, "%.2f", defaultAmount) else "",
-            {
+            validateFun = {
                 val value = it.toFloatOrNull() ?: 0f
                 when {
                     value == 0f -> "Enter an expense amount"
@@ -46,47 +46,73 @@ fun AddPaymentForm(
             }
         )
     }
-    val expenseParticipants = remember {
-        ValidableValue(defaultParticipants ?: groupMembers,
-            {
-                when {
-                    it.isEmpty() -> "Choose expense participants"
+
+    val paidBy = remember {
+        ValidableValue<Int?>(
+            null,
+            validateFun = {
+                when (it) {
+                    null -> "Enter expense payer"
                     else -> ""
                 }
             }
         )
     }
 
-    val expenseAmountValue = expenseAmount.value.collectAsState().value
-    val expenseParticipantsValue = expenseParticipants.value.collectAsState().value
+    val paidTo = remember {
+        ValidableValue<Int?>(
+            null,
+            validateFun = {
+                when (it) {
+                    null -> "Enter expense receiver"
+                    else -> ""
+                }
+            }
+        )
+    }
 
     Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
 
     InputField(
-    focusRequester = expenseAmountRequester,
-    fieldState = expenseAmount,
-    keyboardType = KeyboardType.Number,
-    placeholder = "Amount",
-    focusRequesterAction = {
-        focusManager.clearFocus()
-    },
+        focusRequester = expenseAmountRequester,
+        fieldState = expenseAmount,
+        keyboardType = KeyboardType.Number,
+        placeholder = "Amount",
+        focusRequesterAction = {
+            focusManager.clearFocus()
+        },
     )
 
+    DropdownInput(
+        label = "From",
+        selectedIndex = 0,
+        options = groupMembers.map { it.name },
+        onChanged = {  }
+    )
+
+    Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
+
+    DropdownInput(
+        label = "To",
+        selectedIndex = 0,
+        options = groupMembers.map { it.name },
+        onChanged = {  }
+    )
+
+    Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
+
     Button(
-    modifier = Modifier
-    .fillMaxWidth()
-    .height(StyleConfig.XLARGE_PADDING),
-    shape = RoundedCornerShape(StyleConfig.XSMALL_PADDING),
-    enabled = !loading,
-    onClick = {
-        expenseAmount.validate()
-        expenseParticipants.validate()
-        if (!expenseAmount.isError() and !expenseParticipants.isError())
-            onSave(
-                "payment", expenseAmountValue.toFloatOrNull() ?: 0f,
-                expenseParticipantsValue
-            )
-    }) {
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(StyleConfig.XLARGE_PADDING),
+        shape = RoundedCornerShape(StyleConfig.XSMALL_PADDING),
+        enabled = !loading,
+        onClick = {
+            expenseAmount.validate()
+            if (!expenseAmount.isError()) {
+                //TODO
+            }
+        }) {
         Text("Save", style = MaterialTheme.typography.h4)
     }
 }

@@ -5,7 +5,6 @@ import com.nqproject.MoneyApp.network.SimpleResult
 import com.nqproject.MoneyApp.repository.Group
 import com.nqproject.MoneyApp.repository.GroupRepository
 import com.nqproject.MoneyApp.repository.SuggestedPayment
-import com.nqproject.MoneyApp.repository.User
 import kotlinx.coroutines.launch
 
 
@@ -18,7 +17,7 @@ class SuggestedPaymentViewModel(app: Application) : AndroidViewModel(app) {
     val suggestedPaymentsList: LiveData<List<SuggestedPayment>> = _suggestedPaymentsList
 
     private var initialized = false
-    private var _group: Group? = null
+    private lateinit var _group: Group
 
 
     fun init(group: Group) {
@@ -54,7 +53,7 @@ class SuggestedPaymentViewModel(app: Application) : AndroidViewModel(app) {
             // todo save
             // reload
             _loading.value = true
-            fetchSuggestedPayment(_group!!.id)
+            fetchSuggestedPayment(_group.id)
             _loading.value = false
         }
     }

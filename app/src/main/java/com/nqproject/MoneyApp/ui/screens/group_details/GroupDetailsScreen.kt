@@ -59,7 +59,7 @@ fun GroupDetailsScreen(
             coroutineScope.launch {
                 val result = viewModel.fetchGroupCode(group.id)
 
-                when(result) {
+                when (result) {
                     is SimpleResult.Success -> {
                         code = result.data
                         showCode = true
@@ -77,7 +77,8 @@ fun GroupDetailsScreen(
         body = {
             if (showCode) {
                 CodeAlertComponent(onClose = {
-                    showCode = false}, code = code)
+                    showCode = false
+                }, code = code)
             }
             Column(
                 modifier = Modifier
@@ -140,17 +141,20 @@ fun GroupDetailsScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(StyleConfig.XSMALL_PADDING))
-                Button(onClick = {
-                    Log.d(StyleConfig.MAIN_TAG, "new expense")
-                    onAddExpenseNavigate()
-                },
+                Button(
+                    onClick = {
+                        Log.d(StyleConfig.MAIN_TAG, "new expense")
+                        onAddExpenseNavigate()
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     shape = AbsoluteRoundedCornerShape(StyleConfig.ROUNDED_CORNERS)
                 )
-                { Text(
-                    text = "New expense",
-                    style = MaterialTheme.typography.h4
-                )}
+                {
+                    Text(
+                        text = "New expense",
+                        style = MaterialTheme.typography.h4
+                    )
+                }
                 Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
                 GroupUsersListComponent(
                     userBalanceList = group.members,

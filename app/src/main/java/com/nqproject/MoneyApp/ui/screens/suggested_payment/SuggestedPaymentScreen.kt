@@ -15,9 +15,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nqproject.MoneyApp.StyleConfig
 
 @Composable
-fun SuggestedPaymentScreen(onBackNavigate: () -> Unit) {
+fun SuggestedPaymentScreen(
+    onBackNavigate: () -> Unit,
+    onNewPaymentNavigate: () -> Unit,
+) {
     val viewModel = viewModel<SuggestedPaymentViewModel>()
-    val coroutineScope = rememberCoroutineScope()
     val suggestedPaymentsList = viewModel.suggestedPaymentsList.observeAsState(emptyList()).value
     val scrollState = rememberScrollState()
     val isLoading by viewModel.loading.observeAsState(false)
@@ -42,20 +44,21 @@ fun SuggestedPaymentScreen(onBackNavigate: () -> Unit) {
                         CircularProgressIndicator()
                     }
                 } else {
+
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(StyleConfig.XLARGE_PADDING),
+                        shape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS),
+                        onClick = {
+                            onNewPaymentNavigate()
+                        }) {
+                        Text("New payment", style = MaterialTheme.typography.h4)
+                    }
+                    Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
+
                     when {
                         suggestedPaymentsList.isEmpty() -> {
-                            Button(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(StyleConfig.XLARGE_PADDING)
-                                    .padding(horizontal = StyleConfig.SMALL_PADDING),
-                                shape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS),
-                                onClick = {
-                                    // Todo
-                                }) {
-                                Text("New payment", style = MaterialTheme.typography.h4)
-                            }
-                            Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
                             Text("You don't have any suggested payments",
                                 style = MaterialTheme.typography.h4,
                                 textAlign = TextAlign.Center)
