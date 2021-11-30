@@ -126,7 +126,7 @@ fun GroupDetailsScreen(
                     Text(
                         text = "\$${String.format(Locale.US, "%.2f", group.userBalance)}",
                         style = MaterialTheme.typography.h4,
-                        color = if (group.userBalance > 0.0) Color.Green else Color.Red
+                        color = if (group.userBalance >= 0.0) Color.Green else Color.Red
                     )
                 }
                 Spacer(modifier = Modifier.height(StyleConfig.MEDIUM_PADDING))
