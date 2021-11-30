@@ -89,8 +89,8 @@ private fun LoginForm(
         )
     }
 
-    val usernameValue = usernameState.value.observeAsState().value!!
-    val passwordValue = passwordState.value.observeAsState().value!!
+    val usernameValue = usernameState.value.collectAsState().value
+    val passwordValue = passwordState.value.collectAsState().value
 
     AuthInputFields(
         usernameState = usernameState,

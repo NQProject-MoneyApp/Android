@@ -49,7 +49,7 @@ fun EditExpenseScreen(
                     defaultAmount = expense.amount.toFloat(),
                     defaultParticipants = expense.participants,
                     loading = loading,
-                    onSave = { name, amount, participants ->
+                    onSave = { name, amount, paidBy, participants ->
                         Log.d(StyleConfig.MAIN_TAG, "on save edited expense: $name")
                         coroutineScope.launch {
                             when (val result =

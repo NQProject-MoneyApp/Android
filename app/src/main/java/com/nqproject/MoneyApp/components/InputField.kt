@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -25,17 +26,19 @@ import androidx.compose.ui.draw.clip
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nqproject.MoneyApp.StyleConfig
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 
 class ValidableValue<T>(
     defaultValue: T,
     private val validateFun: (value: T) -> String = { "" }
 ) {
-    private val _value = MutableLiveData(defaultValue)
-    private val _errorMessage = MutableLiveData("")
+    private val _value = MutableStateFlow(defaultValue)
+    private val _errorMessage = MutableStateFlow("")
 
-    val value: LiveData<T> = _value
-    val errorMessage: LiveData<String> = _errorMessage
+    val value: StateFlow<T> = _value
+    val errorMessage: StateFlow<String> = _errorMessage
 
     fun updateValue(value: T){
         _value.value = value
@@ -43,11 +46,11 @@ class ValidableValue<T>(
     }
 
     fun validate() {
-        _errorMessage.value = validateFun(value.value!!)
+        _errorMessage.value = validateFun(value.value)
     }
 
     fun isError(): Boolean {
-        return _errorMessage.value?.isNotEmpty() ?: false
+        return _errorMessage.value.isNotEmpty()
     }
 }
 
@@ -61,8 +64,8 @@ fun InputField(
     keyboardType: KeyboardType,
 ) {
     val fieldShape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS)
-    val value = fieldState.value.observeAsState().value!!
-    val errorMessage = fieldState.errorMessage.observeAsState().value!!
+    val value = fieldState.value.collectAsState().value
+    val errorMessage = fieldState.errorMessage.collectAsState().value
 
     val visualTransformation = if (keyboardType == KeyboardType.Password) {
         PasswordVisualTransformation()

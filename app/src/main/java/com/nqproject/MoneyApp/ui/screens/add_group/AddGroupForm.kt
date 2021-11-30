@@ -9,6 +9,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -57,8 +58,8 @@ fun AddGroupForm(
     }
 
     val friends = viewModel.userFriends.observeAsState(emptyList()).value
-    val groupNameValue = groupName.value.observeAsState().value!!
-    val groupMembersValue = newGroupMembers.value.observeAsState().value!!
+    val groupNameValue = groupName.value.collectAsState().value
+    val groupMembersValue = newGroupMembers.value.collectAsState().value
     val addGroupLoading = viewModel.addGroupLoading.observeAsState(false).value
 
     Card(

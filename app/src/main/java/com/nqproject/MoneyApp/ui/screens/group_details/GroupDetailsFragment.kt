@@ -44,7 +44,7 @@ class GroupDetailsFragment : Fragment() {
                         },
                         onAddExpenseNavigate = {
                             val action = GroupDetailsFragmentDirections
-                                .actionGroupDetailsFragmentToAddExpenseFragment(args.group)
+                                .actionGroupDetailsFragmentToAddPaymentFragment(args.group)
                             findNavController().navigate(action)
                         },
                         onEditGroupNavigate = {

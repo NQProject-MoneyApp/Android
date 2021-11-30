@@ -6,6 +6,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,8 +23,8 @@ fun ChooseUsersComponent(
     groupMembers: List<User>,
     chosenMembers: ValidableValue<List<User>>,
 ) {
-    val errorMessage = chosenMembers.errorMessage.observeAsState().value!!
-    val chosenMembersValue = chosenMembers.value.observeAsState().value!!
+    val errorMessage = chosenMembers.errorMessage.collectAsState().value
+    val chosenMembersValue = chosenMembers.value.collectAsState().value
 
     val cardShape = RoundedCornerShape(StyleConfig.ROUNDED_CORNERS)
     var cardModifier = Modifier

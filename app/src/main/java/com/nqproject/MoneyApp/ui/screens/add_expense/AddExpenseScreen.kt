@@ -40,7 +40,7 @@ fun AddExpenseScreen(
 
                 AddExpenseForm(
                     loading = loading,
-                    onSave = { name, amount, participants ->
+                    onSave = { name, amount, paidBy, participants ->
                         Log.d(StyleConfig.MAIN_TAG, "on save expense: $name")
                         coroutineScope.launch {
                             when (val result =

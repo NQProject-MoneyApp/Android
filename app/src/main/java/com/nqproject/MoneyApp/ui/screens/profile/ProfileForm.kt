@@ -6,6 +6,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -47,8 +48,8 @@ fun ProfileForm(
         )
     }
 
-    val userNameValue = userName.value.observeAsState().value!!
-    val userEmailValue = userEmail.value.observeAsState().value!!
+    val userNameValue = userName.value.collectAsState().value
+    val userEmailValue = userEmail.value.collectAsState().value
     val addGroupLoading = viewModel.addGroupLoading.observeAsState(false).value
 
     InputField(
