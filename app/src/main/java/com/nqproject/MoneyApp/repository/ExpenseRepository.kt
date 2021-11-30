@@ -2,6 +2,7 @@ package com.nqproject.MoneyApp.repository
 
 import com.nqproject.MoneyApp.network.MoneyAppClient
 import com.nqproject.MoneyApp.network.SimpleResult
+import com.nqproject.MoneyApp.network.models.ExpenseType
 import com.nqproject.MoneyApp.utils.DateUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -21,6 +22,9 @@ object ExpenseRepository {
                         groupId = it.groupId,
                         name = it.name,
                         amount = it.amount,
+                        paidBy = it.paid_by,
+                        paymentTo = it.payment_to,
+                        type = ExpenseType.from(it.type),
                         author = User(pk = it.author.pk, it.author.username, it.author.email, 0.0),
                         createDate = DateUtils.parseDate(it.createDate),
                         participants = it.participants.map {
@@ -48,6 +52,9 @@ object ExpenseRepository {
                         result.data.author.pk, result.data.author.username,
                         result.data.author.email, 0.0
                     ),
+                    paidBy = result.data.paid_by,
+                    paymentTo = result.data.payment_to,
+                    type = ExpenseType.from(result.data.type),
                     createDate = DateUtils.parseDate(result.data.createDate),
                     participants = result.data.participants.map {
                         User(
