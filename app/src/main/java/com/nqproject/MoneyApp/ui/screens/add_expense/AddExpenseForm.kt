@@ -26,6 +26,7 @@ import java.util.*
 fun AddExpenseForm(
     defaultName: String = "",
     defaultAmount: Float? = null,
+    defaultPaidBy: String? = null,
     defaultParticipants: List<User>? = null,
     onSave: (name: String, amount: Float, paidBy: Int, participants: List<User>) -> Unit,
     loading: Boolean
@@ -60,10 +61,13 @@ fun AddExpenseForm(
             }
         )
     }
-
+    var defaultPaidByIndex: Int? = groupMembers.indexOfFirst { it.name == defaultPaidBy }
+    if (defaultPaidByIndex == -1) {
+        defaultPaidByIndex = null
+    }
     val expensePaidBy = remember {
-        ValidableValue<Int?>(
-            null,
+        ValidableValue(
+            defaultPaidByIndex,
             {
                 when (it) {
                     null -> "Enter expense payer"
