@@ -2,6 +2,8 @@ package com.nqproject.MoneyApp.ui.screens.add_group
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -22,6 +24,7 @@ fun AddGroupScreen(
 
     val viewModel = viewModel<AddGroupViewModel>()
     val coroutineScope = rememberCoroutineScope()
+    val scrollState = rememberScrollState()
     val context = LocalContext.current
     val loading = viewModel.loading.observeAsState(false).value
     var showImageAlert by remember { mutableStateOf(false) }
@@ -33,7 +36,9 @@ fun AddGroupScreen(
         didPressBackButton = onBackNavigate,
         body = {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {

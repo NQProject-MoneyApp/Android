@@ -3,6 +3,8 @@ package com.nqproject.MoneyApp.ui.screens.add_expense
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -21,6 +23,7 @@ fun AddExpenseScreen(
 ) {
 
     val viewModel = viewModel<AddExpenseViewModel>()
+    val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
     val loading = viewModel.loading.observeAsState(false).value
 
@@ -33,6 +36,7 @@ fun AddExpenseScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .verticalScroll(scrollState)
                     .padding(horizontal = StyleConfig.MEDIUM_PADDING),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
