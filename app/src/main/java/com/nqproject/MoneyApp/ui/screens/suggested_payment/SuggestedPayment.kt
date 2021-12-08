@@ -39,7 +39,8 @@ fun SuggestedPaymentComponent(payment: SuggestedPayment, onSave: (SuggestedPayme
                 color = AppTheme.colors.primaryText
             )
             Text(
-                text = "Amount: $${payment.amount}",
+                text = "Amount: $${String.format(
+                    Locale.US, "%.2f", payment.amount)}",
                 style = MaterialTheme.typography.h4,
                 color = AppTheme.colors.primaryText
             )
